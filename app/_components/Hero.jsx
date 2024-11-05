@@ -172,7 +172,7 @@ const Hero = () => {
         Search <span className="text-primary">Doctors</span>
       </h1>
       <h2 className="text-gray-500 md:text-xl text-sm text-center">
-        search your doctor and book appoitnment
+        search your doctor and book appointment
       </h2>
       <div className="flex w-full md:max-w-xl max-w-sm items-center space-x-4 p-2">
         <Input
