@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 
 const Page = ({ params }) => {
   const [cname, setCname] = useState(null);
@@ -91,6 +92,14 @@ const Page = ({ params }) => {
                   <dd className="text-xs text-gray-500">{doctor.clinic}</dd>
                 </div>
               </dl>
+              <div className=" flex items-center max-w-fit">
+                <Button
+                  variant="primary"
+                  className="bg-primary mt-2 text-white hover:text-slate-300"
+                >
+                  Book Appointment
+                </Button>
+              </div>
             </a>
           </div>
         ))}
