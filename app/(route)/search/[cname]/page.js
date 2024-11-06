@@ -15,9 +15,9 @@ const Page = ({ params }) => {
     },
     {
       id: 2,
-      name: "Dr. Varun Gupta",
+      name: "Dr. Gaurav Aggarwal",
       speciality: "Dental",
-      Exp: 3,
+      Exp: 5,
       clinic: "Pune, India",
     },
   ];

@@ -34,9 +34,10 @@ const Footer = () => {
         <div className="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-32">
           <div className="mx-auto max-w-sm lg:max-w-none">
             <p className="mt-4 text-center text-gray-500 lg:text-left lg:text-lg">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Praesentium natus quod eveniet aut perferendis distinctio iusto
-              repudiandae, provident velit earum?
+              At MGood, we believe that access to quality healthcare should be
+              seamless, efficient, and instant. Our mission is to bridge the gap
+              between those seeking medical attention and qualified healthcare
+              professionals, ensuring timely support and care.
             </p>
 
             <div className="mt-6 flex justify-center gap-4 lg:justify-start">
@@ -159,7 +160,7 @@ const Footer = () => {
                     href="#"
                   >
                     {" "}
-                    Marketing{" "}
+                    Consultations with healthcare professionals{" "}
                   </a>
                 </li>
 
@@ -168,7 +169,7 @@ const Footer = () => {
                     className="text-gray-700 transition hover:text-gray-700/75"
                     href="#"
                   >
-                    Graphic Design
+                    Organization of healthcare camps in your area
                   </a>
                 </li>
 
@@ -177,7 +178,7 @@ const Footer = () => {
                     className="text-gray-700 transition hover:text-gray-700/75"
                     href="#"
                   >
-                    App Development
+                    Referrals for various healthcare needs
                   </a>
                 </li>
 
@@ -186,7 +187,7 @@ const Footer = () => {
                     className="text-gray-700 transition hover:text-gray-700/75"
                     href="#"
                   >
-                    Web Development
+                    Consultation and Referral
                   </a>
                 </li>
               </ul>
