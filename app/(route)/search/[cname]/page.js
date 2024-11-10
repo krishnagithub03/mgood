@@ -1,35 +1,63 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
+import { SyncLoader } from "react-spinners";
+import Link from "next/link";
 
 const Page = ({ params }) => {
   const [cname, setCname] = useState(null);
-
-  const doctorList = [
-    {
-      id: 1,
-      name: "Dr. Umang Agrawal",
-      speciality: "Dental",
-      Exp: 5,
-      clinic: "Noida, India",
-    },
-    {
-      id: 2,
-      name: "Dr. Gaurav Aggarwal",
-      speciality: "Dental",
-      Exp: 5,
-      clinic: "Pune, India",
-    },
-  ];
+  const [doctorList, setDoctorList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  // const doctorList = [
+  //   {
+  //     id: 1,
+  //     name: "Dr. Umang Agrawal",
+  //     speciality: "Dental",
+  //     Exp: 5,
+  //     clinic: "Noida, India",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Dr. Gaurav Aggarwal",
+  //     speciality: "Dental",
+  //     Exp: 5,
+  //     clinic: "Pune, India",
+  //   },
+  // ];
   useEffect(() => {
     // Unwrap the params promise
     params.then((unwrappedParams) => {
-      setCname(unwrappedParams.cname);
+      setCname(unwrappedParams.cname); // Set cname once unwrapped
     });
   }, [params]);
 
-  // Handle the case when `cname` is not yet loaded
-  if (!cname) return <div>Loading...</div>;
+  useEffect(() => {
+    if (cname) {
+      axios
+        // .get(`http://localhost:8000/api/specialization/${cname}`)
+        .get(
+          `https://backend-for-mgood.onrender.com/api/specialization/${cname}`
+        )
+        .then((response) => {
+          setDoctorList(response.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          setError(error);
+          setLoading(false);
+        });
+    }
+  }, [cname]);
+
+  if (loading)
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <SyncLoader />
+      </div>
+    );
+  if (error) return <div>Error...</div>;
 
   return (
     <div>
@@ -44,9 +72,9 @@ const Page = ({ params }) => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7 lg:grid-cols-4 mx-4">
         {doctorList.map((doctor, index) => (
-          <div key={doctor.id} className="mt-2">
-            <a
-              href="#"
+          <div key={doctor._id} className="mt-2">
+            <Link
+              href={`/details/${doctor._id}`}
               className="relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8"
             >
               <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-primary via-gray-500 to-black"></span>
@@ -58,7 +86,7 @@ const Page = ({ params }) => {
                   </h3>
 
                   <p className="mt-1 text-xs font-medium text-gray-600">
-                    {doctor.speciality}
+                    {doctor.specialization}
                   </p>
                 </div>
 
@@ -84,23 +112,25 @@ const Page = ({ params }) => {
                   <dt className="text-sm font-medium text-gray-600">
                     Experience
                   </dt>
-                  <dd className="text-xs text-gray-500">{doctor.Exp} Years</dd>
+                  <dd className="text-xs text-gray-500">{doctor.exp} Years</dd>
                 </div>
 
                 <div className="flex flex-col-reverse">
                   <dt className="text-sm font-medium text-gray-600">Place</dt>
-                  <dd className="text-xs text-gray-500">{doctor.clinic}</dd>
+                  <dd className="text-xs text-gray-500">
+                    {doctor.place}, India
+                  </dd>
                 </div>
               </dl>
               <div className=" flex items-center max-w-fit">
                 <Button
                   variant="primary"
-                  className="bg-primary mt-2 text-white hover:text-slate-300"
+                  className="bg-primary mt-2 text-white hover:text-slate-300 cursor-pointer"
                 >
                   Book Appointment
                 </Button>
               </div>
-            </a>
+            </Link>
           </div>
         ))}
       </div>

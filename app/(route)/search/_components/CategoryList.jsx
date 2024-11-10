@@ -13,21 +13,15 @@ import {
 
 const CategoryList = () => {
   return (
-    <div className="hidden md:block h-screen mt-5 mx-2 flex-col">
+    <div className="hidden md:block h-screen mt-5 mx-5 flex-col">
       <Command>
-        <CommandInput placeholder="Type a command or search..." />
+        <CommandInput placeholder="Search by Location..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Suggestions">
-            <CommandItem>Dental</CommandItem>
-            <CommandItem>Ortho</CommandItem>
-            <CommandItem>Neuro</CommandItem>
-          </CommandGroup>
-          <CommandSeparator />
-          <CommandGroup heading="Others">
-            <CommandItem>Camps</CommandItem>
-            <CommandItem>Clinics</CommandItem>
-            <CommandItem>Doctors</CommandItem>
+            <CommandItem>Noida</CommandItem>
+            <CommandItem>Pune</CommandItem>
+            <CommandItem>Mumbai</CommandItem>
           </CommandGroup>
         </CommandList>
       </Command>

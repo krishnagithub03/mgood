@@ -1,5 +1,5 @@
 import React from "react";
-import CategoryList from "./search/_components/CategoryList";
+import CategoryList from "./_components/CategoryList";
 
 const layout = ({ children }) => {
   return (
