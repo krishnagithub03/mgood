@@ -42,7 +42,7 @@ const Details = ({ params }) => {
   if (error) return <div>Error...</div>;
   return (
     <div className="p-5 md:px-20">
-      <h2 className="font-bold text-2xl">Details</h2>
+      <h2 className="font-bold text-2xl font-display">Details</h2>
       <div className="grid grid-cols-1 md:grid-cols-2">
         <div className="md:col-span-2">
           {doctor ? <DoctorDetails doctor={doctor} /> : <div>Error...</div>}

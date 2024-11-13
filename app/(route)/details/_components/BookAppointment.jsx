@@ -70,7 +70,10 @@ const BookAppointment = () => {
                   </h2>
                   <div className="grid grid-cols-3 gap-2 border-2 rounded-lg p-5 shadow-lg">
                     {timeSlot.map((item, index) => (
-                      <h2 className="p-2 border-2 rounded-full hover:text-white hover:bg-primary text-center cursor-pointer">
+                      <h2
+                        className="p-2 border-2 rounded-full hover:text-white hover:bg-primary text-center cursor-pointer"
+                        key={index}
+                      >
                         {item.time}
                       </h2>
                     ))}
