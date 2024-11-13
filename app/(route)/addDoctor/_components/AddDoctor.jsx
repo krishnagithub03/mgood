@@ -68,7 +68,7 @@ const AddDoctor = () => {
       }
     }
     axios
-      .post("https://backend-for-mgood.onrender.com/api/", formData)
+      .post("https://backend-production-7277.up.railway.app/api/", formData)
       // .post("http://localhost:8000/api/", formData)
       .then((response) => {
         console.log(response);

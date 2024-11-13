@@ -21,7 +21,7 @@ const Details = ({ params }) => {
     if (recordId) {
       axios
         // .get(`http://localhost:8000/api/${recordId}`)
-        .get(`https://backend-for-mgood.onrender.com/api/${recordId}`)
+        .get(`https://backend-production-7277.up.railway.app/api/${recordId}`)
         .then((response) => {
           console.log(response.data);
           setDoctor(response.data);
