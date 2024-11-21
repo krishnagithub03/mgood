@@ -70,8 +70,8 @@ const BookAppointment = ({ doctor }) => {
         console.log(res);
         if (res) {
           axios
-            // .post("http://localhost:3000/api/sendEmail", data)
-            .post(`${process.env.BACKEND_URL}/api/sendEmail`, data)
+            .post("https://mgood.vercel.app/api/sendEmail", data)
+            // .post(`${process.env.BACKEND_URL}/api/sendEmail`, data)
             .then((res) => {
               console.log(res);
             });
