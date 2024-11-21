@@ -65,7 +65,7 @@ const BookAppointment = ({ doctor }) => {
 
     // axios.post("http://localhost:8000/api/appointment", data).then((res) => {
     axios
-      .post(`${process.env.BACKEND_URL}/api/appointment`, data)
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/appointment`, data)
       .then((res) => {
         console.log(res);
         if (res) {

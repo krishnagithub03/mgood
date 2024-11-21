@@ -82,7 +82,7 @@ const AddDoctor = async () => {
       }
     }
     axios
-      .post(`${prcoess.env.BACKEND_URL}/api/`, formData)
+      .post(`${prcoess.env.NEXT_PUBLIC_BACKEND_URL}/api/`, formData)
       // .post("http://localhost:8000/api/", formData)
       .then((response) => {
         console.log(response);

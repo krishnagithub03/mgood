@@ -37,7 +37,9 @@ const Page = ({ params }) => {
     if (cname) {
       axios
         // .get(`http://localhost:8000/api/specialization/${cname}`)
-        .get(`${process.env.BACKEND_URL}/api/specialization/${cname}`)
+        .get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/specialization/${cname}`
+        )
         .then((response) => {
           setDoctorList(response.data);
           setLoading(false);

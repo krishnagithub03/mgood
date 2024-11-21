@@ -21,7 +21,7 @@ const Details = ({ params }) => {
     if (recordId) {
       axios
         // .get(`http://localhost:8000/api/${recordId}`)
-        .get(`${process.env.BACKEND_URL}/api/${recordId}`)
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/${recordId}`)
         .then((response) => {
           console.log(response.data);
           setDoctor(response.data);
