@@ -38,7 +38,7 @@ const Page = ({ params }) => {
       axios
         // .get(`http://localhost:8000/api/specialization/${cname}`)
         .get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/specialization/${cname}`
+          `https://backend-production-7277.up.railway.app/api/specialization/${cname}`
         )
         .then((response) => {
           setDoctorList(response.data);

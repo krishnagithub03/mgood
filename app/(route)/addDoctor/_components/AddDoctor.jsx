@@ -82,7 +82,7 @@ const AddDoctor = async () => {
       }
     }
     axios
-      .post(`${prcoess.env.NEXT_PUBLIC_BACKEND_URL}/api/`, formData)
+      .post("https://backend-production-7277.up.railway.app/api/", formData)
       // .post("http://localhost:8000/api/", formData)
       .then((response) => {
         console.log(response);

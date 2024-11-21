@@ -44,7 +44,10 @@ const PatientDetails = () => {
     };
     console.log("Submitting formData: ", parsedData);
     axios
-      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/patient`, parsedData)
+      .post(
+        `https://backend-production-7277.up.railway.app/api/patient`,
+        parsedData
+      )
       // .post("http://localhost:8000/api/patient", parsedData)
       .then((response) => {
         console.log(response);
