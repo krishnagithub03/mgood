@@ -12,17 +12,17 @@ import BookAppointment from "./BookAppointment";
 
 const DoctorDetails = ({ doctor }) => {
   return (
-    <div className="max-h-fit">
+    <div className="h-fit">
       <div className="grid grid-cols-1 md:grid-cols-8 p-4 mt-5 bg-white rounded-xl">
         {/* doctor img */}
-        <div className="flex md:col-span-2 gap-3">
-          <div className="flex flex-col justify-center items-center">
+        <div className="flex md:col-span-2 gap-2">
+          <div className="flex flex-col justify-center items-center  max-h-[100px] md:max-h-[200px]">
             <Image
               width={200}
-              height={200}
+              height={100}
               src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80"
               alt={doctor.name}
-              className="rounded-full object-cover"
+              className="rounded-full object-cover md:w-[200px] w-[100px]"
             />
           </div>
           <div className="flex flex-col p-2 gap-1">
@@ -35,18 +35,10 @@ const DoctorDetails = ({ doctor }) => {
             </h3>
           </div>
         </div>
-        {/* info */}
+        {/* button */}
         <div className="md:col-span-6 flex justify-start md:justify-end md:px-5">
-          {/* <h2 className="flex gap-2 text-gray-500 text-md">
-            <GraduationCap />
-            <span>{doctor.exp} Years of Experience</span>
-          </h2>
-          <h2 className="flex gap-2 text-gray-500 text-md">
-            <MapPin />
-            <span>{doctor.place}, India</span>
-          </h2> */}
-          <div className="flex md:flex-col items-center">
-            <BookAppointment />
+          <div className="flex items-center justify-center">
+            <BookAppointment doctor={doctor} />
           </div>
         </div>
       </div>

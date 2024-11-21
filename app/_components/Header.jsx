@@ -30,6 +30,11 @@ function Header() {
       name: "Contact Us",
       path: "/",
     },
+    {
+      id: 4,
+      name: "Teleconsultation",
+      path: "/book-tc",
+    },
   ];
 
   const { user } = useKindeBrowserClient();
@@ -58,12 +63,15 @@ function Header() {
         ))}
       </ul>
       {!user ? (
-        <LoginLink>
-          <button className="md:flex gap-2 items-center border-2 border-gray-400 hover:bg-primary px-6 py-2 rounded-md font-display">
-            Get Started
-            <i className="fa-solid fa-arrow-right"></i>
+        <Link href="/book-tc">
+          {/* <LoginLink> */}
+          <button className="text-xs md:text-base md:flex gap-2 items-center border-2 border-gray-400 hover:bg-primary px-2 md:px-6 py-2 rounded-md font-display">
+            Start Teleconsultation
+            <i className="fa-solid fa-phone ml-2 md:ml-0"></i>
+            {/* <i className="fa-solid fa-arrow-right"></i> */}
           </button>
-        </LoginLink>
+          {/* </LoginLink> */}
+        </Link>
       ) : (
         <Popover>
           <PopoverTrigger>

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const AddDoctor = () => {
+const AddDoctor = async () => {
   const initialFormData = {
     name: "",
     email: "",
@@ -18,9 +18,23 @@ const AddDoctor = () => {
     message: "",
     uploadFile: "",
   };
-
   const [formData, setFormData] = useState(initialFormData);
   const [file, setFile] = useState(null);
+
+  // if (isAuthenticated()) {
+  //   const result = await getCgelaim();
+  //   console.log("Role: ", result);
+  // }
+  //   // If user is basic, check if they are trying to access /details
+  // if (result?.value.some((role) => role === "basic-user")) {
+  //   if (request.nextUrl.pathname === "/details") {
+  //     // Allow access to /details
+  //     return NextResponse.next();
+  //   } else {
+  //     // Redirect basic user to home page if they try to access any other route
+  //     return NextResponse.redirect(new URL("/", request.url));
+  //   }
+  // }
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -68,7 +82,7 @@ const AddDoctor = () => {
       }
     }
     axios
-      .post("https://backend-production-7277.up.railway.app/api/", formData)
+      .post(`${prcoess.env.BACKEND_URL}/api/`, formData)
       // .post("http://localhost:8000/api/", formData)
       .then((response) => {
         console.log(response);

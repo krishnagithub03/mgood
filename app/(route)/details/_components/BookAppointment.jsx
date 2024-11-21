@@ -1,24 +1,32 @@
 import React, { useEffect, useState } from "react";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { Calendar1, Clock } from "lucide-react";
+import { Calendar1, CalendarDays, Clock } from "lucide-react";
 import { Slot } from "@radix-ui/react-slot";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { toast } from "sonner";
+import axios from "axios";
 
-const BookAppointment = () => {
+const BookAppointment = ({ doctor }) => {
   const [date, setDate] = useState(new Date());
   const [timeSlot, setTimeSlot] = useState([]);
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
+  const { user } = useKindeBrowserClient();
 
   useEffect(() => {
     getTime();
   }, []);
+
   const getTime = () => {
     const timeList = [];
 
@@ -36,6 +44,45 @@ const BookAppointment = () => {
 
     setTimeSlot(timeList);
   };
+
+  const isPastDay = (date) => {
+    const today = new Date();
+    return date < today;
+  };
+  const handleBookAppointment = () => {
+    const data = {
+      data: {
+        patientName: user.given_name + " " + user.family_name,
+        doctorId: doctor._id,
+        doctorName: doctor.name,
+        specialization: doctor.specialization,
+        patientEmail: user.email,
+        doctorEmail: doctor.email,
+        appointmentDate: date,
+        appointmentTime: selectedTimeSlot,
+      },
+    };
+
+    // axios.post("http://localhost:8000/api/appointment", data).then((res) => {
+    axios
+      .post(`${process.env.BACKEND_URL}/api/appointment`, data)
+      .then((res) => {
+        console.log(res);
+        if (res) {
+          axios
+            // .post("http://localhost:3000/api/sendEmail", data)
+            .post(`${process.env.BACKEND_URL}/api/sendEmail`, data)
+            .then((res) => {
+              console.log(res);
+            });
+          toast("Appointment Booked Successfully");
+          setSelectedTimeSlot(null);
+        }
+      });
+  };
+  if (!user) {
+    return <div>Please Login to Book Appointment</div>;
+  }
   return (
     <Dialog>
       <DialogTrigger>
@@ -47,20 +94,23 @@ const BookAppointment = () => {
             Book Appointment
           </DialogTitle>
           <DialogDescription>
-            <div className="">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-5">
                 {/* Calender */}
-                <div className="mt-3 md:mt-0">
-                  <h2 className="flex gap-2 items-center mb-3">
-                    <Calendar1 className="text-primary h-5 w-5" />
+                <div className="flex flex-col items-baseline gap-3">
+                  <h2 className="flex gap-2 items-center">
+                    <CalendarDays className="text-primary h-5 w-5" />
                     Select Day
                   </h2>
-                  <Calendar
-                    mode="single"
-                    selected={date}
-                    onSelect={setDate}
-                    className="rounded-md border-2 shadow-lg"
-                  />
+                  <div>
+                    <Calendar
+                      mode="single"
+                      selected={date}
+                      onSelect={setDate}
+                      disabled={isPastDay}
+                      className="rounded-md border-2 shadow-lg"
+                    />
+                  </div>
                 </div>
                 {/* Time Slot */}
                 <div className="mt-3 md:mt-0">
@@ -68,11 +118,19 @@ const BookAppointment = () => {
                     <Clock className="text-primary h-5 w-5" />
                     Select Time Slot
                   </h2>
-                  <div className="grid grid-cols-3 gap-2 border-2 rounded-lg p-5 shadow-lg">
-                    {timeSlot.map((item, index) => (
+                  <div
+                    className="grid grid-cols-3 gap-2 border-2 rounded-lg p-4
+                   shadow-lg"
+                  >
+                    {timeSlot?.map((item, index) => (
                       <h2
-                        className="p-2 border-2 rounded-full hover:text-white hover:bg-primary text-center cursor-pointer"
+                        className={`p-2 border-2 rounded-full hover:text-white hover:bg-primary text-center cursor-pointer ${
+                          item.time == selectedTimeSlot
+                            ? "bg-primary text-white"
+                            : ""
+                        }`}
                         key={index}
+                        onClick={() => setSelectedTimeSlot(item.time)}
                       >
                         {item.time}
                       </h2>
@@ -83,6 +141,26 @@ const BookAppointment = () => {
             </div>
           </DialogDescription>
         </DialogHeader>
+        <DialogFooter className="sm:justify-end">
+          <DialogClose asChild>
+            <Button
+              type="button"
+              variant="outline"
+              className="text-red-500 border-red-500"
+            >
+              Close
+            </Button>
+          </DialogClose>
+          <DialogClose asChild>
+            <Button
+              type="button"
+              disabled={!(date && selectedTimeSlot)}
+              onClick={handleBookAppointment}
+            >
+              Book Appointment
+            </Button>
+          </DialogClose>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
