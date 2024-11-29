@@ -56,7 +56,7 @@ export const EmailTemplate = ({
               <Img
                 style={image}
                 width={120}
-                src={`${baseUrl}/asset5.png`}
+                src={`${baseUrl}/asset5.jpg`}
               />
               </div>
             </Row>

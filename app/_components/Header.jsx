@@ -45,7 +45,7 @@ function Header() {
     <nav className="p-3 flex justify-between bg-white items-center shadow-sm text-black">
       <a href="/" className="flex items-center gap-2">
         <Image
-          src="/asset5.png"
+          src="/asset5.jpg"
           className="object-cover max-w-12 max-h-12"
           width={180}
           height={80}
