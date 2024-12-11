@@ -14,6 +14,12 @@ const nextConfig = {
         port: "",
         pathname: "**", // Allows images from any path on this domain
       },
+      {
+        protocol: "https",
+        hostname: "gravatar.com",
+        port: "",
+        pathname: "**", // Allows images from any path on this domain
+      },
     ],
   },
 };

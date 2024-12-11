@@ -63,18 +63,20 @@ const BookAppointment = ({ doctor }) => {
       },
     };
 
-    // axios.post("http://localhost:8000/api/appointment", data).then((res) => {
     axios
-      .post(
-        `https://backend-production-7277.up.railway.app/api/appointment`,
-        data
-      )
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/appointment`, data)
       .then((res) => {
+        // axios
+        //   .post(
+        //     `https://backend-production-7277.up.railway.app/api/appointment`,
+        //     data
+        //   )
+        // .then((res) => {
         console.log(res);
         if (res) {
           axios
             .post("https://mgood.vercel.app/api/sendEmail", data)
-            // .post(`${process.env.BACKEND_URL}/api/sendEmail`, data)
+            // .post("http://localhost:3001/api/sendEmail", data)
             .then((res) => {
               console.log(res);
             });
@@ -91,7 +93,7 @@ const BookAppointment = ({ doctor }) => {
       <DialogTrigger>
         <Button className="bg-primary mt-10 flex">Book Appointment</Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="md:m-0 m-5">
         <DialogHeader>
           <DialogTitle className="text-center text-slate-600">
             Book Appointment

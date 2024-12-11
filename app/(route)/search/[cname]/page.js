@@ -36,10 +36,12 @@ const Page = ({ params }) => {
   useEffect(() => {
     if (cname) {
       axios
-        // .get(`http://localhost:8000/api/specialization/${cname}`)
         .get(
-          `https://backend-production-7277.up.railway.app/api/specialization/${cname}`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/specialization/${cname}`
         )
+        // .get(
+        //   `https://backend-production-7277.up.railway.app/api/specialization/${cname}`
+        // )
         .then((response) => {
           setDoctorList(response.data);
           setLoading(false);
