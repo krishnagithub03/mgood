@@ -279,7 +279,7 @@
 // export default PatientDetails;
 
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import {
@@ -299,32 +299,33 @@ import { toast } from "sonner";
 const socket = io(`${process.env.NEXT_PUBLIC_BACKEND_URL}`);
 
 const specialtyList = [
-  "Cardiology",
-  "Dermatology",
-  "Endocrinology",
-  "Gastroenterology",
-  "General Surgery",
-  "Hematology",
-  "Infectious Disease",
-  "Internal Medicine",
-  "Nephrology",
-  "Neurology",
-  "Obstetrics and Gynecology",
-  "Oncology",
-  "Ophthalmology",
-  "Orthopedics",
-  "Otolaryngology",
-  "Pathology",
-  "Pediatrics",
-  "Plastic Surgery",
+  "Dental",
+  "Ortho",
+  "Derma",
+  "Patho",
+  "Pedo",
+  "Physiotherapy",
+  "General Physician",
+  "Dietician",
+  "Gyane",
   "Psychiatry",
-  "Pulmonology",
-  "Radiology",
-  "Rheumatology",
-  "Sports Medicine",
-  "Thoracic Surgery",
+  "Cardio",
+  "Neuro",
   "Urology",
-  "Vascular Surgery",
+  "Pulmonologist",
+  "General Surgeon",
+  "Radiology",
+  "Hair Transplant Clinics",
+  "Plastic Surgeon",
+  "Ayurveda",
+  "Homeopathy",
+  "Eye",
+  "ENT",
+  "Primary Healthcare Centres",
+  "Yoga Instructors",
+  "Pharmacy",
+  "Diagnostic Centres",
+  "PRO",
 ];
 
 const mgoodIds = ["ID001", "ID002", "ID003", "ID004"]; // Example IDs
@@ -346,6 +347,28 @@ const PatientDetails = () => {
   const [amount, setamount] = useState(1);
   const [paymentStatus, setPaymentStatus] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
+  const [timer, setTimer] = useState(30);
+  const [buttonEnabled, setButtonEnabled] = useState(false);
+
+  useEffect(() => {
+    let interval;
+    if (showDialog) {
+      setTimer(30); // Reset timer to 30 seconds
+      setButtonEnabled(false); // Disable button initially
+      interval = setInterval(() => {
+        setTimer((prev) => {
+          if (prev > 1) {
+            return prev - 1;
+          } else {
+            clearInterval(interval);
+            setButtonEnabled(true); // Enable button after 30 seconds
+            return 0;
+          }
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [showDialog]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -626,7 +649,7 @@ const PatientDetails = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog> */}
-      {showDialog && (
+      {/* {showDialog && (
         <Dialog open={showDialog} onOpenChange={setShowDialog}>
           <DialogContent>
             <DialogHeader>
@@ -639,6 +662,44 @@ const PatientDetails = () => {
                   ) : (
                     <Link href={`/Room/${roomId}`}>
                       <button className="border-2 bg-primary text-white text-xl px-8 py-4 rounded-lg">
+                        Join
+                      </button>
+                    </Link>
+                  )}
+                </p>
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button onClick={() => setShowDialog(false)}>
+                End Consultation
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )} */}
+      {showDialog && (
+        <Dialog open={showDialog} onOpenChange={setShowDialog}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Starting Consultation</DialogTitle>
+              <DialogDescription>
+                <p className="p-28 text-center flex flex-col gap-10">
+                  Please wait while we connect you with a healthcare provider.
+                  <div className="text-lg font-semibold">
+                    Time remaining: {timer} seconds
+                  </div>
+                  {loading ? (
+                    <SyncLoader className="justify-center" />
+                  ) : (
+                    <Link href={`/Room/${roomId}`}>
+                      <button
+                        className={`border-2 text-xl px-8 py-4 rounded-lg ${
+                          buttonEnabled
+                            ? "bg-primary text-white"
+                            : "bg-gray-400 cursor-not-allowed"
+                        }`}
+                        disabled={!buttonEnabled}
+                      >
                         Join
                       </button>
                     </Link>

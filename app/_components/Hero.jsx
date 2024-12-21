@@ -580,6 +580,12 @@ const Hero = () => {
       imgPath: "fas fa-vials",
       path: "/search/Diagnostic-centres",
     },
+    {
+      id: 27,
+      name: "PRO",
+      imgPath: "fas fa-vials",
+      path: "/search/PRO",
+    },
   ];
 
   // Filter specializations based on the search query

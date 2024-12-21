@@ -23,8 +23,8 @@ function Header() {
     },
     {
       id: 2,
-      name: "Contact Us",
-      path: "/",
+      name: "About Us",
+      path: "/about-us",
     },
     {
       id: 3,
