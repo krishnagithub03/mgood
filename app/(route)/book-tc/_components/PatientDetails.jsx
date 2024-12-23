@@ -325,7 +325,8 @@ const specialtyList = [
   "Yoga Instructors",
   "Pharmacy",
   "Diagnostic Centres",
-  "PRO",
+  "Associate",
+  "RMP",
 ];
 
 const mgoodIds = ["ID001", "ID002", "ID003", "ID004"]; // Example IDs

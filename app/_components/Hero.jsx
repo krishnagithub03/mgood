@@ -582,9 +582,15 @@ const Hero = () => {
     },
     {
       id: 27,
-      name: "PRO",
-      imgPath: "fas fa-vials",
-      path: "/search/PRO",
+      name: "Associate",
+      imgPath: "fas fa-user",
+      path: "/search/Associate",
+    },
+    {
+      id: 28,
+      name: "RMP",
+      imgPath: "fas fa-user",
+      path: "/search/RMP",
     },
   ];
 
