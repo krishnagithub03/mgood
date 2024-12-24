@@ -464,7 +464,7 @@ const Hero = () => {
       id: 7,
       name: "General Physician",
       imgPath: "fas fa-user-md",
-      path: "/search/General-physician",
+      path: "/search/General Physician",
     },
     {
       id: 8,
@@ -512,7 +512,7 @@ const Hero = () => {
       id: 15,
       name: "General Surgeon",
       imgPath: "fas fa-stethoscope",
-      path: "/search/General-surgeon",
+      path: "/search/General Surgeon",
     },
     {
       id: 16,
@@ -524,13 +524,13 @@ const Hero = () => {
       id: 17,
       name: "Hair Transplant Clinics",
       imgPath: "fas fa-cut",
-      path: "/search/Hair-transplant-clinics",
+      path: "/search/Hair Transplant Clinics",
     },
     {
       id: 18,
       name: "Plastic Surgeon",
       imgPath: "fas fa-user-ninja",
-      path: "/search/Plastic-surgeon",
+      path: "/search/Plastic Surgeon",
     },
     {
       id: 19,
@@ -554,19 +554,19 @@ const Hero = () => {
       id: 22,
       name: "ENT",
       imgPath: "fas fa-head-side-cough",
-      path: "/search/Ent",
+      path: "/search/ENT",
     },
     {
       id: 23,
       name: "Primary Healthcare Centres",
       imgPath: "fas fa-clinic-medical",
-      path: "/search/Primary-healthcare-centres",
+      path: "/search/Primary Healthcare Centres",
     },
     {
       id: 24,
       name: "Yoga Instructors",
       imgPath: "fas fa-child",
-      path: "/search/Yoga-instructors",
+      path: "/search/Yoga Instructors",
     },
     {
       id: 25,
@@ -578,7 +578,7 @@ const Hero = () => {
       id: 26,
       name: "Diagnostic Centres",
       imgPath: "fas fa-vials",
-      path: "/search/Diagnostic-centres",
+      path: "/search/Diagnostic Centres",
     },
     {
       id: 27,

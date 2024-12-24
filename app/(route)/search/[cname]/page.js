@@ -26,12 +26,25 @@ const Page = ({ params }) => {
   //     clinic: "Pune, India",
   //   },
   // ];
+
   useEffect(() => {
-    // Unwrap the params promise
-    params.then((unwrappedParams) => {
-      setCname(unwrappedParams.cname); // Set cname once unwrapped
-    });
+    // Unwrap `params` if it is a Promise
+    const fetchParams = async () => {
+      const unwrappedParams = await params;
+      if (unwrappedParams?.cname) {
+        const decodedCname = decodeURIComponent(unwrappedParams.cname);
+        setCname(decodedCname);
+      }
+    };
+
+    fetchParams();
   }, [params]);
+  // useEffect(() => {
+  //   // Unwrap the params promise
+  //   params.then((unwrappedParams) => {
+  //     setCname(unwrappedParams.cname); // Set cname once unwrapped
+  //   });
+  // }, [params]);
 
   useEffect(() => {
     if (cname) {
@@ -74,10 +87,10 @@ const Page = ({ params }) => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7 lg:grid-cols-4 mx-4">
         {doctorList.map((doctor, index) => (
-          <div key={doctor._id} className="mt-2">
+          <div key={doctor._id} className="mt-2 h-full">
             <Link
               href={`/details/${doctor._id}`}
-              className="relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8"
+              className="relative flex flex-col justify-between h-full overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8"
             >
               <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-primary via-gray-500 to-black"></span>
 
