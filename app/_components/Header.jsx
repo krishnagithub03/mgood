@@ -12,9 +12,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import axios from "axios";
 
 function Header() {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [mgoodId, setMgoodId] = useState("");
   const navLinks = [
     {
       id: 1,
@@ -37,7 +39,18 @@ function Header() {
   };
   const { user } = useKindeBrowserClient();
   useEffect(() => {
-    console.log(user);
+    if (user?.email) {
+      axios
+        .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/getMgoodId`, {
+          email: user.email,
+        })
+        .then((res) => {
+          setMgoodId(res.data.mgoodId);
+        })
+        .catch((error) => {
+          console.error("Failed to fetch MgoodId:", error);
+        });
+    }
   }, [user]);
   return (
     <nav className="p-3 flex justify-between bg-white items-center shadow-sm text-black">
@@ -96,6 +109,9 @@ function Header() {
                 </li>
                 <li className="cursor-pointer hover:bg-slate-300 p-2 rounded-md">
                   Appointments
+                </li>
+                <li className="cursor-pointer hover:bg-slate-300 p-2 rounded-md">
+                  MgoodId : {mgoodId}
                 </li>
                 <li className="cursor-pointer hover:bg-slate-300 p-2 rounded-md">
                   <LogoutLink>Log Out</LogoutLink>
