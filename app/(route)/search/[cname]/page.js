@@ -56,7 +56,10 @@ const Page = ({ params }) => {
         //   `https://backend-production-7277.up.railway.app/api/specialization/${cname}`
         // )
         .then((response) => {
-          setDoctorList(response.data);
+          setDoctorList(response.data.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          ));
+          console.log(doctorList);
           setLoading(false);
         })
         .catch((error) => {
