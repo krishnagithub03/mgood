@@ -69,17 +69,7 @@ const DoctorDetails = ({ doctor }) => {
           Doctor's Message
         </h2>
         <p className="text-gray-400 mt-2 bg-white p-6 rounded-xl">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi rem
-          nesciunt id quod veritatis consectetur sit a fuga totam, enim nostrum
-          hic inventore quia beatae voluptas. Amet sint libero culpa vel eaque
-          consequuntur delectus numquam, aliquid debitis in architecto quo modi
-          laboriosam exercitationem eligendi fugiat earum explicabo ipsum. Totam
-          enim sunt magnam vitae facere voluptates facilis dignissimos eos eum
-          rerum numquam commodi, libero dicta quam reiciendis a ipsam hic
-          accusamus quasi architecto ullam. Corporis cum illum accusamus omnis
-          repellat molestiae suscipit, voluptate ullam quibusdam in labore neque
-          veniam voluptatem architecto accusantium qui at amet molestias,
-          provident excepturi possimus unde eveniet.
+          {doctor.message}
         </p>
       </div>
     </div>
