@@ -56,9 +56,11 @@ const Page = ({ params }) => {
         //   `https://backend-production-7277.up.railway.app/api/specialization/${cname}`
         // )
         .then((response) => {
-          setDoctorList(response.data.sort(
-            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-          ));
+          setDoctorList(
+            response.data.sort(
+              (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+            )
+          );
           console.log(doctorList);
           setLoading(false);
         })
@@ -119,9 +121,7 @@ const Page = ({ params }) => {
 
               <div className="mt-4">
                 <p className="text-pretty text-sm text-gray-500">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. At
-                  velit illum provident a, ipsa maiores deleniti consectetur
-                  nobis et eaque.
+                  {doctor.message}
                 </p>
               </div>
 
