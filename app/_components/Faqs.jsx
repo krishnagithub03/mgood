@@ -2,7 +2,7 @@ import React from "react";
 
 const Faqs = () => {
   return (
-    <div className="text-left md:mx-40 mx-2 space-y-5">
+    <div className="text-left md:mx-40 mx-2 space-y-5" id="faq-section">
       <h1 className="text-left text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
         FAQS
         <span className="text-primary">.</span>

@@ -1,6 +1,11 @@
+"use client";
 import React from "react";
 
 const Footer = () => {
+  const scrollToFAQ = () => {
+    window.location.href = "#faq-section";
+  };
+
   return (
     <footer className="bg-white font-display">
       <div className="mx-auto max-w-screen-xl px-4 pb-8 pt-16 sm:px-6 lg:px-8">
@@ -48,7 +53,7 @@ const Footer = () => {
             <div className="mt-6 flex justify-center gap-4 lg:justify-start">
               <a
                 className="text-gray-700 transition hover:text-gray-700/75"
-                href="#"
+                href="https://www.facebook.com/profile.php?id=61570343792874 "
                 target="_blank"
                 rel="noreferrer"
               >
@@ -70,7 +75,7 @@ const Footer = () => {
 
               <a
                 className="text-gray-700 transition hover:text-gray-700/75"
-                href="#"
+                href="https://www.instagram.com/mgoodhealthcare2024"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -92,7 +97,7 @@ const Footer = () => {
 
               <a
                 className="text-gray-700 transition hover:text-gray-700/75"
-                href="#"
+                href="http://x.com/MgoodHealthcare"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -181,14 +186,14 @@ const Footer = () => {
                 <li>
                   <a
                     className="text-gray-700 transition hover:text-gray-700/75"
-                    href="#"
+                    href="/about-us"
                   >
                     {" "}
                     About{" "}
                   </a>
                 </li>
 
-                <li>
+                {/* <li>
                   <a
                     className="text-gray-700 transition hover:text-gray-700/75"
                     href="#"
@@ -196,12 +201,12 @@ const Footer = () => {
                     {" "}
                     Careers{" "}
                   </a>
-                </li>
+                </li> */}
 
                 <li>
                   <a
                     className="text-gray-700 transition hover:text-gray-700/75"
-                    href="#"
+                    href="/about-us"
                   >
                     {" "}
                     Our Team{" "}
@@ -216,18 +221,17 @@ const Footer = () => {
               <ul className="mt-6 space-y-1">
                 <li>
                   <a
-                    className="text-gray-700 transition hover:text-gray-700/75"
-                    href="#"
+                    className="text-gray-700 transition hover:text-gray-700/75 cursor-pointer"
+                    onClick={scrollToFAQ}
                   >
-                    {" "}
-                    FAQs{" "}
+                    FAQs
                   </a>
                 </li>
 
                 <li>
                   <a
-                    className="text-gray-700 transition hover:text-gray-700/75"
-                    href="#"
+                    className="text-gray-700 transition hover:text-gray-700/75 cursor-pointer"
+                    onClick={scrollToFAQ}
                   >
                     {" "}
                     Contact{" "}
