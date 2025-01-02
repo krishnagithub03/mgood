@@ -333,7 +333,7 @@ const Testimonials = () => {
             </div> */}
           </div>
 
-          <div className="mt-6 flex items-center justify-center gap-4">
+          {/* <div className="mt-6 flex items-center justify-center gap-4">
             <button
               aria-label="Previous slide"
               id="keen-slider-previous"
@@ -355,10 +355,10 @@ const Testimonials = () => {
               </svg>
             </button>
 
-            <p className="w-16 text-center text-sm text-gray-700">
+             <p className="w-16 text-center text-sm text-gray-700">
               <span id="keen-slider-active">1</span>/
               <span id="keen-slider-count">2</span>
-            </p>
+            </p> 
 
             <button
               aria-label="Next slide"
@@ -379,8 +379,8 @@ const Testimonials = () => {
                   strokeWidth="2"
                 />
               </svg>
-            </button>
-          </div>
+            </button> 
+          </div>*/}
         </div>
       </div>
     </section>

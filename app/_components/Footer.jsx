@@ -3,8 +3,11 @@ import React from "react";
 
 const Footer = () => {
   const scrollToFAQ = () => {
-    window.location.href = "#faq-section";
+    window.location.href = "https://www.mgood.org/#faq-section";
   };
+  // const scrollToFAQ = () => {
+  //   window.location.href = "/#faq-section";
+  // };
 
   return (
     <footer className="bg-white font-display">
@@ -206,7 +209,7 @@ const Footer = () => {
                 <li>
                   <a
                     className="text-gray-700 transition hover:text-gray-700/75"
-                    href="/about-us"
+                    href="/about-us#our-team"
                   >
                     {" "}
                     Our Team{" "}
@@ -231,7 +234,7 @@ const Footer = () => {
                 <li>
                   <a
                     className="text-gray-700 transition hover:text-gray-700/75 cursor-pointer"
-                    onClick={scrollToFAQ}
+                    href="/contact"
                   >
                     {" "}
                     Contact{" "}
