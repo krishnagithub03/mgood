@@ -350,6 +350,9 @@ const PatientDetails = () => {
   const [showDialog, setShowDialog] = useState(false);
   const [timer, setTimer] = useState(30);
   const [buttonEnabled, setButtonEnabled] = useState(false);
+  const [meetingUrl, setMeetingUrl] = useState("");
+  const [prescriptionUrl, setPrescriptionUrl] = useState("");
+  // const [meetingStatus, setMeetingStatus] = useState(false);
 
   useEffect(() => {
     let interval;
@@ -446,7 +449,67 @@ const PatientDetails = () => {
     rzp1.open();
   };
 
-  const handleSubmit = (e) => {
+  const createAppointment = async () => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/third-party/create-appointment`,
+        {
+          name: "Krish",
+          age: "20",
+          appointment_for: "Doctor",
+        }
+      );
+      console.log("Appointment created:", response.data);
+      setMeetingUrl(response.data.data.meeting_url);
+      setPrescriptionUrl(response.data.data.download_prescription);
+    } catch (error) {
+      console.error("Error creating appointment:", error.message);
+    }
+  };
+
+  const handleThirdPartyJoin = async (data) => {
+    try {
+      // console.log("thirdPartFormData", thirdPartFormData);
+
+      const res = await axios
+        .post(
+          `${process.env.NEXT_PUBLIC_CUSIPCO_API_URL}/api/B2B/create-appointment`,
+          // {
+          //   name: data.name,
+          //   age: data.age?.toString(),
+          //   appointment_for: "Doctor",
+          // },
+          {
+            name: "Krish",
+            age: "20",
+            appointment_for: "Doctor",
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "API-Secret-Key": process.env.NEXT_PUBLIC_CUSIPCO_API_SECRET_KEY,
+              "API-Secret-Token":
+                process.env.NEXT_PUBLIC_CUSIPCO_API_SECRET_TOKEN,
+              "API-Environment": process.env.NEXT_PUBLIC_CUSIPCO_ENVIRONMENT,
+              "Accept-Language": "en",
+            },
+          }
+        )
+        .then((response) => {
+          console.log("response", response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      // console.log("body", body);
+      console.log("Third Party", res.data);
+      setMeetingUrl(res.data.data.meeting_url);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const parsedData = {
       ...formData,
@@ -455,14 +518,16 @@ const PatientDetails = () => {
     };
     setRoomId(parsedData.phone);
     console.log("Submitting formData: ", parsedData);
-    axios
+    await axios
       .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/patient`, {
         data: parsedData,
       })
       .then((response) => {
         console.log(response);
         toast("Form Submitted Successfully");
+        // handleThirdPartyJoin(parsedData);
         handlePayment(parsedData);
+        createAppointment();
         setFormData(initialFormData);
         setLoading(false);
       })
@@ -692,18 +757,42 @@ const PatientDetails = () => {
                   {loading ? (
                     <SyncLoader className="justify-center" />
                   ) : (
-                    <Link href={`/Room/${roomId}`}>
-                      <button
-                        className={`border-2 text-xl px-8 py-4 rounded-lg ${
-                          buttonEnabled
-                            ? "bg-primary text-white"
-                            : "bg-gray-400 cursor-not-allowed"
-                        }`}
-                        disabled={!buttonEnabled}
+                    <div>
+                      <Link
+                        // href={`/Room/${roomId}`}
+                        href={meetingUrl}
+                        target="_blank" // This opens the link in a new tab
+                        rel="noopener noreferrer"
                       >
-                        Join
-                      </button>
-                    </Link>
+                        <button
+                          className={`border-2 text-xl px-8 py-4 rounded-lg ${
+                            buttonEnabled
+                              ? "bg-primary text-white"
+                              : "bg-gray-400 cursor-not-allowed"
+                          }`}
+                          disabled={!buttonEnabled}
+                        >
+                          Join
+                        </button>
+                      </Link>
+                      <Link
+                        // href={`/Room/${roomId}`}
+                        href={prescriptionUrl}
+                        target="_blank" // This opens the link in a new tab
+                        rel="noopener noreferrer"
+                      >
+                        <button
+                          className={`border-2 text-xl px-8 py-4 rounded-lg ${
+                            buttonEnabled
+                              ? "bg-primary text-white"
+                              : "bg-gray-400 cursor-not-allowed"
+                          }`}
+                          disabled={!buttonEnabled}
+                        >
+                          Prescription
+                        </button>
+                      </Link>
+                    </div>
                   )}
                 </p>
               </DialogDescription>
