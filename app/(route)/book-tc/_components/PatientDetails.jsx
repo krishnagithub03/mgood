@@ -1,283 +1,3 @@
-// "use client";
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import Link from "next/link";
-// import {
-//   Dialog,
-//   DialogContent,
-//   DialogDescription,
-//   DialogFooter,
-//   DialogHeader,
-//   DialogTitle,
-//   DialogTrigger,
-// } from "@/components/ui/dialog";
-// import { SyncLoader } from "react-spinners";
-// import { Button } from "@/components/ui/button";
-// import { io } from "socket.io-client";
-// import { toast } from "sonner";
-
-// const socket = io("http://localhost:8000");
-
-// const PatientDetails = () => {
-//   const initialFormData = {
-//     name: "",
-//     age: "",
-//     gender: "",
-//     phone: "",
-//     specialization: "",
-//     place: "",
-//     problem: "",
-//     pastMedicalHistory: "",
-//     currentMedication: "",
-//   };
-
-//   const [formData, setFormData] = useState(initialFormData);
-//   const [loading, setLoading] = useState(true);
-//   const [roomId, setRoomId] = useState(null);
-
-//   const handleChange = (e) => {
-//     const { id, value } = e.target;
-//     setFormData((prevData) => ({
-//       ...prevData,
-//       [id]: value,
-//     }));
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     const parsedData = {
-//       ...formData,
-//       age: parseInt(formData.age, 10),
-//       phone: parseInt(formData.phone, 10),
-//     };
-//     setRoomId(parsedData.phone);
-//     console.log("Submitting formData: ", parsedData);
-//     axios
-//       // .post(
-//       //   `https://backend-production-7277.up.railway.app/api/patient`,
-//       //   parsedData
-//       // )
-//       .post("http://localhost:8000/api/patient", { data: parsedData })
-//       .then((response) => {
-//         console.log(response);
-//         socket.emit("appointment-booked", { data: parsedData });
-//         toast("Form Submitted Successfully");
-//         setFormData(initialFormData); // Reset form fields after successful submission
-//         setLoading(false);
-//         // setFile(null);
-//         // document.getElementById("uploadFile").value = "";
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//         alert("An error occurred. Please try again.");
-//       });
-//   };
-
-//   // const handleJoin = () => {};
-//   return (
-//     <section className="bg-gray-100">
-//       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-//         <h1 className="text-4xl font-bold">
-//           Fill Patient <span className="text-primary">Details</span>
-//         </h1>
-//         <div className="grid grid-cols-1 gap-x-16 gap-y-8 lg:grid-cols-5">
-//           <div className="lg:col-span-2 lg:py-12">
-//             <p className="max-w-xl text-lg">
-//               At MGood, we believe that access to quality healthcare should be
-//               seamless, efficient, and instant. Our mission is to bridge the gap
-//               between those seeking medical attention and qualified healthcare
-//               professionals, ensuring timely support and care.
-//             </p>
-//             <div className="mt-8">
-//               <a href="/" className="text-2xl font-bold text-primary">
-//                 Mgood.org
-//               </a>
-//             </div>
-//           </div>
-
-//           <div className="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12">
-//             <form className="space-y-4" onSubmit={handleSubmit}>
-//               <div className="border-2 rounded-md">
-//                 <label className="sr-only" htmlFor="name">
-//                   Name
-//                 </label>
-//                 <input
-//                   className="w-full rounded-lg border-gray-200 p-3 text-sm"
-//                   placeholder="Name"
-//                   type="text"
-//                   id="name"
-//                   value={formData.name}
-//                   onChange={handleChange}
-//                   required
-//                 />
-//               </div>
-
-//               <div className="border-2 rounded-md">
-//                 <label className="sr-only" htmlFor="age">
-//                   Age
-//                 </label>
-//                 <input
-//                   className="w-full rounded-lg border-gray-200 p-3 text-sm"
-//                   placeholder="Age"
-//                   type="number"
-//                   id="age"
-//                   value={formData.age}
-//                   onChange={handleChange}
-//                   required
-//                 />
-//               </div>
-//               <div className="border-2 rounded-md">
-//                 <label className="sr-only" htmlFor="gender">
-//                   Gender
-//                 </label>
-//                 <input
-//                   className="w-full rounded-lg border-gray-200 p-3 text-sm"
-//                   placeholder="Gender"
-//                   type="text"
-//                   id="gender"
-//                   value={formData.gender}
-//                   onChange={handleChange}
-//                   required
-//                 />
-//               </div>
-
-//               <div className="border-2 rounded-md">
-//                 <label className="sr-only" htmlFor="specialization">
-//                   Specialization
-//                 </label>
-//                 <input
-//                   className="w-full rounded-lg border-gray-200 p-3 text-sm"
-//                   placeholder="Specialization"
-//                   type="text"
-//                   id="specialization"
-//                   value={formData.specialization}
-//                   onChange={handleChange}
-//                   required
-//                 />
-//               </div>
-
-//               <div className="border-2 rounded-md">
-//                 <label className="sr-only" htmlFor="place">
-//                   Place
-//                 </label>
-//                 <input
-//                   className="w-full rounded-lg border-gray-200 p-3 text-sm"
-//                   placeholder="Place"
-//                   type="text"
-//                   id="place"
-//                   value={formData.place}
-//                   onChange={handleChange}
-//                   required
-//                 />
-//               </div>
-
-//               <div className="border-2 rounded-md">
-//                 <label className="sr-only" htmlFor="phone">
-//                   Phone Number
-//                 </label>
-//                 <input
-//                   className="w-full rounded-lg border-gray-200 p-3 text-sm"
-//                   placeholder="Phone Number"
-//                   type="number"
-//                   id="phone"
-//                   value={formData.phone}
-//                   onChange={handleChange}
-//                   required
-//                 />
-//               </div>
-
-//               <div className="border-2 rounded-md">
-//                 <label className="sr-only" htmlFor="mgoodid">
-//                   MgoodId
-//                 </label>
-//                 <input
-//                   className="w-full rounded-lg border-gray-200 p-3 text-sm"
-//                   placeholder="MgoodId"
-//                   type="text"
-//                   id="specialization"
-//                   value={formData.specialization}
-//                   onChange={handleChange}
-//                   required
-//                 />
-//               </div>
-
-//               {/* <div className="border-2 rounded-md">
-//                 <label className="sr-only" htmlFor="problem">
-//                   Describe Problem
-//                 </label>
-//                 <textarea
-//                   className="w-full rounded-lg border-gray-200 p-3 text-sm"
-//                   placeholder="Describe Problem"
-//                   id="problem"
-//                   value={formData.problem}
-//                   onChange={handleChange}
-//                   required
-//                 ></textarea>
-//               </div> */}
-//               {/* <div className="border-2 rounded-md">
-//                 <label className="sr-only" htmlFor="pastMedicalHistory">
-//                   Past Medical History
-//                 </label>
-//                 <textarea
-//                   className="w-full rounded-lg border-gray-200 p-3 text-sm"
-//                   placeholder="Past Medical History"
-//                   id="pastMedicalHistory"
-//                   value={formData.pastMedicalHistory}
-//                   onChange={handleChange}
-//                 ></textarea>
-//               </div>
-//               <div className="border-2 rounded-md">
-//                 <label className="sr-only" htmlFor="currentMedication">
-//                   Current Medication
-//                 </label>
-//                 <textarea
-//                   className="w-full rounded-lg border-gray-200 p-3 text-sm"
-//                   placeholder="Current Medication"
-//                   id="currentMedication"
-//                   value={formData.currentMedication}
-//                   onChange={handleChange}
-//                 ></textarea>
-//               </div> */}
-//               <Dialog>
-//                 <DialogTrigger>
-//                   <button
-//                     type="submit"
-//                     className="w-full rounded-lg bg-primary px-5 py-3 text-sm font-medium text-white"
-//                   >
-//                     Start Consultation
-//                   </button>
-//                 </DialogTrigger>
-//                 <DialogContent>
-//                   <DialogHeader>
-//                     <DialogTitle>Starting consultation</DialogTitle>
-//                     <DialogDescription className="p-28 text-center flex flex-col gap-10">
-//                       Please wait while we connect you with a healthcare
-//                       {loading ? (
-//                         <SyncLoader />
-//                       ) : (
-//                         <Link href={`/Room/${roomId}`}>
-//                           <button className="border-2 bg-primary text-white text-xl px-8 py-4 rounded-lg">
-//                             Join
-//                           </button>
-//                         </Link>
-//                       )}
-//                     </DialogDescription>
-//                   </DialogHeader>
-//                   <DialogFooter>
-//                     <Button>End Consultation</Button>
-//                   </DialogFooter>
-//                 </DialogContent>
-//               </Dialog>
-//             </form>
-//           </div>
-//         </div>
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default PatientDetails;
-
 "use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -292,11 +12,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { SyncLoader } from "react-spinners";
+import { PacmanLoader } from "react-spinners";
 import { Button } from "@/components/ui/button";
-import { io } from "socket.io-client";
+import io from "socket.io-client";
 import { toast } from "sonner";
-
-const socket = io(`${process.env.NEXT_PUBLIC_BACKEND_URL}`);
 
 const specialtyList = [
   "Dental",
@@ -332,6 +51,8 @@ const specialtyList = [
 const mgoodIds = ["ID001", "ID002", "ID003", "ID004"]; // Example IDs
 
 const PatientDetails = () => {
+  const socket = io(`${process.env.NEXT_PUBLIC_BACKEND_URL}`);
+
   const initialFormData = {
     name: "",
     age: "",
@@ -352,6 +73,16 @@ const PatientDetails = () => {
   const [buttonEnabled, setButtonEnabled] = useState(false);
   const [meetingUrl, setMeetingUrl] = useState("");
   const [prescriptionUrl, setPrescriptionUrl] = useState("");
+  const [updates, setUpdates] = useState([
+    {
+      triggered_action: "Pending",
+      name: "Krish",
+      custom_order_id: "123456",
+    },
+  ]);
+
+  const [getDocNumber, setDocNumber] = useState(0);
+
   // const [meetingStatus, setMeetingStatus] = useState(false);
 
   useEffect(() => {
@@ -366,6 +97,7 @@ const PatientDetails = () => {
           } else {
             clearInterval(interval);
             setButtonEnabled(true); // Enable button after 30 seconds
+            setDocNumber(1234567890);
             return 0;
           }
         });
@@ -373,6 +105,17 @@ const PatientDetails = () => {
     }
     return () => clearInterval(interval);
   }, [showDialog]);
+
+  useEffect(() => {
+    socket.on("update", (data) => {
+      console.log("Update received:", data);
+      setUpdates((prev) => [...prev, data]); // Append new updates
+    });
+
+    return () => {
+      socket.disconnect(); // Cleanup on component unmount
+    };
+  }, []);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -448,7 +191,6 @@ const PatientDetails = () => {
     const rzp1 = new window.Razorpay(options);
     rzp1.open();
   };
-
   const createAppointment = async () => {
     try {
       const response = await axios.post(
@@ -467,47 +209,47 @@ const PatientDetails = () => {
     }
   };
 
-  const handleThirdPartyJoin = async (data) => {
-    try {
-      // console.log("thirdPartFormData", thirdPartFormData);
+  // const handleThirdPartyJoin = async (data) => {
+  //   try {
+  //     // console.log("thirdPartFormData", thirdPartFormData);
 
-      const res = await axios
-        .post(
-          `${process.env.NEXT_PUBLIC_CUSIPCO_API_URL}/api/B2B/create-appointment`,
-          // {
-          //   name: data.name,
-          //   age: data.age?.toString(),
-          //   appointment_for: "Doctor",
-          // },
-          {
-            name: "Krish",
-            age: "20",
-            appointment_for: "Doctor",
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              "API-Secret-Key": process.env.NEXT_PUBLIC_CUSIPCO_API_SECRET_KEY,
-              "API-Secret-Token":
-                process.env.NEXT_PUBLIC_CUSIPCO_API_SECRET_TOKEN,
-              "API-Environment": process.env.NEXT_PUBLIC_CUSIPCO_ENVIRONMENT,
-              "Accept-Language": "en",
-            },
-          }
-        )
-        .then((response) => {
-          console.log("response", response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      // console.log("body", body);
-      console.log("Third Party", res.data);
-      setMeetingUrl(res.data.data.meeting_url);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     const res = await axios
+  //       .post(
+  //         `${process.env.NEXT_PUBLIC_CUSIPCO_API_URL}/api/B2B/create-appointment`,
+  //         {
+  //           name: data.name,
+  //           age: data.age?.toString(),
+  //           appointment_for: "Doctor",
+  //         },
+  //         // {
+  //         //   name: "Krish",
+  //         //   age: "20",
+  //         //   appointment_for: "Doctor",
+  //         // },
+  //         {
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             "API-Secret-Key": process.env.NEXT_PUBLIC_CUSIPCO_API_SECRET_KEY,
+  //             "API-Secret-Token":
+  //               process.env.NEXT_PUBLIC_CUSIPCO_API_SECRET_TOKEN,
+  //             "API-Environment": process.env.NEXT_PUBLIC_CUSIPCO_ENVIRONMENT,
+  //             "Accept-Language": "en",
+  //           },
+  //         }
+  //       )
+  //       .then((response) => {
+  //         console.log("response", response);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //     // console.log("body", body);
+  //     console.log("Third Party", res.data);
+  //     setMeetingUrl(res.data.data.meeting_url);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -744,66 +486,91 @@ const PatientDetails = () => {
         </Dialog>
       )} */}
       {showDialog && (
-        <Dialog open={showDialog} onOpenChange={setShowDialog}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Starting Consultation</DialogTitle>
-              <DialogDescription>
-                <p className="p-28 text-center flex flex-col gap-10">
-                  Please wait while we connect you with a healthcare provider.
-                  <div className="text-lg font-semibold">
-                    Time remaining: {timer} seconds
-                  </div>
-                  {loading ? (
-                    <SyncLoader className="justify-center" />
-                  ) : (
+        <div>
+          <Dialog open={showDialog} onOpenChange={setShowDialog}>
+            <DialogContent className="h-screen sm:h-fit my-10 p-4 sm:p-8 text-xs sm:text-sm md:p-8 md:text-sm">
+              <DialogHeader>
+                <DialogTitle className="text-center">
+                  Starting Consultation
+                </DialogTitle>
+                <DialogDescription>
+                  <div className="md:p-0 p-28 text-center flex flex-col gap-10 font-body md:text-sm text-xl">
                     <div>
-                      <Link
-                        // href={`/Room/${roomId}`}
-                        href={meetingUrl}
-                        target="_blank" // This opens the link in a new tab
-                        rel="noopener noreferrer"
-                      >
-                        <button
-                          className={`border-2 text-xl px-8 py-4 rounded-lg ${
-                            buttonEnabled
-                              ? "bg-primary text-white"
-                              : "bg-gray-400 cursor-not-allowed"
-                          }`}
-                          disabled={!buttonEnabled}
-                        >
-                          Join
-                        </button>
-                      </Link>
-                      <Link
-                        // href={`/Room/${roomId}`}
-                        href={prescriptionUrl}
-                        target="_blank" // This opens the link in a new tab
-                        rel="noopener noreferrer"
-                      >
-                        <button
-                          className={`border-2 text-xl px-8 py-4 rounded-lg ${
-                            buttonEnabled
-                              ? "bg-primary text-white"
-                              : "bg-gray-400 cursor-not-allowed"
-                          }`}
-                          disabled={!buttonEnabled}
-                        >
-                          Prescription
-                        </button>
-                      </Link>
+                      Please wait while we connect you with a healthcare
+                      provider.
                     </div>
-                  )}
-                </p>
-              </DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <Button onClick={() => setShowDialog(false)}>
-                End Consultation
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+                    <div className="flex justify-center">
+                      <PacmanLoader color="#1CAC78" />
+                    </div>
+                    <div className="text-lg font-semibold">
+                      Time remaining: {timer} seconds
+                    </div>
+                    {loading ? (
+                      <SyncLoader className="justify-center" />
+                    ) : (
+                      <div className="flex flex-col gap-4">
+                        <Link
+                          // href={`/Room/${roomId}`}
+                          href={meetingUrl}
+                          target="_blank" // This opens the link in a new tab
+                          rel="noopener noreferrer"
+                        >
+                          <button
+                            className={`border-2 text-xl px-8 py-4 rounded-lg ${
+                              buttonEnabled
+                                ? "bg-primary text-white"
+                                : "bg-gray-400 cursor-not-allowed"
+                            }`}
+                            disabled={!buttonEnabled}
+                          >
+                            Join
+                          </button>
+                        </Link>
+                        <p className="font-bold text-2xl">
+                          or contact Doctor on the displayed number{" "}
+                          <a
+                            href={`tel:+91${getDocNumber}`}
+                            className="text-blue-500 font-extrabold"
+                          >
+                            {getDocNumber}
+                          </a>
+                        </p>
+                        {updates[updates.length - 1].triggered_action ===
+                          "Prescription-Uploaded" && (
+                          <Link
+                            // href={`/Room/${roomId}`}
+                            href={prescriptionUrl}
+                            target="_blank" // This opens the link in a new tab
+                            rel="noopener noreferrer"
+                          >
+                            <button
+                              className={`border-2 text-xl px-8 py-4 rounded-lg ${
+                                buttonEnabled
+                                  ? "bg-primary text-white"
+                                  : "bg-gray-400 cursor-not-allowed"
+                              }`}
+                              disabled={!buttonEnabled}
+                            >
+                              Prescription
+                            </button>
+                          </Link>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                {updates[updates.length - 1].triggered_action ===
+                  "Completed" && (
+                  <Button onClick={() => setShowDialog(false)}>
+                    End Consultation
+                  </Button>
+                )}
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
       )}
     </section>
   );
