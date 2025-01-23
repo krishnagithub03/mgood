@@ -97,7 +97,7 @@ const PatientDetails = () => {
           } else {
             clearInterval(interval);
             setButtonEnabled(true); // Enable button after 30 seconds
-            setDocNumber(1234567890);
+            // setDocNumber(1234567890);
             return 0;
           }
         });
@@ -203,6 +203,7 @@ const PatientDetails = () => {
       );
       console.log("Appointment created:", response.data);
       setMeetingUrl(response.data.data.meeting_url);
+      setDocNumber(response.data.data.meeting_number);
       setPrescriptionUrl(response.data.data.download_prescription);
     } catch (error) {
       console.error("Error creating appointment:", error.message);

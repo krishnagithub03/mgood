@@ -48,7 +48,8 @@ function Header() {
           setMgoodId(res.data.mgoodId);
         })
         .catch((error) => {
-          console.error("Failed to fetch MgoodId:", error);
+          setMgoodId("Not Found");
+          // console.error("Failed to fetch MgoodId:", error);
         });
     }
   }, [user]);
