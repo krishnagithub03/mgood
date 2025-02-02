@@ -33,6 +33,11 @@ function Header() {
       name: "Teleconsultation",
       path: "/book-tc",
     },
+    {
+      id: 4,
+      name: "Prescriptions",
+      path : "/prescriptions"
+    }
   ];
   const handleMenu = () => {
     setShowMobileMenu(!showMobileMenu);

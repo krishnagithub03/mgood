@@ -1,22 +1,22 @@
-import { NextResponse } from "next/server";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+// import { NextResponse } from "next/server";
+// import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 // This function can be marked `async` if using `await` inside
 export async function middleware(request) {
   console.log("Middleware");
-  const { isAuthenticated } = getKindeServerSession();
+  // const { isAuthenticated } = getKindeServerSession();
   //   if (!(await isAuthenticated())) {
   //     // redirect("/api/auth/login");
   //     return NextResponse.redirect(
   //       new URL("/api/auth/login?post_login_redirect_url=/", request.url)
   //     );
   //   }
-  if (!(await isAuthenticated())) {
-    const requestedUrl = request.url; // Capture the URL they are trying to visit
-    const loginUrl = new URL("/api/auth/login", request.url);
-    loginUrl.searchParams.set("post_login_redirect_url", requestedUrl); // Set the intended route
+  // if (!(await isAuthenticated())) {
+  //   const requestedUrl = request.url; // Capture the URL they are trying to visit
+  //   const loginUrl = new URL("/api/auth/login", request.url);
+  //   loginUrl.searchParams.set("post_login_redirect_url", requestedUrl); // Set the intended route
 
-    return NextResponse.redirect(loginUrl); // Redirect to the login page
-  }
+  //   return NextResponse.redirect(loginUrl); // Redirect to the login page
+  // }
 
   // const { getClaim } = getKindeServerSession();
   // //   // console.log("fjnejnfje", user);
@@ -49,5 +49,8 @@ export async function middleware(request) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/details/:path*", "/addDoctor", "/book-tc"],
+  matcher: [
+  // "/details/:path*", 
+  // "/book-tc"
+],
 };

@@ -33,7 +33,7 @@ const RoomPage = ({ roomId }) => {
     );
   };
   return (
-    <div className="h-screen bg-gray-50">
+    <div className="h-screen w-screen bg-gray-50 flex justify-center my-auto object-contain">
       <div ref={myMeeting} style={{ width: "100vw", height: "100vh" }} />
     </div>
   );
