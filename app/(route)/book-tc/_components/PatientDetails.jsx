@@ -315,6 +315,18 @@ const PatientDetails = () => {
     setPaymentOptions(true); // Show payment options after form submission
   };
 
+
+  const hasPrescriptionUploaded = updates.some(
+    (update) =>
+      update.triggered_action === "Prescription-Uploaded" &&
+      update.custom_order_id === cusipcoOrderId
+  );
+
+  const hasCompleted = updates.some(
+    (update) =>
+      update.triggered_action === "Completed" &&
+      update.custom_order_id === cusipcoOrderId
+  );
   
   return (
     <section className="bg-gray-100">
@@ -586,13 +598,13 @@ const PatientDetails = () => {
                   <div className="md:p-0 p-2 text-center flex flex-col gap-10 font-body md:text-sm text-xl">
                     {timer > 0 && (
                       <>
-                    <div>
-                      Please wait while we connect you with a healthcare
-                      provider.
-                    </div>
-                      <div className="flex justify-center">
-                        <PacmanLoader color="#1CAC78" />
-                      </div>
+                        <div>
+                          Please wait while we connect you with a healthcare
+                          provider.
+                        </div>
+                        <div className="flex justify-center">
+                          <PacmanLoader color="#1CAC78" />
+                        </div>
                       </>
                     )}
                     <div className="text-lg font-semibold">
@@ -629,14 +641,7 @@ const PatientDetails = () => {
                             {getDocNumber}
                           </a>
                         </p>
-                        {((updates[updates.length - 1].triggered_action ===
-                          "Prescription-Uploaded" &&
-                          cusipcoOrderId ===
-                            updates[updates.length - 1].custom_order_id) ||
-                          (updates[updates.length - 1].triggered_action ===
-                            "Completed" &&
-                            cusipcoOrderId ===
-                              updates[updates.length - 1].custom_order_id)) && (
+                        {(hasPrescriptionUploaded || hasCompleted) && (
                           <Link
                             // href={`/Room/${roomId}`}
                             href={prescriptionUrl}
@@ -661,13 +666,11 @@ const PatientDetails = () => {
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter>
-                {updates[updates.length - 1].triggered_action === "Completed" &&
-                  cusipcoOrderId ===
-                    updates[updates.length - 1].custom_order_id && (
-                    <Button onClick={() => setShowDialog(false)}>
-                      End Consultation
-                    </Button>
-                  )}
+                {hasCompleted && (
+                  <Button onClick={() => setShowDialog(false)}>
+                    End Consultation
+                  </Button>
+                )}
               </DialogFooter>
             </DialogContent>
           </Dialog>
