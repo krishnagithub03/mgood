@@ -1,4 +1,5 @@
 import React from "react";
+
 import PatientDetails from "./_components/PatientDetails";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";

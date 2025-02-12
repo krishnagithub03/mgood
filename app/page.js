@@ -3,7 +3,6 @@ import Image from "next/image";
 import Hero from "./_components/Hero";
 import Testimonials from "./_components/Testimonials";
 import Faqs from "./_components/Faqs";
-
 export default function Home() {
   return (
     <div>
