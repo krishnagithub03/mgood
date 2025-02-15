@@ -33,7 +33,7 @@ const PlanUserForm = () => {
             "content-type": "application/json",
           },
           body: JSON.stringify({
-            amount: 1,
+            amount: 299,
           }),
         }
       );
