@@ -38,7 +38,7 @@ const Plans = () => {
                 />
               </svg>
 
-              <span className="text-gray-700"> Unlimited Consultation</span>
+              <span className="text-gray-700"> Unlimited Teleconsultation</span>
             </li>
 
             <li className="flex items-center gap-1">
