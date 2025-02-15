@@ -91,6 +91,8 @@ const PatientDetails = () => {
 
   const [getDocNumber, setDocNumber] = useState(0);
   const [cusipcoOrderId, setCusipcoOrderId] = useState("CS1735913848");
+  const [voucher, setVoucher] = useState("");
+  const [voucherLoading, setVoucherLoading] = useState(false);
 
   useEffect( () =>  {
     let interval;
@@ -315,6 +317,47 @@ const PatientDetails = () => {
     setPaymentOptions(true); // Show payment options after form submission
   };
 
+   const handleRedeem = async () => {
+     setVoucherLoading(true);
+     await axios.post(
+         `${process.env.NEXT_PUBLIC_BACKEND_URL}/planUsers/teleconsult`,
+         {
+           userId: voucher,
+         }
+       ).then((response) => {
+         setVoucherLoading(false);
+         socket.emit("appointment-booked", { data: formData });
+         setPaymentOptions(false);
+         setShowDialog(true);
+         setMeetingUrl(`https://mgood.org/Room/${roomId}`);
+       }).catch ((error) =>{
+       alert("Something went wrong. Please try again.");
+      });
+
+
+     const parsedData = {
+       ...formData,
+       age: parseInt(formData.age, 10),
+       phone: parseInt(formData.phone, 10),
+     };
+     setRoomId(parsedData.phone);
+     console.log("Submitting formData: ", parsedData);
+
+     await axios
+       .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/patient`, {
+         data: parsedData,
+       })
+       .then((response) => {
+         console.log(response);
+         toast("Form Submitted Successfully");
+         setFormData(initialFormData);
+         setLoading(false);
+       })
+       .catch((error) => {
+         console.log(error);
+         alert("An error occurred. Please try again.");
+       });
+   };
 
   const hasPrescriptionUploaded = updates.some(
     (update) =>
@@ -508,6 +551,16 @@ const PatientDetails = () => {
                         />
                         Pay with Other Options
                       </label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="payment"
+                          value="voucher"
+                          checked={selectedOption === "voucher"}
+                          onChange={() => setSelectedOption("voucher")}
+                        />
+                        Redeem Voucher
+                      </label>
                     </div>
 
                     {/* Content Based on Selected Option */}
@@ -517,7 +570,7 @@ const PatientDetails = () => {
                         onSubmit={handleQrSubmit}
                       >
                         <img
-                          src="/mgood-qr.jpg"
+                          src="/pro_plan_qr.jpg"
                           alt="QR Code"
                           className="w-32 h-32 m-auto"
                         />
@@ -576,6 +629,25 @@ const PatientDetails = () => {
                           className="border-2 bg-primary text-white text-xl p-2 rounded-lg hover:bg-green-400"
                         >
                           Go To Razorpay
+                        </button>
+                      </div>
+                    )}
+                    {selectedOption === "voucher" && (
+                      <div className="flex flex-col gap-3 justify-center">
+                        <input
+                          type="text"
+                          placeholder="Enter voucher"
+                          value={voucher}
+                          onChange={(e) => setVoucher(e.target.value)}
+                          className="p-2 border rounded-lg"
+                        />
+                        <button
+                          type="button"
+                          onClick={handleRedeem}
+                          className="border-2 bg-primary text-white text-xl p-2 rounded-lg hover:bg-green-400"
+                          disabled={voucherLoading}
+                        >
+                          {voucherLoading ? "Checking" : "Redeem"}
                         </button>
                       </div>
                     )}
