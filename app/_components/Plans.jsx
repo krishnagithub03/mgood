@@ -57,7 +57,7 @@ const Plans = () => {
                 />
               </svg>
 
-              <span className="text-gray-700"> Discounted Treatment in Networked Hospitals/clinitcs </span>
+              <span className="text-gray-700"> Discounted Treatment in Networ Hospitals/clinics </span>
             </li>
 
             <li className="flex items-center gap-1">
@@ -76,7 +76,7 @@ const Plans = () => {
                 />
               </svg>
 
-              <span className="text-gray-700"> Unlimited Acess to Healthcare Conclave and Q&A Sessions </span>
+              <span className="text-gray-700"> Unlimited Access to Healthcare Conclave and Q&A Sessions </span>
             </li>
 
             <li className="flex items-center gap-1">
