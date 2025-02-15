@@ -72,7 +72,7 @@ const PatientDetails = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [loading, setLoading] = useState(true);
   const [roomId, setRoomId] = useState(null);
-  const [amount, setamount] = useState(1);
+  const [amount, setamount] = useState(169);
   const [paymentStatus, setPaymentStatus] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
   const [timer, setTimer] = useState(30);
@@ -80,7 +80,7 @@ const PatientDetails = () => {
   const [meetingUrl, setMeetingUrl] = useState("");
   const [prescriptionUrl, setPrescriptionUrl] = useState("");
   const [paymentOptions, setPaymentOptions] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("qr");
+  const [selectedOption, setSelectedOption] = useState("other");
   const [updates, setUpdates] = useState([
     {
       triggered_action: "Pending",
@@ -535,21 +535,21 @@ const PatientDetails = () => {
                         <input
                           type="radio"
                           name="payment"
-                          value="qr"
-                          checked={selectedOption === "qr"}
-                          onChange={() => setSelectedOption("qr")}
-                        />
-                        Pay with QR
-                      </label>
-                      <label className="flex items-center gap-2 cursor-pointer">
-                        <input
-                          type="radio"
-                          name="payment"
                           value="other"
                           checked={selectedOption === "other"}
                           onChange={() => setSelectedOption("other")}
                         />
                         Pay with Other Options
+                      </label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="payment"
+                          value="qr"
+                          checked={selectedOption === "qr"}
+                          onChange={() => setSelectedOption("qr")}
+                        />
+                        Pay with QR
                       </label>
                       <label className="flex items-center gap-2 cursor-pointer">
                         <input
