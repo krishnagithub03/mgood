@@ -57,7 +57,7 @@ const Plans = () => {
                 />
               </svg>
 
-              <span className="text-gray-700"> Discounted Treatment in Networ Hospitals/clinics </span>
+              <span className="text-gray-700"> Discounted Treatment in Network Hospitals/clinics </span>
             </li>
 
             <li className="flex items-center gap-1">
