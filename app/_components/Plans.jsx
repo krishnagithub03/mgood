@@ -57,7 +57,10 @@ const Plans = () => {
                 />
               </svg>
 
-              <span className="text-gray-700"> Discounted Treatment in Network Hospitals/clinics </span>
+              <span className="text-gray-700">
+                {" "}
+                Discounted Treatment in Network Hospitals/clinics{" "}
+              </span>
             </li>
 
             <li className="flex items-center gap-1">
@@ -76,7 +79,10 @@ const Plans = () => {
                 />
               </svg>
 
-              <span className="text-gray-700"> Unlimited Access to Healthcare Conclave and Q&A Sessions </span>
+              <span className="text-gray-700">
+                {" "}
+                Unlimited Access to Healthcare Conclave and Q&A Sessions{" "}
+              </span>
             </li>
 
             <li className="flex items-center gap-1">
@@ -95,9 +101,11 @@ const Plans = () => {
                 />
               </svg>
 
-              <span className="text-gray-700"> Assistance to Family and Support </span>
+              <span className="text-gray-700">
+                {" "}
+                Assistance to Family and Support{" "}
+              </span>
             </li>
-
           </ul>
 
           <a
@@ -201,7 +209,10 @@ const Plans = () => {
 
               <span className="text-gray-700"> Help center access </span>
             </li> */}
-            <p className='text-gray-700 text-xl text-center'>Create you own personalized plan by mailing us you requirements on info@mgood.org</p>
+            <p className="text-gray-700 text-xl text-center">
+              Create your personalized plan by emailing your requirements to
+              info@mgood.org
+            </p>
           </ul>
 
           <a
