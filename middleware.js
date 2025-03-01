@@ -5,7 +5,7 @@ const SECRET_KEY = new TextEncoder().encode(
   process.env.JWT_SECRET ?? "default_secret"
 );
 
-export async function middleware(req) {
+async function middleware(req) {
   console.log("Middleware Triggered");
 
   // Retrieve token safely
@@ -32,5 +32,7 @@ export async function middleware(req) {
 // Middleware applies to specific paths
 export const config = {
   matcher: ["/book-tc", "/details/:path*", "/prescriptions", "/planUsers"],
-  runtime: "nodejs",
 };
+
+
+export default middleware;
