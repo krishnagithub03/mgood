@@ -2,21 +2,22 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import {
-  LoginLink,
-  LogoutLink,
-  useKindeBrowserClient,
-} from "@kinde-oss/kinde-auth-nextjs";
+
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {Button} from "@/components/ui/button";
 import axios from "axios";
+import Cookies from "js-cookie";
+import {toast} from "sonner";
 
 function Header() {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [mgoodId, setMgoodId] = useState("");
+  const [user, setUser] = useState(null); // Store user from cookies
+
   const navLinks = [
     {
       id: 1,
@@ -42,22 +43,27 @@ function Header() {
   const handleMenu = () => {
     setShowMobileMenu(!showMobileMenu);
   };
-  const { user } = useKindeBrowserClient();
+
   useEffect(() => {
-    if (user?.email) {
-      axios
-        .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/getMgoodId`, {
-          email: user.email,
-        })
-        .then((res) => {
-          setMgoodId(res.data.mgoodId);
-        })
-        .catch((error) => {
-          setMgoodId("Not Found");
-          // console.error("Failed to fetch MgoodId:", error);
-        });
+    // Retrieve user details from cookies
+    const storedUser = Cookies.get("user"); // Assuming you stored the user as a JSON string
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
     }
-  }, [user]);
+  }, []);
+
+  const handleLogout = () => {
+    try{
+      Cookies.remove("accessToken");
+      Cookies.remove("user");
+      setUser(null);
+      toast.success("Logged out successfully");
+      window.location.href = "/";
+    } catch(error){
+      console.error("Error logging out:", error);
+    }
+  }
+
   return (
     <nav className="p-3 flex justify-between bg-white items-center shadow-sm text-black">
       <a href="/" className="flex items-center gap-2">
@@ -102,7 +108,7 @@ function Header() {
                   user?.picture ==
                   "https://gravatar.com/avatar/8f09e2c347dc3a23653c40425f4b41d7fe947e270661cf900899a7499884995f?d=blank&size=200"
                     ? "/profile.jpg"
-                    : user?.picture
+                    : "/profile.jpg"
                 }
                 alt="profile-pic"
                 className="rounded-full border-2"
@@ -111,7 +117,7 @@ function Header() {
             <PopoverContent className="w-44">
               <ul className="flex flex-col font-display">
                 <li className="cursor-pointer hover:bg-slate-300 p-2 rounded-md">
-                  My Profile
+                  Hey, {user}
                 </li>
                 <li className="cursor-pointer hover:bg-slate-300 p-2 rounded-md">
                   Appointments
@@ -120,7 +126,7 @@ function Header() {
                   MgoodId : {mgoodId}
                 </li>
                 <li className="cursor-pointer hover:bg-slate-300 p-2 rounded-md">
-                  <LogoutLink>Log Out</LogoutLink>
+                  <Button onClick={handleLogout}>Log Out</Button>
                 </li>
               </ul>
             </PopoverContent>

@@ -13,7 +13,6 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Calendar1, CalendarDays, Clock } from "lucide-react";
 import { Slot } from "@radix-ui/react-slot";
-import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { toast } from "sonner";
 import axios from "axios";
 
@@ -21,7 +20,6 @@ const BookAppointment = ({ doctor }) => {
   const [date, setDate] = useState(new Date());
   const [timeSlot, setTimeSlot] = useState([]);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
-  const { user } = useKindeBrowserClient();
 
   useEffect(() => {
     getTime();

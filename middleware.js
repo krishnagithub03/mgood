@@ -1,56 +1,39 @@
-// import { NextResponse } from "next/server";
-// import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-// This function can be marked `async` if using `await` inside
-export async function middleware(request) {
-  console.log("Middleware");
-  // const { isAuthenticated } = getKindeServerSession();
-  //   if (!(await isAuthenticated())) {
-  //     // redirect("/api/auth/login");
-  //     return NextResponse.redirect(
-  //       new URL("/api/auth/login?post_login_redirect_url=/", request.url)
-  //     );
-  //   }
-  // if (!(await isAuthenticated())) {
-  //   const requestedUrl = request.url; // Capture the URL they are trying to visit
-  //   const loginUrl = new URL("/api/auth/login", request.url);
-  //   loginUrl.searchParams.set("post_login_redirect_url", requestedUrl); // Set the intended route
+import { NextResponse } from "next/server";
+import { jwtVerify } from "jose";
 
-  //   return NextResponse.redirect(loginUrl); // Redirect to the login page
-  // }
+const SECRET_KEY = new TextEncoder().encode(
+  process.env.JWT_SECRET ?? "default_secret"
+);
 
-  // const { getClaim } = getKindeServerSession();
-  // //   // console.log("fjnejnfje", user);
-  // const result = await getClaim("roles"); // Assuming role is available in the session
-  // console.log("Role: ", result);
-  // //   // If user is basic, check if they are trying to access /details
-  //   if (result?.value.some((role) => role === "basic-user")) {
-  //     if (request.nextUrl.pathname === "/details") {
-  //       // Allow access to /details
-  //       return NextResponse.next();
-  //     } else {
-  //       // Redirect basic user to home page if they try to access any other route
-  //       return NextResponse.redirect(new URL("/", request.url));
-  //     }
-  //   }
+export async function middleware(req) {
+  console.log("Middleware Triggered");
 
-  //   // If user is a partner, redirect them to /book-tc
-  //   if (result?.value.some((role) => role === "mgood-partner")) {
-  //     if (request.nextUrl.pathname !== "/book-tc") {
-  //       // Redirect partner to /book-tc if they are trying to access any other route
-  //       return NextResponse.redirect(new URL("/book-tc", request.url));
-  //     }
-  //     // Allow access to /book-tc
-  //     return NextResponse.next();
-  //   }
+  // Retrieve token safely
+  const token = req.cookies.get("accessToken")?.value;
+  console.log("Token:", token || "No token found");
 
-  //   // Default behavior: allow access if role is not basic or partner (or no role at all)
-  // return NextResponse.next();
+  // Redirect if no token is present
+  if (!token) {
+    console.log("Redirecting: No token found");
+    return NextResponse.redirect(new URL("/Auth", req.url), 307);
+  }
+
+  try {
+    // Verify JWT token
+    await jwtVerify(token, SECRET_KEY, { algorithms: ["HS256"] });
+    console.log("Token verified successfully!");
+    return NextResponse.next();
+  } catch (error) {
+    console.error("Token verification failed:", error.message);
+    return NextResponse.redirect(new URL("/Auth", req.url), 307);
+  }
 }
 
-// See "Matching Paths" below to learn more
+// Middleware applies to specific paths
 export const config = {
   matcher: [
-  // "/details/:path*", 
-  // "/book-tc"
-],
+    "/book-tc", 
+    "/details/:path*", 
+    "/prescriptions", 
+    "/planUsers"],
 };
