@@ -8,6 +8,7 @@ const Prescription = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null); // Store user from cookies
+  const [accessRole, setAccessRole] = useState(null);
 
   useEffect(() => {
     // Retrieve user details from cookies
@@ -25,7 +26,7 @@ const Prescription = () => {
           { phoneNumber: String(user) }
         );
         setAccessRole(response.data.role);
-        console.log(response);
+        // console.log(response);
       } catch (error) {
         setAccessRole("user");
         console.error(
@@ -116,6 +117,10 @@ const Prescription = () => {
         </div>
       </div>
     );
+  }
+
+   if (accessRole != "Partner") {
+    return <>Access Denied</>;
   }
 
   return (

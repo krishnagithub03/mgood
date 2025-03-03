@@ -83,9 +83,6 @@ const BookAppointment = ({ doctor }) => {
         }
       });
   };
-  if (!user) {
-    return <div>Please Login to Book Appointment</div>;
-  }
   return (
     <Dialog>
       <DialogTrigger>

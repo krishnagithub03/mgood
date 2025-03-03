@@ -116,7 +116,7 @@ const PatientDetails = (phoneNumber) => {
           { phoneNumber: String(user) }
         );
         setAccessRole(response.data.role);
-        console.log(response);
+        // console.log(response);
       } catch (error) {
         setAccessRole("user");
         console.error(
