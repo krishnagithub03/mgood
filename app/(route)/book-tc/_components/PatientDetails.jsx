@@ -337,8 +337,8 @@ const PatientDetails = (phoneNumber) => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            name: data.data.name,
-            age: data.data.age?.toString(),
+            name: data.data.name || "Mgood User",
+            age: data.data.age?.toString() || "25",
             appointment_for: "Doctor",
           }),
         }
