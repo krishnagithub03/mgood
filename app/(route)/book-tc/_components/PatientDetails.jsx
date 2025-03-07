@@ -336,10 +336,21 @@ const PatientDetails = (phoneNumber) => {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          // body: JSON.stringify({
+          //   name: data.data.name || "Mgood User",
+          //   age: data.data.age?.toString() || "25",
+          //   appointment_for: "Doctor",
+          // }),
           body: JSON.stringify({
-            name: data.data.name || "Mgood User",
-            age: data.data.age?.toString() || "25",
-            appointment_for: "Doctor",
+          name:
+          //  data.data.name?.trim() 
+          // || 
+          "User",
+          age: 
+          // data.data.age?.toString().trim() 
+          // || 
+          "25",
+          appointment_for: "Doctor",
           }),
         }
       );
