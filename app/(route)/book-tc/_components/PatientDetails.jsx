@@ -72,7 +72,7 @@ const PatientDetails = (phoneNumber) => {
 
   const [qrFormData, setQrFormData] = useState(initialQrFormData);
   const [formData, setFormData] = useState(initialFormData);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [roomId, setRoomId] = useState(null);
   const [amount, setamount] = useState(169);
   const [paymentStatus, setPaymentStatus] = useState(false);
@@ -100,38 +100,38 @@ const PatientDetails = (phoneNumber) => {
 
   const intervalRef = useRef(null);
 
-  useEffect(() => {
-    // Retrieve user details from cookies
-    const storedUser = Cookies.get("user"); // Assuming you stored the user as a JSON string
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
+  // useEffect(() => {
+  //   // Retrieve user details from cookies
+  //   const storedUser = Cookies.get("user"); // Assuming you stored the user as a JSON string
+  //   if (storedUser) {
+  //     setUser(JSON.parse(storedUser));
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    const fetchAccessRole = async () => {
-      try {
-        const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/getAccessRole`,
-          { phoneNumber: String(user) }
-        );
-        setAccessRole(response.data.role);
-        // console.log(response);
-      } catch (error) {
-        setAccessRole("user");
-        console.error(
-          "Error fetching accessRole:",
-          error.response?.data?.message || error.message
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchAccessRole = async () => {
+  //     try {
+  //       const response = await axios.post(
+  //         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/getAccessRole`,
+  //         { phoneNumber: String(user) }
+  //       );
+  //       setAccessRole(response.data.role);
+  //       // console.log(response);
+  //     } catch (error) {
+  //       setAccessRole("user");
+  //       console.error(
+  //         "Error fetching accessRole:",
+  //         error.response?.data?.message || error.message
+  //       );
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    if (user) {
-      fetchAccessRole();
-    }
-  }, [user]);
+  //   if (user) {
+  //     fetchAccessRole();
+  //   }
+  // }, [user]);
 
   // Check URL for userId on mount
   useEffect(() => {
@@ -490,9 +490,9 @@ const PatientDetails = (phoneNumber) => {
   }
 
 
-  if (accessRole != "Partner") {
-    return <>Access Denied</>;
-  }
+  // if (accessRole != "Partner") {
+  //   return <>Access Denied</>;
+  // }
   return (
     <section className="bg-gray-100">
       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
