@@ -26,6 +26,7 @@
     "date-fns": "^3.6.0",
     "formidable-serverless": "^1.1.1",
     "framer-motion": "^12.4.7",
+    "googleapis": "^146.0.0",
     "html2canvas": "^1.4.1",
     "html2pdf.js": "^0.10.2",
     "input-otp": "^1.4.2",
