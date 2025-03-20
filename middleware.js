@@ -86,13 +86,13 @@ import { NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 
 // More robust secret key handling
-// function getSecretKey() {
-//   const secret = process.env.JWT_SECRET;
-//   if (!secret || secret === "default_secret") {
-//     console.warn("Warning: Using default JWT secret. Set JWT_SECRET environment variable in production.");
-//   }
-//   return new TextEncoder().encode(secret || "default_secret");
-// }
+function getSecretKey() {
+  const secret = process.env.JWT_SECRET;
+  if (!secret || secret === "default_secret") {
+    console.warn("Warning: Using default JWT secret. Set JWT_SECRET environment variable in production.");
+  }
+  return new TextEncoder().encode(secret || "default_secret");
+}
 
 export async function middleware(req) {
   // try {
@@ -100,47 +100,44 @@ export async function middleware(req) {
     console.log("Middleware Triggered");
     
     // Get the token
-  //   const token = req.cookies.get("accessToken")?.value;
+    const token = req.cookies.get("accessToken")?.value;
     
   //   // If no token, redirect to Auth page
-  //   if (!token) {
-  //     // Save current path in a cookie for redirection after login
-  //     const response = NextResponse.redirect(new URL("/Auth", req.url));
-  //     response.cookies.set("returnUrl", req.nextUrl.pathname, {
-  //       path: "/",
-  //       httpOnly: true,
-  //       maxAge: 900, // 15 minutes
-  //     });
-  //     return response;
-  //   }
+    if (!token) {
+      // Save current path in a cookie for redirection after login
+      const response = NextResponse.redirect(new URL("/Auth", req.url));
+      response.cookies.set("returnUrl", req.nextUrl.pathname, {
+        path: "/",
+        httpOnly: true,
+        maxAge: 900, // 15 minutes
+      });
+      return response;
+    }
     
-  //   try {
-  //     // Verify token with proper error handling
-  //     const SECRET_KEY = getSecretKey();
-  //     await jwtVerify(token, SECRET_KEY, { algorithms: ["HS256"] });
-  //     return NextResponse.next();
-  //   } catch (tokenError) {
-  //     console.error("Token verification failed:", tokenError.message);
+    try {
+      // Verify token with proper error handling
+      const SECRET_KEY = getSecretKey();
+      await jwtVerify(token, SECRET_KEY, { algorithms: ["HS256"] });
+      return NextResponse.next();
+    } catch (tokenError) {
+      console.error("Token verification failed:", tokenError.message);
       
-  //     // Invalid token - redirect to Auth
-  //     const response = NextResponse.redirect(new URL("/Auth", req.url));
-  //     response.cookies.set("returnUrl", req.nextUrl.pathname, {
-  //       path: "/",
-  //       httpOnly: true,
-  //       maxAge: 900, // 15 minutes
-  //     });
-  //     return response;
-  //   }
-  // } catch (error) {
-  //   // Global error handler to prevent 500 errors
-  //   console.error("Critical middleware error:", error);
+      // Invalid token - redirect to Auth
+      const response = NextResponse.redirect(new URL("/Auth", req.url));
+      response.cookies.set("returnUrl", req.nextUrl.pathname, {
+        path: "/",
+        httpOnly: true,
+        maxAge: 900, // 15 minutes
+      });
+      return response;
+    }
     
-  //   // In case of critical error, let the request proceed 
-  //   // rather than showing a 500 error
-  //   // Alternative: redirect to an error page
-  //   return NextResponse.next();
+    // In case of critical error, let the request proceed 
+    // rather than showing a 500 error
+    // Alternative: redirect to an error page
+    return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/book-tc", "/details/:path*", "/prescriptions", "/planUsers"],
+  matcher: ["/book-tc", "/details/:path*", "/prescriptions", "/planUsers", "/MHL"],
 };

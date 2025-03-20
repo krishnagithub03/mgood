@@ -5,6 +5,7 @@ import Footer from "./_components/Footer";
 import { Toaster } from "sonner";
 import Script from "next/script";
 import LiveUserCounter from "./_components/LiveCounter";
+import Event from "./_components/Event";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -39,6 +40,7 @@ export default function RootLayout({ children }) {
         <div>
           <Header />
           <LiveUserCounter />
+          <Event />
           {children}
           <Toaster />
         </div>

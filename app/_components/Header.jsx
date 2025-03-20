@@ -38,11 +38,6 @@ function Header() {
       id: 4,
       name: "Prescriptions",
       path : "/prescriptions"
-    },
-    {
-      id: 5,
-      name: "MHL(NEW)",
-      path: "/MHL"
     }
   ];
   const handleMenu = () => {
@@ -61,6 +56,7 @@ function Header() {
     try{
       Cookies.remove("accessToken");
       Cookies.remove("user");
+      Cookies.remove("returnUrl")
       setUser(null);
       toast.success("Logged out successfully");
       window.location.href = "/";
