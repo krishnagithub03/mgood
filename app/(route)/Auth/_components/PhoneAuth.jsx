@@ -3,11 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Phone, Shield, ArrowRight, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { AlertCircle } from "lucide-react";
-import { useRouter } from 'next/navigation';
 
 export default function OTPVerification() {
-  const router = useRouter();
-  const [returnUrl, setReturnUrl] = useState('/');
   const [step, setStep] = useState("phone");
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const [loading, setLoading] = useState(false);
@@ -173,22 +170,6 @@ export default function OTPVerification() {
         }
       };
     }, []);
-
-  useEffect(() => {
-    if (router.isReady) {
-      setReturnUrl(router.query.returnUrl ? decodeURIComponent(router.query.returnUrl) : '/');
-    }
-  }, [router.isReady, router.query]);
-
-  async function handleSuccessfulLogin(token) {
-    // Set the auth token
-    document.cookie = `accessToken=${token}; path=/; max-age=3600; sameSite=lax; ${
-      process.env.NODE_ENV === 'production' ? 'secure;' : ''
-    }`;
-    
-    // Redirect to the originally requested page
-    router.push(returnUrl);
-  }
 
   return (
     <div className="max-h-screen flex bg-gradient-to-r from-primary via-green-300 to-blue-200">
