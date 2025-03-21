@@ -118,6 +118,11 @@
 
 
 
+// 
+
+
+
+// app/api/submit-to-sheets/route.js
 import { google } from 'googleapis';
 import { NextResponse } from 'next/server';
 
@@ -178,13 +183,23 @@ export async function POST(request) {
       throw new Error('Google Sheet ID is missing in environment variables');
     }
     
-    // Format the data for the Sheets API
+    // Format the data for the Sheets API, including the match data
     const values = [
       [
         body.name,
         body.phoneNumber,
         body.numberOfSixes,
-        new Date(body.submissionDate).toLocaleString()
+        new Date(body.submissionDate).toLocaleString('en-IN', {
+          timeZone: 'Asia/Kolkata', // Indian Standard Time
+          year: 'numeric',
+          month: 'numeric',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        }),
+        body.matchName || 'No Match', // Add match name
+       
       ]
     ];
     
@@ -192,10 +207,10 @@ export async function POST(request) {
       // Get the cached sheets client or create a new one
       const sheets = await getSheetClient();
       
-      // Append data to the sheet
+      // Append data to the sheet (updated range to include match columns)
       const response = await sheets.spreadsheets.values.append({
         spreadsheetId,
-        range: 'Sheet1!A:D',
+        range: 'Sheet1!A:F', // Updated range to include match data columns
         valueInputOption: 'USER_ENTERED',
         insertDataOption: 'INSERT_ROWS',
         resource: {
@@ -215,7 +230,7 @@ export async function POST(request) {
       console.error('Google Sheets API Error:', googleError);
       
       if (googleError.message?.includes('invalid_grant')) {
-        // If auth token expired, clear cache and try again (optional)
+        // If auth token expired, clear cache and try again
         authClient = null;
         sheetsClient = null;
         
