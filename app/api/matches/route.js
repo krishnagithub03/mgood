@@ -7,7 +7,7 @@ export async function GET() {
     // Replace with your actual backend URL
     const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';
     
-    const response = await fetch(`${backendUrl}/api/matches/latest`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/mhl/get`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
