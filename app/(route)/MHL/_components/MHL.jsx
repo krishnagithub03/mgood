@@ -479,14 +479,14 @@ const MhlForm = () => {
   }, []);
 
 
-  useEffect(() => {
-    const alreadySubmitted = document.cookie
-      .split('; ')
-      .find(row => row.startsWith('alreadySubmitted='));
-    if (alreadySubmitted && alreadySubmitted.split('=')[1] === 'true') {
-      setSubmitted(true);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const alreadySubmitted = document.cookie
+  //     .split('; ')
+  //     .find(row => row.startsWith('alreadySubmitted='));
+  //   if (alreadySubmitted && alreadySubmitted.split('=')[1] === 'true') {
+  //     setSubmitted(true);
+  //   }
+  // }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -541,7 +541,7 @@ const MhlForm = () => {
       }
 
       setSubmitted(true);
-      document.cookie = `alreadySubmitted=true; max-age=${12 * 60 * 60}; path=/`;
+      // document.cookie = `alreadySubmitted=true; max-age=${12 * 60 * 60}; path=/`;
       // setAlredaySubmitted(true);
     } catch (err) {
       console.error('Error in form submission:', err);
