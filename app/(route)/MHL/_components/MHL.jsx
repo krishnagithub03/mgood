@@ -479,14 +479,6 @@ const MhlForm = () => {
   }, []);
 
 
-  // useEffect(() => {
-  //   const alreadySubmitted = document.cookie
-  //     .split('; ')
-  //     .find(row => row.startsWith('alreadySubmitted='));
-  //   if (alreadySubmitted && alreadySubmitted.split('=')[1] === 'true') {
-  //     setSubmitted(true);
-  //   }
-  // }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -515,42 +507,85 @@ const MhlForm = () => {
     return regex.test(phoneNumber);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setIsSubmitting(true);
+  function setCookieForNoonIST(count = 1) {
+  const now = new Date();
+  const noonIST = new Date();
 
-    try {
-      if (!formData.name.trim()) throw new Error('Please enter your name');
-      if (!validatePhoneNumber(formData.phoneNumber)) throw new Error('Please enter a valid 10-digit phone number');
-      if (!formData.selectedMatch.trim()) throw new Error('Please select a match');
+  // Set time to today's 12:00 Noon IST (UTC+5:30)
+  noonIST.setUTCHours(6, 30, 0, 0);
 
-      const dataToSend = { ...formData, submissionDate: new Date().toISOString() };
+  // If the current time is past today's noon, set it for tomorrow's noon
+  if (now >= noonIST) {
+    noonIST.setUTCDate(noonIST.getUTCDate() + 1);
+  }
 
-      setLoading(true);
-      const response = await fetch('/api/submit-to-sheets', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dataToSend),
-      });
+  // Set cookie with updated count and correct expiration
+  document.cookie = `alreadySubmitted=${count}; expires=${noonIST.toUTCString()}; path=/`;
+}
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error('Submission error:', errorData);
-        throw new Error(errorData.message || 'Failed to submit data');
-      }
+// Read cookie helper function
+function getCookie(name) {
+  const value = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith(`${name}=`));
+  return value ? value.split("=")[1] : null;
+}
 
-      setSubmitted(true);
-      // document.cookie = `alreadySubmitted=true; max-age=${12 * 60 * 60}; path=/`;
-      // setAlredaySubmitted(true);
-    } catch (err) {
-      console.error('Error in form submission:', err);
-      setError(err.message || 'An error occurred during submission');
-    } finally {
-      setIsSubmitting(false);
-      setLoading(false);
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError("");
+  setIsSubmitting(true);
+
+  try {
+    const submissionCount = getCookie("alreadySubmitted") || 0;
+
+    if (parseInt(submissionCount) >= 2) {
+      throw new Error("You have reached the maximum of 2 submissions for today.");
     }
-  };
+
+    if (!formData.name.trim()) throw new Error("Please enter your name");
+    if (!validatePhoneNumber(formData.phoneNumber))
+      throw new Error("Please enter a valid 10-digit phone number");
+    if (!formData.selectedMatch.trim()) throw new Error("Please select a match");
+
+    const dataToSend = { ...formData, submissionDate: new Date().toISOString() };
+
+    setLoading(true);
+    const response = await fetch("/api/submit-to-sheets", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(dataToSend),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Submission error:", errorData);
+      throw new Error(errorData.message || "Failed to submit data");
+    }
+
+    // Increment cookie count and set expiration for noon IST
+    const newCount = parseInt(submissionCount) + 1;
+    setCookieForNoonIST(newCount);
+
+    if (newCount >= 2) setSubmitted(true);
+
+  } catch (err) {
+    console.error("Error in form submission:", err);
+    setError(err.message || "An error occurred during submission");
+  } finally {
+    setIsSubmitting(false);
+    setLoading(false);
+  }
+};
+
+useEffect(() => {
+  const submissionCount = getCookie("alreadySubmitted");
+  if (submissionCount && parseInt(submissionCount) >= 2) {
+    setSubmitted(true);
+  }
+}, []);
+
 
   if (loading) {
     return (
@@ -563,6 +598,7 @@ const MhlForm = () => {
   return (
     <div className="max-w-xl mx-auto p-10 bg-white rounded-lg shadow-xl mt-20 mb-20">
       <h1 className="text-2xl font-bold mb-6 text-center text-primary">MGOOD HEALTH LEAGUE</h1>
+      <p className='italic mb-6'>Disclaimer: Each user is allowed a maximum of 2 submissions per day. Further attempts will not be accepted.</p>
       {matchLoading ? (
         <div className="text-center">Loading matches...</div>
       ) : matchError ? (
