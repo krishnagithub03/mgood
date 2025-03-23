@@ -631,7 +631,7 @@ useEffect(() => {
           </div>
           <div className="mb-6">
             <label htmlFor="numberOfSixes" className="block mb-2 font-medium">Number of Sixes: {formData.numberOfSixes}</label>
-            <input type="range" id="numberOfSixes" name="numberOfSixes" min="0" max="20" step="1" value={formData.numberOfSixes} onChange={handleSliderChange} className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" />
+            <input type="range" id="numberOfSixes" name="numberOfSixes" min="0" max="50" step="1" value={formData.numberOfSixes} onChange={handleSliderChange} className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" />
           </div>
           <button type="submit" disabled={isSubmitting} className={`w-full ${isSubmitting ? 'bg-blue-300 cursor-not-allowed' : 'bg-primary hover:bg-blue-600'} text-white py-2 px-4 rounded transition duration-200`}>{isSubmitting ?  'Submitting...' : 'Submit'}</button>
         </form>
