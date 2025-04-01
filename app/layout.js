@@ -33,6 +33,18 @@ export default function RootLayout({ children }) {
         />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<Script async src="https://www.googletagmanager.com/gtag/js?id=G-DG2GY331WV"></Script>
+<Script>
+  {
+    `
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DG2GY331WV');
+  `
+}
+</Script>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
