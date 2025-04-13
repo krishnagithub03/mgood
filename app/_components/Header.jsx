@@ -38,6 +38,11 @@ function Header() {
       id: 4,
       name: "Prescriptions",
       path : "/prescriptions"
+    },
+    {
+      id: 5,
+      name: "Blood Donation",
+      path : "/blood"
     }
   ];
   const handleMenu = () => {
