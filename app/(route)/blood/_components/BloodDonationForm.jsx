@@ -42,20 +42,14 @@ const BloodDonationForm = () => {
     return regex.test(mobileNumber);
   };
 
-  function setCookieForNoonIST(count = 1) {
-    const now = new Date();
-    const noonIST = new Date();
-
-    // Set time to today's 12:00 Noon IST (UTC+5:30)
-    noonIST.setUTCHours(6, 30, 0, 0);
-
-    // If the current time is past today's noon, set it for tomorrow's noon
-    if (now >= noonIST) {
-      noonIST.setUTCDate(noonIST.getUTCDate() + 1);
-    }
-
-    // Set cookie with updated count and correct expiration
-    document.cookie = `alreadySubmitted=${count}; expires=${noonIST.toUTCString()}; path=/`;
+  // Set permanent cookie that doesn't expire
+  function setPermanentCookie() {
+    // Set expiration date far in the future (10 years)
+    const farFuture = new Date();
+    farFuture.setFullYear(farFuture.getFullYear() + 10);
+    
+    // Set cookie with very long expiration - using a unique name for blood donation
+    document.cookie = `bloodDonationSubmitted=true; expires=${farFuture.toUTCString()}; path=/`;
   }
 
   // Read cookie helper function
@@ -72,9 +66,9 @@ const BloodDonationForm = () => {
     setIsSubmitting(true);
 
     try {
-      const submissionCount = getCookie("alreadySubmitted") || 0;
+      const hasSubmitted = getCookie("bloodDonationSubmitted");
 
-      if (parseInt(submissionCount) >= 1) {
+      if (hasSubmitted) {
         throw new Error("You have already submitted your information. Only one submission is allowed per person.");
       }
 
@@ -102,10 +96,8 @@ const BloodDonationForm = () => {
         throw new Error(errorData.message || "Failed to submit data");
       }
 
-      // Increment cookie count and set expiration for noon IST
-      const newCount = parseInt(submissionCount) + 1;
-      setCookieForNoonIST(newCount);
-
+      // Set permanent cookie to track that this user has submitted
+      setPermanentCookie();
       setSubmitted(true);
 
     } catch (err) {
@@ -118,8 +110,8 @@ const BloodDonationForm = () => {
   };
 
   useEffect(() => {
-    const submissionCount = getCookie("alreadySubmitted");
-    if (submissionCount && parseInt(submissionCount) >= 1) {
+    const hasSubmitted = getCookie("bloodDonationSubmitted");
+    if (hasSubmitted) {
       setSubmitted(true);
     }
   }, []);
@@ -299,4 +291,3 @@ const BloodDonationForm = () => {
 };
 
 export default BloodDonationForm;
-
