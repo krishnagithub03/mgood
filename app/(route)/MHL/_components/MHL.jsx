@@ -435,6 +435,215 @@
 
 
 
+// 'use client';
+
+// import React, { useState, useEffect } from 'react';
+// import axios from 'axios';
+// import { set } from 'date-fns';
+
+// const MhlForm = () => {
+//   const [formData, setFormData] = useState({
+//     name: '',
+//     phoneNumber: '',
+//     numberOfSixes: 0,
+//     selectedMatch: ''
+//   });
+//   const [submitted, setSubmitted] = useState(false);
+//   const [error, setError] = useState('');
+//   const [isSubmitting, setIsSubmitting] = useState(false);
+//   const [matches, setMatches] = useState([]);
+//   const [matchLoading, setMatchLoading] = useState(true);
+//   const [matchError, setMatchError] = useState('');
+//   const [loading, setLoading] = useState(false);
+//   const PacmanLoader = require('react-spinners/PacmanLoader');
+//   // const [alredaySubmitted, setAlredaySubmitted] = useState(false);
+
+//   // Fetch matches when component mounts
+//   useEffect(() => {
+//     const fetchMatches = async () => {
+//       try {
+//         setMatchLoading(true);
+//         const response = await axios.get('/api/matches');
+//         const matchData = response.data.matchName.split(',');
+//         setMatches(matchData);
+//         setMatchError('');
+//       } catch (error) {
+//         console.error('Error fetching matches:', error);
+//         setMatchError('Failed to load matches');
+//       } finally {
+//         setMatchLoading(false);
+//       }
+//     };
+
+//     fetchMatches();
+//   }, []);
+
+
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData(prev => ({
+//       ...prev,
+//       [name]: value
+//     }));
+//   };
+
+//   const handleSliderChange = (e) => {
+//     setFormData(prev => ({
+//       ...prev,
+//       numberOfSixes: parseInt(e.target.value)
+//     }));
+//   };
+
+//   const handleMatchSelect = (match) => {
+//     setFormData(prev => ({
+//       ...prev,
+//       selectedMatch: match
+//     }));
+//   };
+
+//   const validatePhoneNumber = (phoneNumber) => {
+//     const regex = /^[6-9]\d{9}$/;
+//     return regex.test(phoneNumber);
+//   };
+
+//   function setCookieForNoonIST(count = 1) {
+//   const now = new Date();
+//   const noonIST = new Date();
+
+//   // Set time to today's 12:00 Noon IST (UTC+5:30)
+//   noonIST.setUTCHours(6, 30, 0, 0);
+
+//   // If the current time is past today's noon, set it for tomorrow's noon
+//   if (now >= noonIST) {
+//     noonIST.setUTCDate(noonIST.getUTCDate() + 1);
+//   }
+
+//   // Set cookie with updated count and correct expiration
+//   document.cookie = `alreadySubmitted=${count}; expires=${noonIST.toUTCString()}; path=/`;
+// }
+
+// // Read cookie helper function
+// function getCookie(name) {
+//   const value = document.cookie
+//     .split("; ")
+//     .find((row) => row.startsWith(`${name}=`));
+//   return value ? value.split("=")[1] : null;
+// }
+
+
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+//   setError("");
+//   setIsSubmitting(true);
+
+//   try {
+//     const submissionCount = getCookie("alreadySubmitted") || 0;
+
+//     if (parseInt(submissionCount) >= 2) {
+//       throw new Error("You have reached the maximum of 2 submissions for today.");
+//     }
+
+//     if (!formData.name.trim()) throw new Error("Please enter your name");
+//     if (!validatePhoneNumber(formData.phoneNumber))
+//       throw new Error("Please enter a valid 10-digit phone number");
+//     if (!formData.selectedMatch.trim()) throw new Error("Please select a match");
+
+//     const dataToSend = { ...formData, submissionDate: new Date().toISOString() };
+
+//     setLoading(true);
+//     const response = await fetch("/api/submit-to-sheets", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify(dataToSend),
+//     });
+
+//     if (!response.ok) {
+//       const errorData = await response.json();
+//       console.error("Submission error:", errorData);
+//       throw new Error(errorData.message || "Failed to submit data");
+//     }
+
+//     // Increment cookie count and set expiration for noon IST
+//     const newCount = parseInt(submissionCount) + 1;
+//     setCookieForNoonIST(newCount);
+
+//     if (newCount >= 2) setSubmitted(true);
+
+//   } catch (err) {
+//     console.error("Error in form submission:", err);
+//     setError(err.message || "An error occurred during submission");
+//   } finally {
+//     setIsSubmitting(false);
+//     setLoading(false);
+//   }
+// };
+
+// useEffect(() => {
+//   const submissionCount = getCookie("alreadySubmitted");
+//   if (submissionCount && parseInt(submissionCount) >= 2) {
+//     setSubmitted(true);
+//   }
+// }, []);
+
+
+//   if (loading) {
+//     return (
+//       <div className="min-h-screen flex flex-col items-center justify-center bg-white">
+//         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+//         <div> Submitting your response... </div>
+//       </div>
+//     );
+//   }
+//   return (
+//     <div className="max-w-xl mx-auto p-10 bg-white rounded-lg shadow-xl mt-20 mb-20">
+//       <h1 className="text-2xl font-bold mb-6 text-center text-primary">MGOOD HEALTH LEAGUE</h1>
+//       <p className='italic mb-6'>Disclaimer: Each user is allowed a maximum of 2 submissions per day. Further attempts will not be accepted.</p>
+//       {matchLoading ? (
+//         <div className="text-center">Loading matches...</div>
+//       ) : matchError ? (
+//         <div className="text-red-600 text-center">{matchError}</div>
+//       ) : (
+//         <div className="grid grid-cols-2 gap-4 mb-6">
+//           {matches.map((match, index) => (
+//             <div
+//               key={index}
+//               className={`p-4 border rounded cursor-pointer text-center ${formData.selectedMatch === match ? 'bg-primary text-white' : 'bg-gray-100'}`}
+//               onClick={() => handleMatchSelect(match)}
+//             >
+//               {match.trim()}
+//             </div>
+//           ))}
+//         </div>
+//       )}
+//       {submitted ? (
+//         <div className="text-center mb-4 p-4 bg-green-100 text-green-700 rounded-md">Thank you for your submission!</div>
+//       ) : (
+//         <form onSubmit={handleSubmit}>
+//           {error && <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">{error}</div>}
+//           <div className="mb-4">
+//             <label htmlFor="name" className="block mb-2 font-medium">Full Name</label>
+//             <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500" placeholder="Enter your full name" />
+//           </div>
+//           <div className="mb-4">
+//             <label htmlFor="phoneNumber" className="block mb-2 font-medium">Phone Number (Paytm)</label>
+//             <input type="text" id="phoneNumber" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500" placeholder="Enter your 10-digit phone number" maxLength="10" />
+//           </div>
+//           <div className="mb-6">
+//             <label htmlFor="numberOfSixes" className="block mb-2 font-medium">Number of Sixes: {formData.numberOfSixes}</label>
+//             <input type="range" id="numberOfSixes" name="numberOfSixes" min="0" max="50" step="1" value={formData.numberOfSixes} onChange={handleSliderChange} className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" />
+//           </div>
+//           <button type="submit" disabled={isSubmitting} className={`w-full ${isSubmitting ? 'bg-blue-300 cursor-not-allowed' : 'bg-primary hover:bg-blue-600'} text-white py-2 px-4 rounded transition duration-200`}>{isSubmitting ?  'Submitting...' : 'Submit'}</button>
+//         </form>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default MhlForm;
+
+
+
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -456,7 +665,6 @@ const MhlForm = () => {
   const [matchError, setMatchError] = useState('');
   const [loading, setLoading] = useState(false);
   const PacmanLoader = require('react-spinners/PacmanLoader');
-  // const [alredaySubmitted, setAlredaySubmitted] = useState(false);
 
   // Fetch matches when component mounts
   useEffect(() => {
@@ -477,8 +685,6 @@ const MhlForm = () => {
 
     fetchMatches();
   }, []);
-
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -508,84 +714,82 @@ const MhlForm = () => {
   };
 
   function setCookieForNoonIST(count = 1) {
-  const now = new Date();
-  const noonIST = new Date();
+    const now = new Date();
+    const noonIST = new Date();
 
-  // Set time to today's 12:00 Noon IST (UTC+5:30)
-  noonIST.setUTCHours(6, 30, 0, 0);
+    // Set time to today's 12:00 Noon IST (UTC+5:30)
+    noonIST.setUTCHours(6, 30, 0, 0);
 
-  // If the current time is past today's noon, set it for tomorrow's noon
-  if (now >= noonIST) {
-    noonIST.setUTCDate(noonIST.getUTCDate() + 1);
-  }
-
-  // Set cookie with updated count and correct expiration
-  document.cookie = `alreadySubmitted=${count}; expires=${noonIST.toUTCString()}; path=/`;
-}
-
-// Read cookie helper function
-function getCookie(name) {
-  const value = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith(`${name}=`));
-  return value ? value.split("=")[1] : null;
-}
-
-
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError("");
-  setIsSubmitting(true);
-
-  try {
-    const submissionCount = getCookie("alreadySubmitted") || 0;
-
-    if (parseInt(submissionCount) >= 2) {
-      throw new Error("You have reached the maximum of 2 submissions for today.");
+    // If the current time is past today's noon, set it for tomorrow's noon
+    if (now >= noonIST) {
+      noonIST.setUTCDate(noonIST.getUTCDate() + 1);
     }
 
-    if (!formData.name.trim()) throw new Error("Please enter your name");
-    if (!validatePhoneNumber(formData.phoneNumber))
-      throw new Error("Please enter a valid 10-digit phone number");
-    if (!formData.selectedMatch.trim()) throw new Error("Please select a match");
+    // Set cookie with updated count and correct expiration - using unique name for MHL
+    document.cookie = `mhlSubmitted=${count}; expires=${noonIST.toUTCString()}; path=/`;
+  }
 
-    const dataToSend = { ...formData, submissionDate: new Date().toISOString() };
+  // Read cookie helper function
+  function getCookie(name) {
+    const value = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith(`${name}=`));
+    return value ? value.split("=")[1] : null;
+  }
 
-    setLoading(true);
-    const response = await fetch("/api/submit-to-sheets", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(dataToSend),
-    });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setIsSubmitting(true);
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error("Submission error:", errorData);
-      throw new Error(errorData.message || "Failed to submit data");
+    try {
+      const submissionCount = getCookie("mhlSubmitted") || 0;
+
+      if (parseInt(submissionCount) >= 2) {
+        throw new Error("You have reached the maximum of 2 submissions for today.");
+      }
+
+      if (!formData.name.trim()) throw new Error("Please enter your name");
+      if (!validatePhoneNumber(formData.phoneNumber))
+        throw new Error("Please enter a valid 10-digit phone number");
+      if (!formData.selectedMatch.trim()) throw new Error("Please select a match");
+
+      const dataToSend = { ...formData, submissionDate: new Date().toISOString() };
+
+      setLoading(true);
+      const response = await fetch("/api/submit-to-sheets", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dataToSend),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Submission error:", errorData);
+        throw new Error(errorData.message || "Failed to submit data");
+      }
+
+      // Increment cookie count and set expiration for noon IST
+      const newCount = parseInt(submissionCount) + 1;
+      setCookieForNoonIST(newCount);
+
+      if (newCount >= 2) setSubmitted(true);
+
+    } catch (err) {
+      console.error("Error in form submission:", err);
+      setError(err.message || "An error occurred during submission");
+    } finally {
+      setIsSubmitting(false);
+      setLoading(false);
     }
+  };
 
-    // Increment cookie count and set expiration for noon IST
-    const newCount = parseInt(submissionCount) + 1;
-    setCookieForNoonIST(newCount);
-
-    if (newCount >= 2) setSubmitted(true);
-
-  } catch (err) {
-    console.error("Error in form submission:", err);
-    setError(err.message || "An error occurred during submission");
-  } finally {
-    setIsSubmitting(false);
-    setLoading(false);
-  }
-};
-
-useEffect(() => {
-  const submissionCount = getCookie("alreadySubmitted");
-  if (submissionCount && parseInt(submissionCount) >= 2) {
-    setSubmitted(true);
-  }
-}, []);
-
+  useEffect(() => {
+    const submissionCount = getCookie("mhlSubmitted");
+    if (submissionCount && parseInt(submissionCount) >= 2) {
+      setSubmitted(true);
+    }
+  }, []);
 
   if (loading) {
     return (
@@ -595,6 +799,7 @@ useEffect(() => {
       </div>
     );
   }
+  
   return (
     <div className="max-w-xl mx-auto p-10 bg-white rounded-lg shadow-xl mt-20 mb-20">
       <h1 className="text-2xl font-bold mb-6 text-center text-primary">MGOOD HEALTH LEAGUE</h1>
@@ -633,7 +838,7 @@ useEffect(() => {
             <label htmlFor="numberOfSixes" className="block mb-2 font-medium">Number of Sixes: {formData.numberOfSixes}</label>
             <input type="range" id="numberOfSixes" name="numberOfSixes" min="0" max="50" step="1" value={formData.numberOfSixes} onChange={handleSliderChange} className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" />
           </div>
-          <button type="submit" disabled={isSubmitting} className={`w-full ${isSubmitting ? 'bg-blue-300 cursor-not-allowed' : 'bg-primary hover:bg-blue-600'} text-white py-2 px-4 rounded transition duration-200`}>{isSubmitting ?  'Submitting...' : 'Submit'}</button>
+          <button type="submit" disabled={isSubmitting} className={`w-full ${isSubmitting ? 'bg-blue-300 cursor-not-allowed' : 'bg-primary hover:bg-blue-600'} text-white py-2 px-4 rounded transition duration-200`}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
         </form>
       )}
     </div>
