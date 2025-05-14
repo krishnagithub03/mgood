@@ -7,6 +7,7 @@ const HealthCampForm = () => {
     name: '',
     age: '',
     gender: '',
+    phoneNumber: '', // Added phoneNumber
     disease: ''
   });
   const [submitted, setSubmitted] = useState(false);
@@ -20,6 +21,12 @@ const HealthCampForm = () => {
       ...prev,
       [name]: value
     }));
+  };
+
+  // Validate Indian Mobile Number (10 digits, starting with 6, 7, 8, or 9)
+  const validateMobileNumber = (mobileNumber) => {
+    const regex = /^[6-9]\d{9}$/;
+    return regex.test(mobileNumber);
   };
 
   function setPermanentCookie(cookieName) {
@@ -51,6 +58,8 @@ const HealthCampForm = () => {
       if (!formData.name.trim()) throw new Error("Please enter your name");
       if (!formData.age.trim() || parseInt(formData.age, 10) <= 0) throw new Error("Please enter a valid age");
       if (!formData.gender.trim()) throw new Error("Please select your gender");
+      if (!validateMobileNumber(formData.phoneNumber)) // Added phone number validation
+        throw new Error("Please enter a valid 10-digit mobile number");
       // 'disease' can be optional
 
       const dataToSend = { ...formData, submissionDate: new Date().toISOString() };
@@ -99,9 +108,9 @@ const HealthCampForm = () => {
   
   return (
     <div className="max-w-xl mx-auto p-10 bg-white rounded-lg shadow-xl mt-20 mb-20">
-      <h1 className="text-2xl font-bold mb-6 text-center text-primary">Nagata Auto Engineering India Pvt Limited</h1>
-      <h2 className="text-2xl font-bold mb-6 text-center text-primary">Organized by : MGood</h2>
-      <p className='italic mb-6'>Disclaimer: Each user is allowed only one registration for the health camp. Further attempts will not be accepted.</p>
+      <h1 className="text-xl sm:text-2xl font-bold mb-2 text-center text-primary">Nagata Auto Engineering India Pvt Limited</h1>
+      <h2 className="text-lg sm:text-xl font-semibold mb-6 text-center text-gray-700"> Organized by: <span className="text-primary">MGood</span></h2>
+      <p className='italic mb-6 text-sm text-gray-600 text-center'>Disclaimer: Each user is allowed only one registration. Further attempts will not be accepted.</p>
       
       {submitted ? (
         <div className="text-center mb-4 p-4 bg-green-100 text-green-700 rounded-md">Thank you for registering for the Health Camp! We will contact you with further details.</div>
@@ -153,6 +162,22 @@ const HealthCampForm = () => {
               <option value="Prefer not to say">Prefer not to say</option>
             </select>
           </div>
+
+          {/* Added Phone Number Field */}
+          <div className="mb-4">
+            <label htmlFor="phoneNumber" className="block mb-2 font-medium">Mobile Number</label>
+            <input 
+              type="text" // Using text to allow for easy maxLength and pattern validation
+              id="phoneNumber" 
+              name="phoneNumber" 
+              value={formData.phoneNumber} 
+              onChange={handleChange} 
+              className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500" 
+              placeholder="Enter your 10-digit mobile number" 
+              maxLength="10" 
+              pattern="[6-9]{1}[0-9]{9}" // Basic HTML5 pattern validation
+            />
+          </div>
           
           <div className="mb-4">
             <label htmlFor="disease" className="block mb-2 font-medium">Any Pre-existing Disease / Current Ailments</label>
@@ -170,25 +195,24 @@ const HealthCampForm = () => {
           <button 
             type="submit" 
             disabled={isSubmitting} 
-            className={`w-full ${isSubmitting ? 'bg-blue-300 cursor-not-allowed' : 'bg-primary hover:bg-blue-600'} text-white py-2 px-4 rounded transition duration-200`}
+            className={`w-full ${isSubmitting ? 'bg-blue-300 cursor-not-allowed' : 'bg-primary hover:bg-blue-600'} text-white py-3 px-4 rounded transition duration-200 font-semibold`}
           >
-            {isSubmitting ? 'Registering...' : 'Register for Health Camp'}
+            {isSubmitting ? 'Registering...' : 'Register for Eye Checkup Camp'}
           </button>
         </form>
       )}
 
-      {/* Partners Section - Added Here */}
       <div className="mt-10 pt-6 border-t border-gray-300 text-center">
-        <h2 className="text-xl font-semibold mb-4 text-gray-700">Our Partners</h2>
-        <div className="space-y-2">
+        <h3 className="text-lg font-semibold mb-4 text-gray-700">Our Esteemed Partners</h3>
+        <div className="space-y-2 text-sm">
           <p className="text-gray-600">
-            <span className="font-lg">Eye Checkup Partner:</span> NEEL EYE HOSPITAL
+            <span className="font-medium">Eye Checkup Partner:</span> NEEL EYE HOSPITAL
           </p>
           <p className="text-gray-600">
-            <span className="font-lg">Pharmacy Partner:</span> AVA Pharma
+            <span className="font-medium">Pharmacy Partner:</span> AVA Pharma
           </p>
           <p className="text-gray-600">
-            <span className="font-lg">Optician Partner:</span> Agrawal Optical Company
+            <span className="font-medium">Optician Partner:</span> Agrawal Optical Company
           </p>
         </div>
       </div>
