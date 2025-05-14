@@ -139,5 +139,5 @@ export async function middleware(req) {
 }
 
 export const config = {
-  matcher: ["/book-tc", "/details/:path*", "/prescriptions", "/planUsers","/MHL","/blood"],
+  matcher: ["/book-tc", "/details/:path*", "/prescriptions", "/planUsers","/MHL","/blood","/camp"],
 };
