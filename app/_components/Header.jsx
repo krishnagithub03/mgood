@@ -43,6 +43,11 @@ function Header() {
       id: 5,
       name: "Blood Donation",
       path : "/blood"
+    },
+    {
+      id: 6,
+      name: "Gallery",
+      path : "/gallery"
     }
   ];
   const handleMenu = () => {
