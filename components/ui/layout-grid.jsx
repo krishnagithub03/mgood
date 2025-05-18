@@ -225,14 +225,21 @@
 //   );
 // };
 
-
-import React, { useState } from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export const LayoutGrid = ({ cards }) => {
   const [selectedId, setSelectedId] = useState(null);
   const [lastSelectedId, setLastSelectedId] = useState(null);
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  if (!hasMounted) return null; // 🚫 Avoid mismatch
 
   const selected = cards.find((c) => c.id === selectedId);
   const lastSelected = cards.find((c) => c.id === lastSelectedId);
@@ -281,20 +288,16 @@ export const LayoutGrid = ({ cards }) => {
   );
 };
 
-const ImageComponent = ({ card }) => {
-  return (
-    <motion.img
-      layoutId={`image-${card.id}-image`}
-      src={card.thumbnail}
-      height="500"
-      width="500"
-      className={cn(
-        "object-cover object-top absolute inset-0 h-full w-full transition duration-200"
-      )}
-      alt={card.title || "thumbnail"}
-    />
-  );
-};
+const ImageComponent = ({ card }) => (
+  <motion.img
+    layoutId={`image-${card.id}-image`}
+    src={card.thumbnail}
+    height="500"
+    width="500"
+    className="object-cover object-top absolute inset-0 h-full w-full transition duration-200"
+    alt={card.title || "thumbnail"}
+  />
+);
 
 const SelectedCard = ({ selected }) => {
   if (!selected?.content) return null;
