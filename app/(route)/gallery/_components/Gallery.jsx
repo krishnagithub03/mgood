@@ -53,7 +53,7 @@ const sampleImages = [
 ];
 
 const Gallery = () => {
-  
+
   const cards = sampleImages.map((image) => ({
     id: image.id, 
     className: image.className, 
