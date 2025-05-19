@@ -1,7 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { NumberTicker } from "@/components/magicui/number-ticker";
 
+   
+  
 function LiveUserCounter() {
   const [userCount, setUserCount] = useState(0);
 
@@ -25,9 +28,13 @@ function LiveUserCounter() {
   }, []);
 
   return (
-    <div className="text-center bg-gray-100 py-2 text-sm font-medium">
-      🏥 Total Teleconsultations Done: <span className="text-primary">{userCount}</span>
+    <div className="text-center bg-white py-1 text-sm font-medium">
+      🏥 Total Teleconsultations Done: <NumberTicker
+      value={userCount}
+      className="whitespace-pre-wrap text-sm font-medium tracking-tighter text-black dark:text-white"
+    />
     </div>
+    
   );
 }
 
