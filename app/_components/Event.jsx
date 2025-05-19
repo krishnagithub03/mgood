@@ -12,7 +12,7 @@ const Event = () => {
         
     </div> */}
      <div className='text-center bg-white-100 py-2 text-xl font-lg'>
-     <span >Health Camp Registrat </span> 
+     <span >Health Camp Registration </span> 
      <Button className="text-center bg-primary py-2 text-sm font-medium" onClick={() => window.location.href = '/camp'}>
          Click me
      </Button>

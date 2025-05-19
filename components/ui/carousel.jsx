@@ -1,4 +1,5 @@
-"use client";;
+"use client";
+import dynamic from "next/dynamic";
 import { IconArrowNarrowRight } from "@tabler/icons-react";
 import { useState, useRef, useId, useEffect } from "react";
 
