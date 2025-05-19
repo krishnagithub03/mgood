@@ -17,7 +17,7 @@ const Gallery = () => {
     },
     {
       title: "Mgood Eye Care Camp ",
-      src: "https://res.cloudinary.com/dwkili7et/image/upload/v1717379641/6_klbh3u.png",
+      src: "https://res.cloudinary.com/dwkili7et/image/upload/v1717379641/5_ptg0ws.png",
     },
     {
       title: "Mgood.org's initiative to support community eye health through accessible care.",
@@ -25,11 +25,11 @@ const Gallery = () => {
     },
     {
       title: "Mgood Eye Care Camp ",
-      src: "https://res.cloudinary.com/dwkili7et/image/upload/v1717379641/6_klbh3u.png",
+      src: "https://res.cloudinary.com/dwkili7et/image/upload/v1747379641/3_wkfk1j.png",
     },
     {
       title: "Mgood.org's initiative to support community eye health through accessible care.",
-      src: "https://res.cloudinary.com/dwkili7et/image/upload/v1717379641/5_ptg0ws.png",
+      src: "https://res.cloudinary.com/dwkili7et/image/upload/v1717379641/6_klbh3u.png",
     },
     {
       title: "Mgood Eye Care Camp ",

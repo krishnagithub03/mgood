@@ -1,7 +1,8 @@
 import React from "react";
-import Gallery from "./_components/Gallery";
+import Gallery from "./_components/Gallery"
+
 function Page() {
-  return <Gallery />;
+  return <Gallery/>
 }
 
 export default Page;
