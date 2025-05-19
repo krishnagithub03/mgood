@@ -258,7 +258,7 @@ export default function OTPVerification() {
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       ) : (
                         <>
-                          Continue <ArrowRight className="ml-2 h-4 w-4" />
+                          Continue <ArrowRight className="ml-2 h-4 w-4 mt-1" />
                         </>
                       )}
                     </button>
