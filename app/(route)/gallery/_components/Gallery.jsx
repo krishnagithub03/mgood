@@ -564,16 +564,16 @@ const Gallery = () => {
       thumbnail: safeThumbnail,
       title: safeTitle, // For alt tags and direct use
       // Content is JSX that will be rendered inside SelectedCard
-      content: ( // This MUST be a valid React element.
-        <div>
-          <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
-            {safeTitle} {/* Render the sanitized string title */}
-          </h2>
-          <p className="text-sm md:text-base text-neutral-200">
-            {safeDescription} {/* Render the sanitized string description */}
-          </p>
-        </div>
-      ),
+      // content: ( // This MUST be a valid React element.
+      //   <div>
+      //     <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
+      //       {safeTitle} {/* Render the sanitized string title */}
+      //     </h2>
+      //     <p className="text-sm md:text-base text-neutral-200">
+      //       {safeDescription} {/* Render the sanitized string description */}
+      //     </p>
+      //   </div>
+      // ),
     };
   });
 
@@ -787,3 +787,6 @@ const SelectedCard = ({ selected }) => {
 };
 
 export default Gallery;
+
+
+
