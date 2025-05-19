@@ -1,4 +1,32 @@
+"use client";
+
 import React from "react";
+
+import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
+
+const testimonials = [
+  {
+    quote:
+      "Driving strategic marketing initiatives, ensuring legal compliance, and cultivating high-impact sponsorships to elevate brand value and integrity.",
+    name: "Mr. Puneet Singhal",
+    designation: "Head - Marketing , legal and Sponsorship",
+    src: "/mgood-puneet.jpg",
+  },
+  {
+    quote:
+      "Driving operational excellence through streamlined processes and efficient administration to ensure seamless business functionality.",
+    name: "Mrs. Garima Gangal",
+    designation: "Head - Admin & Process",
+    src: "/mgood-garima.jpg",
+  },
+  {
+    quote:
+      "Designing, managing, and securing robust IT infrastructure systems that power business continuity and digital transformation.",
+    name: "Mr. Krishna Agrawal",
+    designation: "IT Infrastructure Expert",
+    src: "/mgood-krishna.jpg",
+  },
+];
 
 const AboutUs = () => {
   return (
@@ -20,10 +48,10 @@ const AboutUs = () => {
               into a reality. Our commitment goes beyond teleconsultation. We're
               dedicated to empowering our Medical Good Partners (MGPs) to
               achieve their dreams of being part of a multispecialty setup.
-              Remember, MGood is more than just a platform – we're a friend in
+              Remember, MGood is more than just a platform - we're a friend in
               need. Join hands with us, and together, let's create a world
-              that's not just a place to live, but a good – an MGood –
-              place to thrive."
+              that's not just a place to live, but a good - an MGood -
+              place to thrive."
             </p>
           </div>
         </div>
@@ -73,7 +101,10 @@ const AboutUs = () => {
             <p className="font-light text-gray-500 lg:mb-16 sm:text-xl dark:text-gray-400">
               Meet out experts who are driving the MGood platform and brand.
             </p>
-          </div>
+            <div>
+            <AnimatedTestimonials testimonials={testimonials} />
+            </div>
+          {/* </div>
           <div className="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
             <div className="items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
               <a href="#">
@@ -142,7 +173,7 @@ const AboutUs = () => {
                   IT Infrastructure Expert
                 </span>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
