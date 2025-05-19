@@ -1,3 +1,4 @@
+
 import React from "react";
 import Gallery from "./_components/Gallery"
 
@@ -6,3 +7,4 @@ function Page() {
 }
 
 export default Page;
+
