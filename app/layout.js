@@ -52,7 +52,7 @@ export default function RootLayout({ children }) {
         <div>
           <Header />
           <LiveUserCounter />
-          <Event />
+         
           {children}
           <Toaster />
         </div>

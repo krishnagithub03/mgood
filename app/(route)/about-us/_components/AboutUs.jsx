@@ -63,7 +63,7 @@ const AboutUs = () => {
           </h1>
           <TextGenerateEffect
             words={aboutMGoodText}
-            className={"italic font-body md:text-xl text-lg leading-relaxed"}
+            className={"italic font-body md:text-lg text-lg leading-relaxed "}
           />
         </div>
       </div>
@@ -78,7 +78,7 @@ const AboutUs = () => {
           </h1>
           <TextGenerateEffect
             words={aboutIndia}
-            className={"italic font-body md:text-xl text-lg leading-relaxed"}
+            className={"italic font-body md:text-lg text-lg leading-relaxed "}
           />
         </div>
 
