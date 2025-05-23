@@ -7,6 +7,7 @@ import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { SparklesText } from "@/components/magicui/sparkles-text";
 import { Globe } from "@/components/magicui/globe"; // Assuming this path is correct
+import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 
 // ... (testimonials and other constants remain the same) ...
 const testimonials = [
@@ -56,9 +57,8 @@ const AboutUs = () => {
         <div className="flex flex-col gap-6 max-w-4xl mx-auto text-center">
           <h1 className="md:text-5xl text-3xl font-display font-bold">
             About
-            <SparklesText className={"text-primary inline-block p-1"}>
-            MGood
-            </SparklesText>
+            
+            <span className="text-primary mx-2 ">MGOOD</span>
            
           </h1>
           <TextGenerateEffect
@@ -195,6 +195,7 @@ const AboutUs = () => {
           </div>
         </div>
       </div>
+      
     </section>
   );
 };

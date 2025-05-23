@@ -44,11 +44,7 @@ function Header() {
       name: "Blood Donation",
       path : "/blood"
     },
-    {
-      id: 6,
-      name: "Gallery",
-      path : "/gallery"
-    }
+   
   ];
   const handleMenu = () => {
     setShowMobileMenu(!showMobileMenu);

@@ -1,11 +1,17 @@
+import { ShineBorder } from '@/components/magicui/shine-border';
 import React from 'react'
 
 const Plans = () => {
   return (
+    
     <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+      
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-center md:gap-8">
-        <div className="rounded-2xl border border-primary p-6 ring-1 shadow-xs ring-primary sm:order-last sm:px-8 lg:p-12">
+      
+        <div className="rounded-2xl p-6 border border-primary  ring-primary ring-1 shadow-xs  sm:order-last sm:px-8 lg:p-12">
+        
           <div className="text-center">
+         
             <h2 className="text-lg font-medium text-gray-900">
               Pro
               <span className="sr-only">Plan</span>
