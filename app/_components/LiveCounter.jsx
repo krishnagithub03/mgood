@@ -29,7 +29,7 @@ function LiveUserCounter() {
 
   return (
     <div className="text-center bg-white py-1 text-sm font-medium">
-      🏥 Total Teleconsultations Done: <NumberTicker
+      Total Number of request recevie : <NumberTicker
       value={userCount}
       className="whitespace-pre-wrap text-sm font-medium tracking-tighter text-black dark:text-white"
     />
