@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { NumberTicker } from "@/components/magicui/number-ticker";
+import { StickyBanner } from "@/components/ui/sticky-banner";
 
    
   
@@ -28,12 +29,14 @@ function LiveUserCounter() {
   }, []);
 
   return (
-    <div className="text-center bg-white py-1 text-sm font-medium">
+    <StickyBanner className="bg-primary">
+    <div className="text-center text-white max-w-[90%] drop-shadow-md py-1 text-sm font-medium">
       Total Number of request recevie : <NumberTicker
       value={userCount}
-      className="whitespace-pre-wrap text-sm font-medium tracking-tighter text-black dark:text-white"
+      className="whitespace-pre-wrap text-sm font-medium tracking-tighter text-white drop-shadow-md  dark:text-white"
     />
     </div>
+    </StickyBanner>
     
   );
 }

@@ -2,10 +2,46 @@
 import React, { useEffect, useRef } from "react";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
+import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 
 const Testimonials = () => {
   const sliderRef = useRef(null);
   const [slider, setSlider] = React.useState(null);
+  const testimonials = [
+    {
+      quote:
+        "Thanks Mgood for making us your partner. With this partnership We were not only able to build trust within our customers but also was able to provide them online consultation. Your partnership has helped us in increasing our business",
+      name: "Dr. Abhishek",
+      number: 1,
+      
+    },
+    {
+      quote:
+        " I have been practising physiotherapy from last 12 years, Mgood has helped me in bringing efficiency to my overall practice.Since now if needed be i can get an MBBS doctor on call as per patients need.",
+      title: "Dr. Parth",
+      number: 2,
+    },
+    {
+      quote:
+        "Thanks Mgood for making us your partner. With this partnership We were not only able to build trust within our customers but also was able to provide them online consultation. Your partnership has helped us in increasing our business",
+      name: "Dr. Abhishek",
+      title: "",
+      number: 3,
+    },
+    {
+      quote:
+        " I have been practising physiotherapy from last 12 years, Mgood has helped me in bringing efficiency to my overall practice.Since now if needed be i can get an MBBS doctor on call as per patients need.",
+      title: "Dr. Parth",
+      number: 4,
+    },
+    {
+      quote:
+        "Thanks Mgood for making us your partner. With this partnership We were not only able to build trust within our customers but also was able to provide them online consultation. Your partnership has helped us in increasing our business",
+      name: "Dr. Abhishek",
+      title: "",
+      number: 5,
+    },
+  ];
 
   useEffect(() => {
     if (sliderRef.current) {
@@ -52,16 +88,25 @@ const Testimonials = () => {
 
   return (
     <section className="bg-white font-display">
-      <div className="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+      <div className="mx-auto max-w-screen-xl px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
         <h2 className="text-center text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
           Read trusted reviews from our{" "}
           <span className="text-primary">Healthcare Partners</span>
         </h2>
+        <div className="h-[25rem] rounded-md flex flex-col antialiased bg-white dark:bg-black dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden">
+      <InfiniteMovingCards
+        items={testimonials}
+        direction="left"
+        speed="fast"
+      />
+      
+    </div>
 
-        <div className="mt-8">
+        {/* <div className="mt-8">
           <div id="keen-slider" className="keen-slider gap-4">
-            <div className="keen-slider__slide transition-opacity duration-500">
-              <blockquote className="rounded-lg bg-gray-50 p-6 shadow-sm sm:p-8">
+            <div className="keen-slider__slide transition-opacity duration-500"> */}
+
+              {/* <blockquote className="rounded-lg bg-gray-50 p-6 shadow-sm sm:p-8">
                 <div className="flex items-center gap-4">
                   <img
                     alt=""
@@ -193,8 +238,8 @@ const Testimonials = () => {
                   Since now if needed be i can get an MBBS doctor on call as
                   per patients need.
                 </p>
-              </blockquote>
-            </div>
+              </blockquote> */}
+            {/* </div> */}
 
             {/* <div className="hidden md:block keen-slider__slide opacity-40 transition-opacity duration-500">
               <blockquote className="rounded-lg bg-gray-50 p-6 shadow-sm sm:p-8">
@@ -331,7 +376,7 @@ const Testimonials = () => {
                 </p>
               </blockquote>
             </div> */}
-          </div>
+          {/* </div> */}
 
           {/* <div className="mt-6 flex items-center justify-center gap-4">
             <button
@@ -381,7 +426,7 @@ const Testimonials = () => {
               </svg>
             </button> 
           </div>*/}
-        </div>
+        {/* </div> */}
       </div>
     </section>
   );
