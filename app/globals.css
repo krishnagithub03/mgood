@@ -76,6 +76,7 @@ body {
   }
   .theme {
     --animate-shine: shine var(--duration) infinite linear;
+    --animate-gradient: gradient 8s linear infinite;
   }
 }
 
@@ -127,14 +128,15 @@ body {
   }
 
   --animate-scroll: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
- 
- 
+  @keyframes gradient {
+  to {
+    background-position: var(--bg-size, 300%) 0;
+    }
+  }
+
 }
 @keyframes scroll {
   to {
     transform: translate(calc(-50% - 0.5rem));
   }
 }
-
-
-
