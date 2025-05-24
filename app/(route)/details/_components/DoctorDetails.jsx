@@ -16,7 +16,7 @@ const DoctorDetails = ({ doctor }) => {
       <div className="grid grid-cols-1 md:grid-cols-8 p-4 mt-5 bg-white rounded-xl">
         {/* doctor img */}
         <div className="flex md:col-span-2 gap-2">
-          <div className="flex flex-col justify-center items-center  max-h-[100px] md:max-h-[200px]">
+          {/* <div className="flex flex-col justify-center items-center  max-h-[100px] md:max-h-[200px]">
             <Image
               width={200}
               height={100}
@@ -24,7 +24,7 @@ const DoctorDetails = ({ doctor }) => {
               alt={doctor.name}
               className="rounded-full object-cover md:w-[200px] w-[100px]"
             />
-          </div>
+          </div> */}
           <div className="flex flex-col p-2 gap-1">
             <h2 className="font-bold text-2xl font-display">{doctor.name}</h2>
             <h3 className="flex gap-1 text-gray-500 text-sm items-center">
