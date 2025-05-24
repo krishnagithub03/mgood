@@ -6,11 +6,13 @@ import Faqs from "./_components/Faqs";
 import Plans from "./_components/Plans";
 import Gallery from "./_components/Gallery";
 import Event from "./_components/Event";
+import { Slider } from "./_components/Slider";
 
 export default function Home() {
   return (
     <div>
        <Event />
+       <Slider/>
       <Plans />
       {/* hero->searchbar + category */}
       <Hero />
