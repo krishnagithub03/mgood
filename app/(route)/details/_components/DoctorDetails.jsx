@@ -64,14 +64,14 @@ const DoctorDetails = ({ doctor }) => {
           </h2>
         </div>
       </div>
-      <div>
+      {/* <div>
         <h2 className="font-bold text-lg mt-10 font-display">
           Doctor's Message
         </h2>
         <p className="text-gray-400 mt-2 bg-white p-6 rounded-xl">
           {doctor.message}
         </p>
-      </div>
+      </div> */}
     </div>
   );
 };
