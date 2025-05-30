@@ -7,6 +7,8 @@ import Plans from "./_components/Plans";
 import Gallery from "./_components/Gallery";
 import Event from "./_components/Event";
 import { Slider } from "./_components/Slider";
+import RuralGallery from "./_components/RuralGallery";
+
 
 export default function Home() {
   return (
@@ -19,6 +21,8 @@ export default function Home() {
       <Gallery/>
       <Testimonials />
       <Faqs />
+      <RuralGallery/>
+      
 
     </div>
   );

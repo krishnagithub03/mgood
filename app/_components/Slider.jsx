@@ -16,7 +16,7 @@ export function Slider() {
 
     <div className="flex justify-center ">
   
-  <ImagesSlider className="h-[30rem] md:w-[70rem]" images={images}>
+  <ImagesSlider className="h-[20rem] md:h-[30rem] md:w-[70rem]" images={images}>
       <motion.div
         initial={{
           opacity: 0,
