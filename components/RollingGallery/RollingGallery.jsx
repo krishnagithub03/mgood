@@ -480,7 +480,7 @@ const RollingGallery = ({
               <img
                 src={url}
                 alt={`gallery-image-${i}`}
-                className="pointer-events-none rounded-[15px] border-[3px] border-white object-conver transition-transform duration-300 ease-out group-hover:scale-105 w-[280px] h-[170px] sm:w-[200px] sm:h-[120px]"
+                className="pointer-events-none rounded-[15px] border-[3px] border-white object-conver transition-transform duration-300 ease-out group-hover:scale-105 w-[280px] h-[170px] sm:w-[180px] sm:h-[120px]"
               />
             </div>
           ))}
