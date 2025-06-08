@@ -344,9 +344,9 @@
 
 
 
-
 // --- THIS IS THE FIX ---
-// This directive must be the very first line in the file.
+// This directive tells Next.js to render this component in the browser.
+// It MUST be the very first line of the file.
 'use client';
 
 import { useState, useRef, useEffect } from "react";
