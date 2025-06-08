@@ -345,15 +345,19 @@
 
 
 
+// --- THIS IS THE FIX ---
+// This directive must be the very first line in the file.
+'use client';
+
 import { useState, useRef, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation"; // <-- CHANGED: Added necessary hooks
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, Shield, ArrowRight, Loader2, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 
 export default function OTPVerification() {
-  const router = useRouter(); // <-- CHANGED: Initialize router
-  const searchParams = useSearchParams(); // <-- CHANGED: Initialize search params
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [step, setStep] = useState("phone");
   const [otp, setOtp] = useState(new Array(6).fill(""));
@@ -454,7 +458,6 @@ export default function OTPVerification() {
         throw new Error(data.message || "Invalid OTP");
       }
       
-      // <-- CHANGED: Added SameSite=Lax for better security
       document.cookie = `accessToken=${data.token}; path=/; max-age=${7 * 24 * 60 * 60}; secure; SameSite=Lax`;
       document.cookie = `user=${phoneNumber}; path=/; max-age=${7 * 24 * 60 * 60}; secure; SameSite=Lax`;
 
@@ -462,7 +465,6 @@ export default function OTPVerification() {
         description: "Redirecting you...",
       });
       
-      // <-- CHANGED: This is the new, dynamic redirect logic
       const returnUrl = searchParams.get("returnUrl") || "/";
       router.push(returnUrl);
 
