@@ -1,15 +1,43 @@
 "use client";
-import React from "react";
-import RollingGallery from "@/components/RollingGallery/RollingGallery";
+import React, { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import RotatingText from "@/components/RotatingText/RotatingText";
 
-  
 
+const Carousel = dynamic(() => import("@/components/ui/carousel"), { ssr: false });
 
-const RuralGallery = () =>{
-    return (
-        <>
-        <div className="flex justify-center mt-12 ">
+const RuralGallery = () => {
+  const slideData = [
+    {
+      title: "Mgood Rural Expansion",
+      src: "https://res.cloudinary.com/dwkili7et/image/upload/v1748622706/PHOTO-2025-05-26-10-03-44_eky4av.jpg",
+    },
+    {
+      title: "Mgood.org's initiative to support community Healthcare Across Rural Area.",
+      src: "https://res.cloudinary.com/dwkili7et/image/upload/v1748622707/PHOTO-2025-05-26-10-02-51_a1ftl8.jpg",
+    },
+    {
+      title: "Mgood Rural Expansion ",
+      src: "https://res.cloudinary.com/dwkili7et/image/upload/v1748622707/PHOTO-2025-05-26-10-03-45_whjkg6.jpg",
+    },
+    {
+      title: "Mgood.org's initiative to support community Healthcare Across Rural Area.",
+      src: "https://res.cloudinary.com/dwkili7et/image/upload/v1748622706/PHOTO-2025-05-26-10-03-44_eky4av.jpg",
+    },
+    {
+      title: "Mgood Rural Expansion ",
+      src: "https://res.cloudinary.com/dwkili7et/image/upload/v1748622707/PHOTO-2025-05-26-10-02-51_a1ftl8.jpg",
+    },
+    {
+      title: "Mgood.org's initiative to support community Healthcare Across Rural Area.",
+      src: "https://res.cloudinary.com/dwkili7et/image/upload/v1748622707/PHOTO-2025-05-26-10-03-45_whjkg6.jpg",
+    },
+    
+  ];
+
+  return (
+    <>
+    <div className="flex justify-center mt-12 ">
     <h1 className="py-2 m-2 sm:py-2 md:py-3 text-3xl font-display font-bold">MGOOD</h1>
    
 <RotatingText
@@ -27,14 +55,11 @@ const RuralGallery = () =>{
   />
 
 </div>
-  <div>
-<RollingGallery autoplay={true} pauseOnHover={true} />
-  </div>
-
-
-</>
-    )
-}
-
+    <div className="relative overflow-hidden w-full h-full py-20">
+      <Carousel slides={slideData} autoplay={true} autoplayInterval={3000}  />
+    </div>
+  </>
+  );
+};
 
 export default RuralGallery;

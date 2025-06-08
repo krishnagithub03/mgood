@@ -82,62 +82,115 @@
 // };
 
 
+// import { NextResponse } from "next/server";
+// import { jwtVerify } from "jose";
+
+// // More robust secret key handling
+// function getSecretKey() {
+//   const secret = process.env.JWT_SECRET;
+//   if (!secret || secret === "default_secret") {
+//     console.warn("Warning: Using default JWT secret. Set JWT_SECRET environment variable in production.");
+//   }
+//   return new TextEncoder().encode(secret || "default_secret");
+// }
+
+// export async function middleware(req) {
+//   // try {
+//     // console.log("Middleware triggered for:", req.nextUrl.pathname);
+//     console.log("Middleware Triggered");
+    
+//     // Get the token
+//     const token = req.cookies.get("accessToken")?.value;
+    
+//   //   // If no token, redirect to Auth page
+//     if (!token) {
+//       // Save current path in a cookie for redirection after login
+//       const response = NextResponse.redirect(new URL("/Auth", req.url));
+//       response.cookies.set("returnUrl", req.nextUrl.pathname, {
+//         path: "/",
+//         httpOnly: true,
+//         maxAge: 900, // 15 minutes
+//       });
+//       return response;
+//     }
+    
+//     try {
+//       // Verify token with proper error handling
+//       const SECRET_KEY = getSecretKey();
+//       await jwtVerify(token, SECRET_KEY, { algorithms: ["HS256"] });
+//       return NextResponse.next();
+//     } catch (tokenError) {
+//       console.error("Token verification failed:", tokenError.message);
+      
+//       // Invalid token - redirect to Auth
+//       const response = NextResponse.redirect(new URL("/Auth", req.url));
+//       response.cookies.set("returnUrl", req.nextUrl.pathname, {
+//         path: "/",
+//         httpOnly: true,
+//         maxAge: 900, // 15 minutes
+//       });
+//       return response;
+//     }
+    
+//     // In case of critical error, let the request proceed 
+//     // rather than showing a 500 error
+//     // Alternative: redirect to an error page
+//     return NextResponse.next();
+// }
+
+// export const config = {
+//   matcher: ["/book-tc", "/details/:path*", "/prescriptions", "/planUsers","/MHL","/blood","/camp"],
+// };
+
+
+
+
 import { NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 
-// More robust secret key handling
 function getSecretKey() {
   const secret = process.env.JWT_SECRET;
   if (!secret || secret === "default_secret") {
-    console.warn("Warning: Using default JWT secret. Set JWT_SECRET environment variable in production.");
+    console.warn("Warning: Using default JWT secret.");
   }
   return new TextEncoder().encode(secret || "default_secret");
 }
 
 export async function middleware(req) {
-  // try {
-    // console.log("Middleware triggered for:", req.nextUrl.pathname);
-    console.log("Middleware Triggered");
-    
-    // Get the token
-    const token = req.cookies.get("accessToken")?.value;
-    
-  //   // If no token, redirect to Auth page
-    if (!token) {
-      // Save current path in a cookie for redirection after login
-      const response = NextResponse.redirect(new URL("/Auth", req.url));
-      response.cookies.set("returnUrl", req.nextUrl.pathname, {
-        path: "/",
-        httpOnly: true,
-        maxAge: 900, // 15 minutes
-      });
-      return response;
-    }
-    
-    try {
-      // Verify token with proper error handling
-      const SECRET_KEY = getSecretKey();
-      await jwtVerify(token, SECRET_KEY, { algorithms: ["HS256"] });
-      return NextResponse.next();
-    } catch (tokenError) {
-      console.error("Token verification failed:", tokenError.message);
-      
-      // Invalid token - redirect to Auth
-      const response = NextResponse.redirect(new URL("/Auth", req.url));
-      response.cookies.set("returnUrl", req.nextUrl.pathname, {
-        path: "/",
-        httpOnly: true,
-        maxAge: 900, // 15 minutes
-      });
-      return response;
-    }
-    
-    // In case of critical error, let the request proceed 
-    // rather than showing a 500 error
-    // Alternative: redirect to an error page
-    return NextResponse.next();
+  console.log("Middleware Triggered");
+
+  const token = req.cookies.get("accessToken")?.value;
+
+  // No token → redirect to login
+  if (!token) {
+    const returnUrl = req.nextUrl.pathname + req.nextUrl.search;
+    const response = NextResponse.redirect(new URL("/Auth", req.url));
+    response.cookies.set("returnUrl", returnUrl, {
+      path: "/",
+      httpOnly: true,
+      maxAge: 900, // 15 mins
+    });
+    return response;
+  }
+
+  try {
+    const SECRET_KEY = getSecretKey();
+    await jwtVerify(token, SECRET_KEY, { algorithms: ["HS256"] });
+    return NextResponse.next(); // Authenticated
+  } catch (err) {
+    console.error("Invalid token:", err.message);
+
+    const returnUrl = req.nextUrl.pathname + req.nextUrl.search;
+    const response = NextResponse.redirect(new URL("/Auth", req.url));
+    response.cookies.set("returnUrl", returnUrl, {
+      path: "/",
+      httpOnly: true,
+      maxAge: 900,
+    });
+    return response;
+  }
 }
 
 export const config = {
-  matcher: ["/book-tc", "/details/:path*", "/prescriptions", "/planUsers","/MHL","/blood","/camp"],
+  matcher: ["/book-tc", "/details/:path*", "/prescriptions", "/planUsers", "/MHL", "/blood", "/camp"],
 };
