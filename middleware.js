@@ -151,46 +151,62 @@ import { jwtVerify } from "jose";
 function getSecretKey() {
   const secret = process.env.JWT_SECRET;
   if (!secret || secret === "default_secret") {
-    console.warn("Warning: Using default JWT secret.");
+    // It's better to avoid logging secrets, even default ones, in production.
+    // This warning is fine for development.
+    console.warn("Warning: JWT secret is not set or is the default value.");
   }
   return new TextEncoder().encode(secret || "default_secret");
 }
 
 export async function middleware(req) {
-  console.log("Middleware Triggered");
+  const { pathname } = req.nextUrl;
+  console.log("Middleware triggered for path:", pathname);
+
+  // 1. ADD THIS CHECK: If the request is for the authentication page,
+  // let it go through without any token verification. This prevents a redirect loop.
+  if (pathname.startsWith("/Auth")) {
+    return NextResponse.next();
+  }
 
   const token = req.cookies.get("accessToken")?.value;
 
-  // No token → redirect to login
+  // If no token exists, redirect to the login page
   if (!token) {
-    const returnUrl = req.nextUrl.pathname + req.nextUrl.search;
-    const response = NextResponse.redirect(new URL("/Auth", req.url));
-    response.cookies.set("returnUrl", returnUrl, {
-      path: "/",
-      httpOnly: true,
-      maxAge: 900, // 15 mins
-    });
-    return response;
+    // Construct the full redirect URL
+    const loginUrl = new URL("/Auth", req.url);
+    
+    // Set the returnUrl so we can redirect back after a successful login
+    loginUrl.searchParams.set("returnUrl", pathname + req.nextUrl.search);
+    
+    return NextResponse.redirect(loginUrl);
   }
 
+  // If a token exists, try to verify it
   try {
     const SECRET_KEY = getSecretKey();
     await jwtVerify(token, SECRET_KEY, { algorithms: ["HS256"] });
-    return NextResponse.next(); // Authenticated
+
+    // Token is valid, allow the request to proceed
+    return NextResponse.next();
   } catch (err) {
+    // This block catches invalid/expired tokens
     console.error("Invalid token:", err.message);
 
-    const returnUrl = req.nextUrl.pathname + req.nextUrl.search;
-    const response = NextResponse.redirect(new URL("/Auth", req.url));
-    response.cookies.set("returnUrl", returnUrl, {
-      path: "/",
-      httpOnly: true,
-      maxAge: 900,
-    });
+    // Redirect to login page just like the 'no token' case
+    const loginUrl = new URL("/Auth", req.url);
+    loginUrl.searchParams.set("returnUrl", pathname + req.nextUrl.search);
+    
+    const response = NextResponse.redirect(loginUrl);
+    
+    // It's good practice to clear the invalid cookie
+    response.cookies.delete("accessToken");
+    
     return response;
   }
 }
 
+// Your matcher config remains the same.
+// It correctly specifies which routes are protected.
 export const config = {
   matcher: ["/book-tc", "/details/:path*", "/prescriptions", "/planUsers", "/MHL", "/blood", "/camp"],
 };
