@@ -348,6 +348,7 @@
 // This directive tells Next.js to render this component in the browser.
 // It MUST be the very first line of the file.
 'use client';
+export const dynamic = 'force-dynamic';
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
