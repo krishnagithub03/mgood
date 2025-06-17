@@ -140,12 +140,13 @@ const HealthCampForm = () => {
             type="number" 
             id="age" 
             name="age" 
+            min="1" 
+            max="120"
             value={formData.age} 
             onChange={handleChange} 
             className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500" 
             placeholder="Enter your age" 
-            min="1" 
-            max="120"
+           
           />
         </div>
         
