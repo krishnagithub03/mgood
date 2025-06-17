@@ -1,3 +1,7 @@
+// 
+
+
+
 'use client';
 
 import React, { useState } from 'react';
@@ -45,12 +49,17 @@ const HealthPackageForm = () => {
 
     try {
       // --- Validation Checks ---
+      const ageValue = parseInt(formData.age, 10); // Parse age once
+
       if (!formData.employeeId.trim()) throw new Error("Please enter your Employee ID");
       if (!formData.name.trim()) throw new Error("Please enter your full name");
       if (!validateEmail(formData.email)) throw new Error("Please enter a valid email address");
       if (!validateMobileNumber(formData.mobileNo)) throw new Error("Please enter a valid 10-digit mobile number");
       if (!formData.gender) throw new Error("Please select your gender");
-      if (!formData.age.trim() || parseInt(formData.age, 10) <= 0) throw new Error("Please enter a valid age");
+      // --- UPDATED AGE VALIDATION ---
+      if (!formData.age.trim() || isNaN(ageValue) || ageValue < 1 || ageValue > 120) {
+          throw new Error("Please enter a valid age between 1 and 120");
+      }
       if (!formData.healthPackage) throw new Error("Please select a health package plan");
       if (!formData.address.trim()) throw new Error("Please enter your complete address");
       if (!validatePincode(formData.pincode)) throw new Error("Please enter a valid 6-digit pincode");
@@ -100,7 +109,7 @@ const HealthPackageForm = () => {
     <div className="max-w-xl mx-auto p-6 sm:p-10 bg-white rounded-lg shadow-xl my-10 sm:my-20">
       <div className="text-center mb-8">
         {/* <h1 className="text-2xl sm:text-3xl font-bold text-primary">MGood Logo</h1> */}
-        <img src="./mgood_logo.jpg" alt="" />
+        <img src="./mgood_logo.jpg" alt="MGood Logo" />
         <p className="text-gray-600 mt-2">Employee Health Package Registration</p>
       </div>
 
@@ -145,8 +154,7 @@ const HealthPackageForm = () => {
             </div>
             <div className="mb-4">
               <label htmlFor="age" className="block mb-2 font-medium">Age</label>
-              <input type="number" id="age" name="age" value={formData.age} onChange={handleChange} className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500" placeholder="Enter your age"  min="1" 
-            max="120" />
+              <input type="number" id="age" name="age" value={formData.age} onChange={handleChange} className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500" placeholder="Enter your age" min="1" max="120"/>
             </div>
         </div>
 
@@ -166,7 +174,7 @@ const HealthPackageForm = () => {
 
         <div className="mb-4">
           <label htmlFor="pincode" className="block mb-2 font-medium">Pincode</label>
-          <input type="text" id="pincode" name="pincode" value={formData.pincode} onChange={handleChange} className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500" placeholder="6-digit pincode" maxLength="6" />
+          <input type="text" id="pincode" name="pincode" value={formData.pincode} onChange={handleChange} className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500" placeholder="Pincode numeric only 6 digit" maxLength="6" />
         </div>
         
         <button type="submit" disabled={isSubmitting} className={`w-full ${isSubmitting ? 'bg-blue-300 cursor-not-allowed' : 'bg-primary hover:bg-blue-600'} text-white py-3 px-4 rounded transition duration-200 font-semibold mt-4`}>
