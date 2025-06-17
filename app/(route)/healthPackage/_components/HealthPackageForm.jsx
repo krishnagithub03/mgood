@@ -145,7 +145,8 @@ const HealthPackageForm = () => {
             </div>
             <div className="mb-4">
               <label htmlFor="age" className="block mb-2 font-medium">Age</label>
-              <input type="number" id="age" name="age" value={formData.age} onChange={handleChange} className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500" placeholder="Enter your age" min="1" />
+              <input type="number" id="age" name="age" value={formData.age} onChange={handleChange} className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500" placeholder="Enter your age"  min="1" 
+            max="120" />
             </div>
         </div>
 
