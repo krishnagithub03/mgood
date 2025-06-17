@@ -208,5 +208,5 @@ export async function middleware(req) {
 // Your matcher config remains the same.
 // It correctly specifies which routes are protected.
 export const config = {
-  matcher: ["/book-tc", "/details/:path*", "/prescriptions", "/planUsers", "/MHL", "/blood", "/camp"],
+  matcher: ["/book-tc", "/details/:path*", "/prescriptions", "/planUsers", "/MHL", "/blood", "/camp","/healthPackage"],
 };
