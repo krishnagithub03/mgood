@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Phone, Shield, ArrowRight, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { AlertCircle } from "lucide-react";
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function OTPVerification() {
   const [step, setStep] = useState("phone");
@@ -340,3 +341,5 @@ export default function OTPVerification() {
     </div>
   );
 }
+
+
