@@ -99,13 +99,14 @@ const HealthPackageForm = () => {
   return (
     <div className="max-w-xl mx-auto p-6 sm:p-10 bg-white rounded-lg shadow-xl my-10 sm:my-20">
       <div className="text-center mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-primary">MGood Logo</h1>
+        {/* <h1 className="text-2xl sm:text-3xl font-bold text-primary">MGood Logo</h1> */}
+        <img src="./mgood_logo.jpg" alt="" />
         <p className="text-gray-600 mt-2">Employee Health Package Registration</p>
       </div>
 
       {submitted && (
         <div className="text-center mb-4 p-4 bg-green-100 text-green-700 rounded-md">
-          Registration successful! You may submit another response if needed.
+          Registration successful!
         </div>
       )}
 
