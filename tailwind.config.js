@@ -6,6 +6,11 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: [
+    'animate-marquee',
+    'animate-marquee-vertical',
+    'group-hover:[animation-play-state:paused]', // It's good practice to safelist complex classes too
+  ],
   theme: {
     extend: {
       colors: {
