@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Building, Users, Shield, Heart, CheckCircle, Phone, Mail, MapPin, ArrowRight, Star, Check } from 'lucide-react';
 import { cn } from "@/lib/utils";
-import { Marquee } from "@/components/magicui/marquee";
+
 
 // --- Reusable Pricing Card Component ---
 const PricingCard = ({ plan, index }) => {
@@ -65,6 +65,28 @@ const PricingCard = ({ plan, index }) => {
         BOOK NOW
       </a>
     </motion.div>
+  );
+};
+
+
+const Marquee = ({ children, pauseOnHover = false, repeat = 4, reverse = false }) => {
+  return (
+    <div className="marquee-wrapper group flex overflow-hidden p-2 gap-[var(--gap)] [--duration:30s] [--gap:1rem]">
+      {Array(repeat).fill(0).map((_, i) => (
+        <div
+          key={i}
+          className={cn(
+            "flex shrink-0 justify-around gap-[var(--gap)] animate-marquee",
+            {
+              "group-hover:paused": pauseOnHover,
+              reverse: reverse,
+            }
+          )}
+        >
+          {children}
+        </div>
+      ))}
+    </div>
   );
 };
 
@@ -143,7 +165,14 @@ const CustomPlan = () => {
 
   const ReviewCard = ({ img, name, username, body }) => (
     <figure className={cn("relative h-full w-64 cursor-pointer overflow-hidden rounded-xl border p-4", "border-gray-200 bg-white hover:shadow-lg transition-shadow")}>
-      <div className="flex flex-row items-center gap-4"><img className="rounded-full" style={{ width: '64px', height: '64px', objectFit: 'cover' }} alt={name} src={img} /><div className="flex flex-col"><figcaption className="text-sm font-semibold text-gray-800">{name}</figcaption>{username && <p className="text-xs font-medium text-gray-500">{username}</p>}</div></div><blockquote className="mt-4 text-sm text-gray-600">{body}</blockquote>
+      <div className="flex flex-row items-center gap-4">
+        <img className="rounded-full" style={{ width: '64px', height: '64px', objectFit: 'cover' }} alt={name} src={img} />
+        <div className="flex flex-col">
+          <figcaption className="text-sm font-semibold text-gray-800">{name}</figcaption>
+          {username && <p className="text-xs font-medium text-gray-500">{username}</p>}
+        </div>
+      </div>
+      <blockquote className="mt-4 text-sm text-gray-600">{body}</blockquote>
     </figure>
   );
 
@@ -197,13 +226,28 @@ const CustomPlan = () => {
 
       {/* Marquee Section */}
       <section className="py-20 bg-white">
-        <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className='text-4xl lg:text-5xl font-bold text-blue-600 mb-12 text-center'>Our Onboarded Corporate</motion.h2>
-          <Marquee pauseOnHover className="[--duration:30s]">{reviews.map((review) => <ReviewCard key={review.id} {...review} />)}</Marquee>
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white"></div>
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-white"></div>
-        </div>
-      </section>
+      <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-4xl lg:text-5xl font-bold text-blue-600 mb-12 text-center"
+        >
+          Our Onboarded Corporate
+        </motion.h2>
+
+        <Marquee pauseOnHover>
+          {reviews.map((review) => (
+            <ReviewCard key={review.id} {...review} />
+          ))}
+        </Marquee>
+
+        {/* Gradient Overlays */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-white" />
+      </div>
+    </section>
 
       {/* Features Section */}
       <section className="py-20 bg-gray-50">
