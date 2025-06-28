@@ -29,22 +29,39 @@ const Customcorporate = () => {
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const validatePhone = (phone) => /^[6-9]\d{9}$/.test(phone);
 
-  const handleSubmit = async (e) => {
+// In Customcorporate.js
+
+const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setIsSubmitting(true);
     setSubmitted(false);
 
     try {
+      // Client-side validation
       if (!formData.companyName.trim()) throw new Error("Please enter your company name");
       if (!formData.contactPerson.trim()) throw new Error("Please enter contact person name");
       if (!validateEmail(formData.email)) throw new Error("Please enter a valid email address");
       if (!validatePhone(formData.phoneNumber)) throw new Error("Please enter a valid 10-digit mobile number");
       if (!formData.employeeCount) throw new Error("Please select employee count");
 
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      // Make the API call
+      // Ensure '/api/submit-data' is the correct path to your API route
+      const response = await fetch("/api/submit-to-sheets", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Server-side error occurred.');
+      }
+
       setSubmitted(true);
+   
       setFormData({
         companyName: '',
         contactPerson: '',
@@ -55,12 +72,14 @@ const Customcorporate = () => {
         currentProvider: '',
         specificNeeds: ''
       });
+
     } catch (err) {
       setError(err.message);
     } finally {
       setIsSubmitting(false);
     }
   };
+
 
   const reviews = [
     {
