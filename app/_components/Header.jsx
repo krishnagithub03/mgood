@@ -44,6 +44,11 @@ function Header() {
       name: "Blood Donation",
       path : "/blood"
     },
+    {
+      id: 6,
+      name: "Corporate",
+      path:" /Corporate",
+    }
    
   ];
   const handleMenu = () => {
