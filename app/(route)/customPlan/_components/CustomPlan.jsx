@@ -107,32 +107,48 @@ const CustomPlan = () => {
   const validatePhone = (phone) => /^[6-9]\d{9}$/.test(phone);
   const validatePincode = (pincode) => /^\d{6}$/.test(pincode);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setIsSubmitting(true);
-    setSubmitted(false);
+// In CustomPlan.js
 
-    try {
-      if (!formData.companyName.trim()) throw new Error("Please enter your company name");
-      if (!formData.contactPerson.trim()) throw new Error("Please enter contact person name");
-      if (!validateEmail(formData.email)) throw new Error("Please enter a valid email address");
-      if (!validatePhone(formData.phoneNumber)) throw new Error("Please enter a valid 10-digit mobile number");
-      if (!formData.plan) throw new Error("Please select a plan");
-      if (!formData.address.trim()) throw new Error("Please enter your address");
-      if (!validatePincode(formData.pincode)) throw new Error("Please enter a valid 6-digit pincode");
-      
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      setSubmitted(true);
-      setFormData({ companyName: '', contactPerson: '', email: '', phoneNumber: '', plan: '', address: '', pincode: '' });
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setIsSubmitting(false);
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError('');
+  setIsSubmitting(true);
+  setSubmitted(false);
+
+  try {
+    // --- Client-side validation (already in place) ---
+    if (!formData.companyName.trim()) throw new Error("Please enter your company name");
+    if (!formData.contactPerson.trim()) throw new Error("Please enter contact person name");
+    if (!validateEmail(formData.email)) throw new Error("Please enter a valid email address");
+    if (!validatePhone(formData.phoneNumber)) throw new Error("Please enter a valid 10-digit mobile number");
+    if (!formData.plan) throw new Error("Please select a plan");
+    if (!formData.address.trim()) throw new Error("Please enter your address");
+    if (!validatePincode(formData.pincode)) throw new Error("Please enter a valid 6-digit pincode");
+
+  
+    const response = await fetch('/api/submit-to-sheets', { 
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    // --- Handle API response ---
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Something went wrong on the server.');
     }
-  };
 
+    setSubmitted(true);
+    setFormData({ companyName: '', contactPerson: '', email: '', phoneNumber: '', plan: '', address: '', pincode: '' });
+
+  } catch (err) {
+    setError(err.message);
+  } finally {
+    setIsSubmitting(false);
+  }
+};
   const reviews = [
     { name: "Balaji Publication", body: "Our employees are happy using MGood services, because they are very proactive in providing solutions.", img: "/mgood_logo.jpg", id:1 },
     { name: "NMV India Private Limited", body: "We are in the oil and chemical industry, and MGood has provided good health checkups for our contractual employees.", img: "https://avatar.vercel.sh/jill", id:2 },
