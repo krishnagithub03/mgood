@@ -119,10 +119,10 @@ const CustomPlan = () => {
   };
 
   const reviews = [
-    { name: "Balaji Publication", body: "Our employees are happy using MGood services, because they are very proactive in providing solutions.", img: "/mgood_logo.jpg" },
-    { name: "NMV India Private Limited", body: "We are in the oil and chemical industry, and MGood has provided good health checkups for our contractual employees.", img: "https://avatar.vercel.sh/jill" },
-    { name: "Pyramid Engineering", body: "MGood is offering our employees a unique plan which is so customized that we feel health empowered.", img: "https://avatar.vercel.sh/john" },
-    { name: "Pyramid Buildtech", body: "We have been offered full access of the MGood platform. Looking forward to a long term association.", img: "https://avatar.vercel.sh/jane" },
+    { name: "Balaji Publication", body: "Our employees are happy using MGood services, because they are very proactive in providing solutions.", img: "/mgood_logo.jpg", id:1 },
+    { name: "NMV India Private Limited", body: "We are in the oil and chemical industry, and MGood has provided good health checkups for our contractual employees.", img: "https://avatar.vercel.sh/jill", id:2 },
+    { name: "Pyramid Engineering", body: "MGood is offering our employees a unique plan which is so customized that we feel health empowered.", img: "https://avatar.vercel.sh/john" ,id:3 },
+    { name: "Pyramid Buildtech", body: "We have been offered full access of the MGood platform. Looking forward to a long term association.", img: "https://avatar.vercel.sh/jane", id:4 },
   ];
 
   const features = [
@@ -199,7 +199,7 @@ const CustomPlan = () => {
       <section className="py-20 bg-white">
         <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className='text-4xl lg:text-5xl font-bold text-blue-600 mb-12 text-center'>Our Onboarded Corporate</motion.h2>
-          <Marquee pauseOnHover className="[--duration:30s]">{reviews.map((review) => <ReviewCard key={review.name} {...review} />)}</Marquee>
+          <Marquee pauseOnHover className="[--duration:30s]">{reviews.map((review) => <ReviewCard key={review.id} {...review} />)}</Marquee>
           <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white"></div>
           <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-white"></div>
         </div>
