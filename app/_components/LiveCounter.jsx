@@ -32,7 +32,7 @@ function LiveUserCounter() {
     <StickyBanner className="bg-primary">
     <div className="text-center text-white max-w-[90%] drop-shadow-md py-1 text-sm font-medium">
       Total Requests Received : <NumberTicker
-      value={userCount}
+      value={526}
       className="whitespace-pre-wrap text-sm font-medium tracking-tighter text-white drop-shadow-md  dark:text-white"
     />
     </div>
