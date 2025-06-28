@@ -2,55 +2,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Building, Users, Shield, Heart, CheckCircle, Phone, Mail, MapPin, ArrowRight, Star } from 'lucide-react';
-// This import seems unused in the provided code, you can remove it if not needed elsewhere.
-// import { TextAnimate } from "@/components/magicui/text-animate"; 
 import { cn } from "@/lib/utils";
+import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
+import { Marquee } from "@/components/magicui/marquee";
 
-
-const Marquee = ({
-    className,
-    reverse = false,
-    pauseOnHover = false,
-    children,
-    vertical = false,
-    repeat = 4,
-    ...props
-  }) => {
-    return (
-      <div
-        {...props}
-        className={cn(
-          "group flex overflow-hidden p-2 [--duration:40s] [--gap:1rem] [gap:var(--gap)]",
-          {
-            "flex-row": !vertical,
-            "flex-col": vertical,
-          },
-          className
-        )}>
-        {Array(repeat)
-          .fill(0)
-          .map((_, i) => (
-            <div
-              key={i}
-              className={cn("flex shrink-0 justify-around [gap:var(--gap)]", {
-                "animate-marquee flex-row": !vertical,
-                "animate-marquee-vertical flex-col": vertical,
-                "group-hover:[animation-play-state:paused]": pauseOnHover,
-                "[animation-direction:reverse]": reverse,
-              })}>
-              {children}
-            </div>
-          ))}
-      </div>
-    );
-  };
 
 const Corporate = () => {
     const reviews = [
         {
           name: "Balaji Publication",
           body: "Our employees are happy using MGood services , Because they are very proactive in providing solutions",
-          img: "/mgood_logo.jpg", // Correct path for public directory
+          img: "/mgood_logo.jpg", 
         },
         {
           name: "NMV India Private Limited",
@@ -71,7 +33,7 @@ const Corporate = () => {
         },
     
       ];
-    
+
   const features = [
     {
       icon: <Users className="w-8 h-8 text-blue-600" />,
@@ -226,6 +188,7 @@ const Corporate = () => {
           </div>
         </div>
       </section>
+
 
       {/* Marquee Section */}
       <section className="py-12 bg-gray-50 dark:bg-background">
