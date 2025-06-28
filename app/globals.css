@@ -158,3 +158,45 @@ body {
     transform: translate(calc(-50% - 0.5rem));
   }
 }
+
+@layer utilities {
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+  }
+}
+
+@keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(-100% - var(--gap)));
+  }
+}
+
+.animate-marquee {
+  animation: marquee var(--duration, 30s) linear infinite;
+}
+
+.animate-marquee-vertical {
+  animation: marquee-vertical var(--duration, 30s) linear infinite;
+}
+
+.group-hover\:paused:hover {
+  animation-play-state: paused;
+}
+
+.reverse {
+  animation-direction: reverse;
+}
+
+/* optional: fallback gap/duration */
+.marquee-wrapper {
+  --gap: 1rem;
+  --duration: 30s;
+}
+}
