@@ -61,6 +61,14 @@ module.exports = {
         body: ["Inter", "sans-serif"],
       },
        keyframes: {
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-100% - var(--gap)))" },
+        },
+        "marquee-vertical": {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(calc(-100% - var(--gap)))" },
+        },
         "caret-blink": {
           "0%,70%,100%": { opacity: "1" },
           "20%,50%": { opacity: "0" },
@@ -71,9 +79,12 @@ module.exports = {
           }
       },
     },
+
       animation: {
           "caret-blink": "caret-blink 1.25s ease-out infinite",
           scroll: "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
+          marquee: "marquee var(--duration) linear infinite",
+          "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
         },
     },
     
