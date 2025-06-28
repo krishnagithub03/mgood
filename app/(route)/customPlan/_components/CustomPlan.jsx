@@ -69,19 +69,13 @@ const PricingCard = ({ plan, index }) => {
 };
 
 
-const Marquee = ({ children, pauseOnHover = false, repeat = 4, reverse = false }) => {
+const Marquee = ({ children, repeat = 4, reverse = false, pauseOnHover = true }) => {
   return (
-    <div className="marquee-wrapper group flex overflow-hidden p-2 gap-[var(--gap)] [--duration:30s] [--gap:1rem]">
+    <div className="marquee-wrapper group">
       {Array(repeat).fill(0).map((_, i) => (
         <div
           key={i}
-          className={cn(
-            "flex shrink-0 justify-around gap-[var(--gap)] animate-marquee",
-            {
-              "group-hover:paused": pauseOnHover,
-              reverse: reverse,
-            }
-          )}
+          className={`marquee-track ${reverse ? 'reverse' : ''}`}
         >
           {children}
         </div>
@@ -89,7 +83,6 @@ const Marquee = ({ children, pauseOnHover = false, repeat = 4, reverse = false }
     </div>
   );
 };
-
 
 const CustomPlan = () => {
   const [formData, setFormData] = useState({
@@ -237,11 +230,11 @@ const CustomPlan = () => {
           Our Onboarded Corporate
         </motion.h2>
 
-        <Marquee pauseOnHover>
-          {reviews.map((review) => (
-            <ReviewCard key={review.id} {...review} />
-          ))}
-        </Marquee>
+        <Marquee>
+              {reviews.map((review) => (
+           <ReviewCard key={review.id} {...review} />
+               ))}
+         </Marquee>
 
         {/* Gradient Overlays */}
         <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white" />
