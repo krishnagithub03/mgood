@@ -188,23 +188,174 @@
 //   }
 // }
 
+// import { google } from "googleapis";
+// import { NextResponse } from "next/server";
+
+// // Create auth client once and cache it
+// let authClient = null;
+// let sheetsClient = null;
+
+// // Initialize the Google Sheets client
+// async function getSheetClient() {
+//   if (sheetsClient) {
+//     return sheetsClient;
+//   }
+//   try {
+//     const privateKey = process.env.GOOGLE_PRIVATE_KEY;
+//     if (!privateKey) {
+//       throw new Error("Google Private Key is missing in environment variables");
+//     }
+//     const formattedPrivateKey = privateKey.replace(/\\n/g, "\n");
+//     const auth = new google.auth.GoogleAuth({
+//       credentials: {
+//         client_email: process.env.GOOGLE_CLIENT_EMAIL,
+//         private_key: formattedPrivateKey,
+//       },
+//       scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+//     });
+//     authClient = await auth.getClient();
+//     sheetsClient = google.sheets({ version: "v4", auth: authClient });
+//     return sheetsClient;
+//   } catch (error) {
+//     console.error("Error initializing Google Sheets client:", error);
+//     authClient = null; // Reset on error
+//     sheetsClient = null; // Reset on error
+//     throw error;
+//   }
+// }
+
+// // --- Validation Helpers ---
+// const validateServerMobileNumber = (mobileNumber) => {
+//     if (!mobileNumber) return false;
+//     return /^[6-9]\d{9}$/.test(String(mobileNumber));
+// };
+// const validateEmail = (email) => {
+//     if (!email) return false;
+//     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email));
+// };
+// const validatePincode = (pincode) => {
+//     if (!pincode) return false;
+//     return /^\d{6}$/.test(String(pincode));
+// };
+
+// export async function POST(request) {
+//   try {
+//     const body = await request.json();
+//     let values = [];
+//     let range = "";
+
+//     const submissionDate = new Date().toLocaleString("en-IN", {
+//         timeZone: "Asia/Kolkata",
+//         year: "numeric", month: "numeric", day: "numeric",
+//         hour: "2-digit", minute: "2-digit", second: "2-digit",
+//     });
+
+//     // --- Health Package Form ---
+//     if (body.employeeId !== undefined && body.healthPackage !== undefined) {
+//       if (!body.employeeId || !body.name || !body.email || !body.mobileNo || !body.gender || !body.age || !body.healthPackage || !body.address || !body.pincode) {
+//         return NextResponse.json({ message: "All fields are required for health package registration." }, { status: 400 });
+//       }
+//       if (!validateEmail(body.email)) return NextResponse.json({ message: "Invalid email format." }, { status: 400 });
+//       if (!validateServerMobileNumber(body.mobileNo)) return NextResponse.json({ message: "Invalid 10-digit mobile number." }, { status: 400 });
+//       if (!validatePincode(body.pincode)) return NextResponse.json({ message: "Invalid 6-digit pincode." }, { status: 400 });
+      
+//       values = [[
+//           body.employeeId, body.name, body.email, body.mobileNo, body.gender,
+//           body.age, body.healthPackage, body.address, body.pincode,
+//           submissionDate
+//       ]];
+//       range = "HealthPackage!A:J";
+
+//     // --- Blood Donation Form ---
+//     } else if (body.bloodGroup !== undefined) { 
+//       if (!body.name || !body.mobileNumber || !validateServerMobileNumber(body.mobileNumber)) {
+//         return NextResponse.json({ message: "Valid name and mobile number are required for blood donation." }, { status: 400 });
+//       }
+//       values = [[
+//           body.name, body.age, body.sex, body.city, body.state, body.mobileNumber, 
+//           body.bloodGroup, body.preexistingDisease || "None", body.willingToDonate,
+//           submissionDate
+//       ]];
+//       range = "BloodDonations!A:J";
+
+//     // --- Health Camp Form ---
+//     } else if (body.gender !== undefined && body.phoneNumber !== undefined) {
+//       if (!body.name || !body.age || !body.gender || !body.phoneNumber || !validateServerMobileNumber(body.phoneNumber)) { 
+//         return NextResponse.json({ message: "Valid name, age, gender, and phone number are required." }, { status: 400 });
+//       }
+//       values = [[
+//           body.name, body.age, body.gender, body.phoneNumber, 
+//           body.disease || "None", submissionDate
+//       ]];
+//       range = "HealthCamp!A:F";
+
+//     // --- MHL Form ---
+//     } else if (body.phoneNumber !== undefined && body.numberOfSixes !== undefined) { 
+//       if (!body.name || !body.phoneNumber || !validateServerMobileNumber(body.phoneNumber)) {
+//         return NextResponse.json({ message: "Valid name and phone number are required for MHL." }, { status: 400 });
+//       }
+//       values = [[
+//           body.name, body.phoneNumber, body.numberOfSixes,
+//           submissionDate, body.selectedMatch || "No Match",
+//       ]];
+//       range = "MHL!A:E"; 
+
+//     } else {
+//       console.warn("Unknown form submission type. Body:", body);
+//       return NextResponse.json({ message: "Could not determine form type from submitted data." }, { status: 400 });
+//     }
+
+//     const spreadsheetId = process.env.GOOGLE_SHEET_ID;
+//     if (!spreadsheetId) {
+//       throw new Error("Google Sheet ID is missing in environment variables");
+//     }
+
+//     try {
+//       const sheets = await getSheetClient();
+//       await sheets.spreadsheets.values.append({
+//         spreadsheetId,
+//         range: range,
+//         valueInputOption: "USER_ENTERED",
+//         insertDataOption: "INSERT_ROWS",
+//         resource: { values },
+//       });
+
+//       return NextResponse.json({ message: "Data submitted successfully" }, { status: 200 });
+
+//     } catch (googleError) {
+//       console.error("Google Sheets API Error:", googleError);
+//       if (googleError.message?.includes("invalid_grant")) {
+//         authClient = null; sheetsClient = null;
+//         return NextResponse.json({ message: "Authentication error. Please contact support." }, { status: 401 });
+//       }
+//       if (googleError.message?.includes("permission")) {
+//         return NextResponse.json({ message: "Permission denied. Contact support." }, { status: 403 });
+//       }
+//       throw googleError;
+//     }
+//   } catch (error) {
+//     console.error("Error submitting to Google Sheets:", error);
+//     return NextResponse.json({
+//         message: "Failed to submit data. Please try again later.",
+//         error: process.env.NODE_ENV === "development" ? error.message : undefined,
+//       }, { status: 500 });
+//   }
+// }
+
 import { google } from "googleapis";
 import { NextResponse } from "next/server";
 
-// Create auth client once and cache it
 let authClient = null;
 let sheetsClient = null;
 
-// Initialize the Google Sheets client
 async function getSheetClient() {
   if (sheetsClient) {
     return sheetsClient;
   }
   try {
     const privateKey = process.env.GOOGLE_PRIVATE_KEY;
-    if (!privateKey) {
-      throw new Error("Google Private Key is missing in environment variables");
-    }
+    if (!privateKey) throw new Error("Google Private Key is missing");
+    
     const formattedPrivateKey = privateKey.replace(/\\n/g, "\n");
     const auth = new google.auth.GoogleAuth({
       credentials: {
@@ -218,25 +369,15 @@ async function getSheetClient() {
     return sheetsClient;
   } catch (error) {
     console.error("Error initializing Google Sheets client:", error);
-    authClient = null; // Reset on error
-    sheetsClient = null; // Reset on error
+    authClient = null; sheetsClient = null;
     throw error;
   }
 }
 
 // --- Validation Helpers ---
-const validateServerMobileNumber = (mobileNumber) => {
-    if (!mobileNumber) return false;
-    return /^[6-9]\d{9}$/.test(String(mobileNumber));
-};
-const validateEmail = (email) => {
-    if (!email) return false;
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email));
-};
-const validatePincode = (pincode) => {
-    if (!pincode) return false;
-    return /^\d{6}$/.test(String(pincode));
-};
+const validateServerMobileNumber = (mobileNumber) => /^[6-9]\d{9}$/.test(String(mobileNumber));
+const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email));
+const validatePincode = (pincode) => /^\d{6}$/.test(String(pincode));
 
 export async function POST(request) {
   try {
@@ -249,9 +390,33 @@ export async function POST(request) {
         year: "numeric", month: "numeric", day: "numeric",
         hour: "2-digit", minute: "2-digit", second: "2-digit",
     });
-
+    
+    // ========================================================================
+    // --- NEW: Corporate Plan Form (CustomPlan component) ---
+    // ========================================================================
+    if (body.companyName !== undefined && body.contactPerson !== undefined) {
+      // Server-side validation
+      if (!body.companyName || !body.contactPerson || !body.plan || !body.address) {
+        return NextResponse.json({ message: "All fields are required for corporate plan registration." }, { status: 400 });
+      }
+      if (!validateEmail(body.email)) return NextResponse.json({ message: "Invalid email format." }, { status: 400 });
+      if (!validateServerMobileNumber(body.phoneNumber)) return NextResponse.json({ message: "Invalid 10-digit mobile number." }, { status: 400 });
+      if (!validatePincode(body.pincode)) return NextResponse.json({ message: "Invalid 6-digit pincode." }, { status: 400 });
+      
+      values = [[
+          submissionDate, // Column A
+          body.companyName, // Column B
+          body.contactPerson, // Column C
+          body.email, // Column D
+          body.phoneNumber, // Column E
+          body.plan, // Column F
+          body.address, // Column G
+          body.pincode // Column H
+      ]];
+      range = "CorporatePlans!A:H"; // New Sheet!
+    
     // --- Health Package Form ---
-    if (body.employeeId !== undefined && body.healthPackage !== undefined) {
+    } else if (body.employeeId !== undefined && body.healthPackage !== undefined) {
       if (!body.employeeId || !body.name || !body.email || !body.mobileNo || !body.gender || !body.age || !body.healthPackage || !body.address || !body.pincode) {
         return NextResponse.json({ message: "All fields are required for health package registration." }, { status: 400 });
       }
@@ -341,8 +506,6 @@ export async function POST(request) {
       }, { status: 500 });
   }
 }
-
-
 
 // import { google } from "googleapis";
 // import { NextResponse } from "next/server";
