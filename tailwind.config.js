@@ -9,7 +9,11 @@ module.exports = {
   safelist: [
     'animate-marquee',
     'animate-marquee-vertical',
-    'group-hover:[animation-play-state:paused]', // It's good practice to safelist complex classes too
+    '[animation-direction:reverse]',
+    'group-hover:[animation-play-state:paused]',
+    '[--duration:40s]',
+    '[--gap:1rem]',
+    'gap-[var(--gap)]',
   ],
   theme: {
     extend: {
@@ -25,7 +29,6 @@ module.exports = {
           foreground: "hsl(var(--popover-foreground))",
         },
         primary: {
-          // DEFAULT: "#00FF7F",
           DEFAULT: "#1CAC78",
           foreground: "hsl(var(--primary-foreground))",
         },
@@ -65,7 +68,7 @@ module.exports = {
         display: ["Poppins", "sans-serif"],
         body: ["Inter", "sans-serif"],
       },
-       keyframes: {
+      keyframes: {
         marquee: {
           from: { transform: "translateX(0)" },
           to: { transform: "translateX(calc(-100% - var(--gap)))" },
@@ -77,23 +80,20 @@ module.exports = {
         "caret-blink": {
           "0%,70%,100%": { opacity: "1" },
           "20%,50%": { opacity: "0" },
-          scroll: {
-            to: {
-              transform: "translate(calc(-50% - 0.5rem))",
-            },
-          }
+        },
+        scroll: {
+          to: {
+            transform: "translate(calc(-50% - 0.5rem))",
+          },
+        },
+      },
+      animation: {
+        "caret-blink": "caret-blink 1.25s ease-out infinite",
+        scroll: "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
+        marquee: "marquee var(--duration) linear infinite",
+        "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
       },
     },
-
-      animation: {
-          "caret-blink": "caret-blink 1.25s ease-out infinite",
-          scroll: "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
-          marquee: "marquee var(--duration) linear infinite",
-          "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
-        },
-    },
-    
   },
-  
   plugins: [require("tailwindcss-animate")],
 };
