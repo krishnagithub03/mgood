@@ -38,7 +38,7 @@ const Gallery = () => {
   ];
 
   return (
-    <div className="relative overflow-hidden w-full h-full py-20">
+    <div className="relative  w-full h-auto py-20">
       <Carousel slides={slideData} autoplay={true} autoplayInterval={3000}  />
     </div>
   );

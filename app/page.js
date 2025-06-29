@@ -8,6 +8,9 @@ import Gallery from "./_components/Gallery";
 import Event from "./_components/Event";
 import { Slider } from "./_components/Slider";
 import RuralGallery from "./_components/RuralGallery";
+import Trusted from "./_components/Trusted";
+import Numbers from "./_components/Numbers";
+import Services from "./_components/Services";
 
 
 export default function Home() {
@@ -16,9 +19,12 @@ export default function Home() {
        <Event />
        <Slider/>
       <Plans />
-      {/* hero->searchbar + category */}
+      <Numbers/>
       <Hero />
+      
+      <Services/>
       <Gallery/>
+      <Trusted/>
       <Testimonials />
       <Faqs />
       <RuralGallery/>

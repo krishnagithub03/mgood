@@ -8,9 +8,18 @@ import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { SparklesText } from "@/components/magicui/sparkles-text";
 import { Globe } from "@/components/magicui/globe"; // Assuming this path is correct
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
+import OurJourney, {StickyScrollRevealDemo } from "@/app/_components/Journey";
+
 
 // ... (testimonials and other constants remain the same) ...
 const testimonials = [
+  {
+    quote:
+      "We believe healthcare should be proactive, personal, and available — exactly when you need it.",
+    name: "Dr. Aayushi Agarwal",
+    designation: "MGood Doctor",
+    src: "/team3.jpg",
+  },
   {
     quote:
       "Driving strategic marketing initiatives, ensuring legal compliance, and cultivating high-impact sponsorships to elevate brand value and integrity.",
@@ -32,6 +41,8 @@ const testimonials = [
     designation: "IT Infrastructure Expert",
     src: "/mgood-krishna.jpg",
   },
+
+
 ];
 
 
@@ -51,6 +62,7 @@ const AboutUs = () => {
 
 
   return (
+    
     <section className="overflow-x-hidden">
       {/* About MGood Section */}
       <div className="flex items-center justify-center md:min-h-[60vh] min-h-[auto] py-16 md:py-20 px-6 md:px-10">
@@ -61,6 +73,7 @@ const AboutUs = () => {
             <span className="text-primary mx-2 ">MGOOD</span>
            
           </h1>
+         
           <TextGenerateEffect
             words={aboutMGoodText}
             className={"italic font-body md:text-lg text-lg leading-relaxed "}
@@ -195,6 +208,9 @@ const AboutUs = () => {
           </div>
         </div>
       </div>
+     <div>
+     <OurJourney/>
+     </div>
       
     </section>
   );
