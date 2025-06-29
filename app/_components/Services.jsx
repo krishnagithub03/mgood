@@ -44,7 +44,7 @@ const Services =()=>{
       
 
 return (
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-4 w-[90%] m-auto">
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-4 w-[90%] m-auto" id="services" >
     {features.map((feature, index) => (
         <motion.div
           key={index}

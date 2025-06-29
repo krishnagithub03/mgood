@@ -21,8 +21,8 @@ export default function Home() {
       <Plans />
       <Numbers/>
       <Hero />
-      
-      <Services/>
+
+      <Services />
       <Gallery/>
       <Trusted/>
       <Testimonials />
