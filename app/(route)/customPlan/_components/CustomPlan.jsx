@@ -181,7 +181,7 @@ const CustomPlan = () => {
       if (!formData.address.trim()) throw new Error("Please enter your address");
       if (!validatePincode(formData.pincode)) throw new Error("Please enter a valid 6-digit pincode");
 
-      const response = await fetch('/api/submit-data', { 
+      const response = await fetch('/api/submit-to-sheets', { 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -202,7 +202,7 @@ const CustomPlan = () => {
   };
 
   const reviews = [
-    { name: "Balaji Publication", body: "Our employees are happy using MGood services...", img: "/mgood_logo.jpg", id: 1 },
+    { name: "Balaji Publication", body: "Our employees are happy using MGood services...", img: "https://avatar.vercel.sh/jill", id: 1 },
     { name: "NMV India Private Limited", body: "MGood has provided good health checkups...", img: "https://avatar.vercel.sh/jill", id: 2 },
     { name: "Pyramid Engineering", body: "MGood is offering our employees a unique plan...", img: "https://avatar.vercel.sh/john", id: 3 },
     { name: "Pyramid Buildtech", body: "We have been offered full access of the MGood platform...", img: "https://avatar.vercel.sh/jane", id: 4 },
