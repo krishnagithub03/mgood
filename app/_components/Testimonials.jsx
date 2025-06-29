@@ -11,35 +11,40 @@ const Testimonials = () => {
     {
       quote:
         "Thanks Mgood for making us your partner. With this partnership We were not only able to build trust within our customers but also was able to provide them online consultation. Your partnership has helped us in increasing our business",
-      name: "Dr. Abhishek",
+      name: "Dr. Abhishek, MPT , Physiotherapy , Pro Kabbadi",
       number: 1,
+      rating: 5,
       
     },
     {
       quote:
-        " I have been practising physiotherapy from last 12 years, Mgood has helped me in bringing efficiency to my overall practice.Since now if needed be i can get an MBBS doctor on call as per patients need.",
-      title: "Dr. Parth",
+        " MGood is really very quick in arranging things, they have helped me by onboarding my setup to insurance network and are now handling each health claim effectively.",
+      title: "Dr. Mishul Agrawal, MBBS ms (General Surgery)",
       number: 2,
+      rating: 4,
     },
     {
       quote:
-        "Thanks Mgood for making us your partner. With this partnership We were not only able to build trust within our customers but also was able to provide them online consultation. Your partnership has helped us in increasing our business",
-      name: "Dr. Abhishek",
+        "We have been able to scale our presence with MGood , they organized camps for us and helps us in arraning more patients",
+      name: "Dr. Ashutosh Mishra , MBBS , MS ( Eye Surgeon)",
       title: "",
       number: 3,
+      rating: 5,
     },
     {
       quote:
-        " I have been practising physiotherapy from last 12 years, Mgood has helped me in bringing efficiency to my overall practice.Since now if needed be i can get an MBBS doctor on call as per patients need.",
-      title: "Dr. Parth",
+        " I have been running my dental clinic , adding my clinic to this network has helped me in exploring new avenues.",
+      title: "Dr. Deepika BDS, MIDA ",
       number: 4,
+      rating: 5,
     },
     {
       quote:
-        "Thanks Mgood for making us your partner. With this partnership We were not only able to build trust within our customers but also was able to provide them online consultation. Your partnership has helped us in increasing our business",
-      name: "Dr. Abhishek",
+        "I have registered my products on amazon via MGood , they have helped me in increasing my business via this channel",
+      name: "Agrawal Optical Company",
       title: "",
       number: 5,
+      rating: 4,
     },
   ];
 
