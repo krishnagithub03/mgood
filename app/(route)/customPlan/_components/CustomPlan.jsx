@@ -356,7 +356,6 @@
 
 'use client';
 
-// Step 1: Add new imports
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
