@@ -85,7 +85,7 @@ const handleSubmit = async (e) => {
     {
       name: "Balaji Publication",
       body: "Our employees are happy using MGood services, because they are very proactive in providing solutions.",
-      img: "/mgood_logo.jpg", // Corrected Path for Public Directory
+      img: "https://avatar.vercel.sh/jill", // Corrected Path for Public Directory
     },
     {
       name: "NMV India Private Limited",

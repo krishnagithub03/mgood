@@ -12,7 +12,7 @@ const Corporate = () => {
         {
           name: "Balaji Publication",
           body: "Our employees are happy using MGood services , Because they are very proactive in providing solutions",
-          img: "/mgood_logo.jpg", 
+          img: "https://avatar.vercel.sh/jill", 
         },
         {
           name: "NMV India Private Limited",
@@ -21,13 +21,11 @@ const Corporate = () => {
         },
         {
           name: "Pyramid Engineering",
-          username: "@john",
           body: "MGood is offering our employees an unique plan which is so customized that we feel health empowered",
           img: "https://avatar.vercel.sh/john",
         },
         {
           name: "Pyramid Buildtech",
-          username: "@jane",
           body: "We have been offered full access of MGood platform , Looking forward for a long term association",
           img: "https://avatar.vercel.sh/jane",
         },
