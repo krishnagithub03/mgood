@@ -234,7 +234,7 @@ const CustomPlan = () => {
        "You saved 2420 INR",
         "Elderly Care Program for Parents"
       ],
-      ctaLink: "/customPlan#register",
+      ctaLink: `/customPlan?companyId=${companyId}#register`,
       highlight: false
     },
     {
