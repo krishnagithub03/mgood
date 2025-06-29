@@ -29,7 +29,7 @@ function LiveUserCounter() {
   }, []);
 
   return (
-    <StickyBanner className="bg-primary">
+    <StickyBanner className="bg-gradient-to-r from-blue-600 to-purple-700">
     <div className="text-center text-white max-w-[90%] drop-shadow-md py-1 text-sm font-medium">
       Total Requests Received : <NumberTicker
       value={526}

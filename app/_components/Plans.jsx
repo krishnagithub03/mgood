@@ -8,7 +8,7 @@ const Plans = () => {
       
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-center md:gap-8">
       
-        <div className="rounded-2xl p-6 border border-primary  ring-primary ring-1 shadow-xs  sm:order-last sm:px-8 lg:p-12">
+        <div className="rounded-2xl p-6 border border-blue-600  ring-blue-600 ring-1 shadow-xs  sm:order-last sm:px-8 lg:p-12">
         
           <div className="text-center">
          
@@ -117,7 +117,7 @@ const Plans = () => {
           <a
             // href="http://localhost:3001/planUsers"
             href="https://mgood.org/planUsers"
-            className="mt-8 block rounded-full border border-primary bg-primary px-12 py-3 text-center text-sm font-medium text-white hover:bg-white hover:text-primary hover:ring-1 hover:ring-primary focus:ring-3 focus:outline-hidden"
+            className="mt-8 block rounded-full border border-gradient-to-r from-blue-600 to-purple-700 bg-gradient-to-r from-blue-600 to-purple-700 px-12 py-3 text-center text-sm font-medium text-white hover:bg-white hover:text-blue-600 hover:ring-1 hover:ring-blue-600 focus:ring-3 focus:outline-hidden"
           >
             Get Started
           </a>

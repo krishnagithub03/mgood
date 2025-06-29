@@ -245,10 +245,10 @@ const Slide = ({
   const { src, button, title } = slide;
 
   return (
-    (<div className="[perspective:1200px] [transform-style:preserve-3d]">
+    (<div className="[perspective:1200px] [transform-style:preserve-3d] ">
       <li
         ref={slideRef}
-        className="flex flex-1 flex-col items-center justify-center relative text-center text-white opacity-100 transition-all duration-300 ease-in-out w-[70vmin] h-[70vmin] mx-[4vmin] z-10 "
+        className="flex flex-1 flex-col items-center justify-center relative text-center text-white opacity-100 transition-all duration-300 ease-in-out w-[45vmin] h-[35vmin] mx-[2vmin] z-10 "
         onClick={() => handleSlideClick(index)}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
@@ -269,7 +269,7 @@ const Slide = ({
                 : "none",
           }}>
           <img
-            className="absolute inset-0 w-[120%] h-[120%] object-cover opacity-100 transition-opacity duration-600 ease-in-out"
+            className="absolute inset-0 w-[100%] h-[100%]  object-contain opacity-100 transition-opacity duration-600 ease-in-out"
             style={{
               opacity: current === index ? 1 : 0.5,
             }}
@@ -284,7 +284,7 @@ const Slide = ({
         </div>
 
         <article
-          className={`relative p-[4vmin] transition-opacity duration-1000 ease-in-out ${
+          className={`relative p-[2vmin]  transition-opacity duration-1000 ease-in-out ${
             current === index ? "opacity-100 visible" : "opacity-0 invisible"
           }`}>
           <h2 className="text-lg md:text-2xl lg:text-4xl font-semibold  relative">
@@ -306,7 +306,7 @@ const CarouselControl = ({
 }) => {
   return (
     (<button
-      className={`w-10 h-10 flex items-center mx-2 justify-center bg-primary dark:bg-neutral-800 border-3 border-transparent rounded-full focus:border-[#6D64F7] focus:outline-none hover:-translate-y-0.5 active:translate-y-0.5 transition duration-200 ${
+      className={`w-10 h-10 flex items-center mx-1 justify-center bg-primary dark:bg-neutral-800 border-3 border-transparent rounded-full focus:border-[#6D64F7] focus:outline-none hover:-translate-y-0.5 active:translate-y-0.5 transition duration-200 ${
         type === "previous" ? "rotate-180" : ""
       }`}
       title={title}
@@ -369,35 +369,35 @@ export default function Carousel({
   const id = useId();
 
   return (
-    (<div
-      className="relative w-[70vmin] h-[70vmin] mx-auto"
-      aria-labelledby={`carousel-heading-${id}`}>
+    (<div className="relative w-[50vmin] h-[45vmin] mx-auto" aria-labelledby={`carousel-heading-${id}`}>
       <ul
-        className="absolute flex mx-[-4vmin] transition-transform duration-1000 ease-in-out"
+        className="absolute flex mx-[-2vmin] transition-transform duration-1000 ease-in-out"
         style={{
-          // Protect against division by zero if slides.length is 0
           transform: slides.length > 0 ? `translateX(-${current * (100 / slides.length)}%)` : 'translateX(0%)',
         }}>
         {slides.map((slide, index) => (
           <Slide
-            key={index} // It's generally better to use a unique ID from the slide data if available
+            key={index}
             slide={slide}
             index={index}
             current={current}
-            handleSlideClick={handleSlideClick} />
+            handleSlideClick={handleSlideClick}
+          />
         ))}
       </ul>
-      {slides.length > 1 && ( // Only show controls if there's more than one slide
-        <div className="absolute flex justify-center w-full top-[calc(100%+1rem)]">
+    
+      {slides.length > 1 && (
+        <div className="absolute flex justify-center w-full top-full mt-2">
           <CarouselControl
             type="previous"
             title="Go to previous slide"
-            handleClick={handlePreviousClick} />
-
-          <CarouselControl 
-            type="next" 
-            title="Go to next slide" 
-            handleClick={handleNextClick} />
+            handleClick={handlePreviousClick}
+          />
+          <CarouselControl
+            type="next"
+            title="Go to next slide"
+            handleClick={handleNextClick}
+          />
         </div>
       )}
     </div>)

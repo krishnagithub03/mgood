@@ -125,9 +125,8 @@
 //     if (!formData.address.trim()) throw new Error("Please enter your address");
 //     if (!validatePincode(formData.pincode)) throw new Error("Please enter a valid 6-digit pincode");
 
-//     // --- Make the API call ---
-//     // Replace '/api/submit' with the actual path to your API route if it's different
-//     const response = await fetch("/api/submit-to-sheets", { 
+  
+//     const response = await fetch('/api/submit-to-sheets', { 
 //       method: 'POST',
 //       headers: {
 //         'Content-Type': 'application/json',
@@ -149,10 +148,6 @@
 //   } finally {
 //     setIsSubmitting(false);
 //   }
-// };
-
-
-
 // };
 //   const reviews = [
 //     { name: "Balaji Publication", body: "Our employees are happy using MGood services, because they are very proactive in providing solutions.", img: "/mgood_logo.jpg", id:1 },
@@ -358,12 +353,24 @@
 // export default CustomPlan;
 
 
+
 'use client';
-import React, { useState } from 'react';
+
+// Step 1: Add new imports
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Building, Users, Shield, Heart, CheckCircle, Phone, Mail, MapPin, ArrowRight, Star, Check } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
+// --- Sample Company Data ---
+// In a real app, you might fetch this or import it from a shared file.
+const companyData = [
+  { id: '1', name: 'Pyramid Buildtech' },
+  { id: '2', name: 'Balaji Publication' },
+  { id: '3', name: 'NMV India Private Limited' },
+  { id: '4', name: 'Pyramid Engineering' },
+];
 
 // --- Reusable Pricing Card Component ---
 const PricingCard = ({ plan, index }) => {
@@ -402,7 +409,6 @@ const PricingCard = ({ plan, index }) => {
             { !plan.price.startsWith('C') && <span className={cn("text-sm font-medium", isHighlighted ? "text-blue-200" : "text-gray-700")}>/employee</span> }
           </p>
         </div>
-
         <ul className="mt-8 space-y-3">
           {plan.features.map((feature, i) => (
             <li key={i} className="flex items-start gap-2">
@@ -412,7 +418,6 @@ const PricingCard = ({ plan, index }) => {
           ))}
         </ul>
       </div>
-
       <a
         href={plan.ctaLink}
         className={cn(
@@ -428,18 +433,40 @@ const PricingCard = ({ plan, index }) => {
   );
 };
 
-
-const Marquee = ({ children, repeat = 4, reverse = false, pauseOnHover = true }) => {
+// --- Marquee Component ---
+const Marquee = ({
+  className,
+  reverse = false,
+  pauseOnHover = false,
+  children,
+  vertical = false,
+  repeat = 4,
+  ...props
+}) => {
   return (
-    <div className="marquee-wrapper group">
-      {Array(repeat).fill(0).map((_, i) => (
-        <div
-          key={i}
-          className={`marquee-track ${reverse ? 'reverse' : ''}`}
-        >
-          {children}
-        </div>
-      ))}
+    <div
+      {...props}
+      className={cn(
+        "group flex overflow-hidden p-2 [--duration:40s] [--gap:1rem] [gap:var(--gap)]",
+        { "flex-row": !vertical, "flex-col": vertical },
+        className
+      )}
+    >
+      {Array(repeat)
+        .fill(0)
+        .map((_, i) => (
+          <div
+            key={i}
+            className={cn("flex shrink-0 justify-around [gap:var(--gap)]", {
+              "animate-marquee flex-row": !vertical,
+              "animate-marquee-vertical flex-col": vertical,
+              "group-hover:[animation-play-state:paused]": pauseOnHover,
+              "[animation-direction:reverse]": reverse,
+            })}
+          >
+            {children}
+          </div>
+        ))}
     </div>
   );
 };
@@ -457,6 +484,26 @@ const CustomPlan = () => {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [company,setcompany]=useState('');
+
+  // --- Read URL Search Parameters ---
+  const searchParams = useSearchParams();
+
+  // --- useEffect to pre-fill the form based on URL parameter ---
+  useEffect(() => {
+    const companyId = searchParams.get('companyId');
+    if (companyId) {
+      const company = companyData.find(c => c.id === companyId);
+      if (company) {
+        setFormData(prev => ({
+          ...prev,
+          companyName: company.name
+        })
+      );
+      setcompany(company.name)
+      }
+    }
+  }, [searchParams]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -467,105 +514,89 @@ const CustomPlan = () => {
   const validatePhone = (phone) => /^[6-9]\d{9}$/.test(phone);
   const validatePincode = (pincode) => /^\d{6}$/.test(pincode);
 
-// In CustomPlan.js
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setIsSubmitting(true);
+    setSubmitted(false);
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError('');
-  setIsSubmitting(true);
-  setSubmitted(false);
+    try {
+      if (!formData.companyName.trim()) throw new Error("Please enter your company name");
+      if (!formData.contactPerson.trim()) throw new Error("Please enter contact person name");
+      if (!validateEmail(formData.email)) throw new Error("Please enter a valid email address");
+      if (!validatePhone(formData.phoneNumber)) throw new Error("Please enter a valid 10-digit mobile number");
+      if (!formData.plan) throw new Error("Please select a plan");
+      if (!formData.address.trim()) throw new Error("Please enter your address");
+      if (!validatePincode(formData.pincode)) throw new Error("Please enter a valid 6-digit pincode");
 
-  try {
-    // --- Client-side validation (already in place) ---
-    if (!formData.companyName.trim()) throw new Error("Please enter your company name");
-    if (!formData.contactPerson.trim()) throw new Error("Please enter contact person name");
-    if (!validateEmail(formData.email)) throw new Error("Please enter a valid email address");
-    if (!validatePhone(formData.phoneNumber)) throw new Error("Please enter a valid 10-digit mobile number");
-    if (!formData.plan) throw new Error("Please select a plan");
-    if (!formData.address.trim()) throw new Error("Please enter your address");
-    if (!validatePincode(formData.pincode)) throw new Error("Please enter a valid 6-digit pincode");
+      const response = await fetch('/api/submit-data', { 
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
 
-  
-    const response = await fetch('/api/submit-to-sheets', { 
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Something went wrong on the server.');
+      }
 
-    // --- Handle API response ---
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Something went wrong on the server.');
+      setSubmitted(true);
+      setFormData({ companyName: '', contactPerson: '', email: '', phoneNumber: '', plan: '', address: '', pincode: '' });
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsSubmitting(false);
     }
+  };
 
-    setSubmitted(true);
-    setFormData({ companyName: '', contactPerson: '', email: '', phoneNumber: '', plan: '', address: '', pincode: '' });
-
-  } catch (err) {
-    setError(err.message);
-  } finally {
-    setIsSubmitting(false);
-  }
-};
   const reviews = [
-    { name: "Balaji Publication", body: "Our employees are happy using MGood services, because they are very proactive in providing solutions.", img: "/mgood_logo.jpg", id:1 },
-    { name: "NMV India Private Limited", body: "We are in the oil and chemical industry, and MGood has provided good health checkups for our contractual employees.", img: "https://avatar.vercel.sh/jill", id:2 },
-    { name: "Pyramid Engineering", body: "MGood is offering our employees a unique plan which is so customized that we feel health empowered.", img: "https://avatar.vercel.sh/john" ,id:3 },
-    { name: "Pyramid Buildtech", body: "We have been offered full access of the MGood platform. Looking forward to a long term association.", img: "https://avatar.vercel.sh/jane", id:4 },
+    { name: "Balaji Publication", body: "Our employees are happy using MGood services...", img: "/mgood_logo.jpg", id: 1 },
+    { name: "NMV India Private Limited", body: "MGood has provided good health checkups...", img: "https://avatar.vercel.sh/jill", id: 2 },
+    { name: "Pyramid Engineering", body: "MGood is offering our employees a unique plan...", img: "https://avatar.vercel.sh/john", id: 3 },
+    { name: "Pyramid Buildtech", body: "We have been offered full access of the MGood platform...", img: "https://avatar.vercel.sh/jane", id: 4 },
   ];
 
   const features = [
-    { icon: <Users className="w-8 h-8 text-blue-600" />, title: "Employee Wellness Programs", description: "Comprehensive health screenings, preventive care, and wellness initiatives designed to keep your workforce healthy and productive." },
-    { icon: <Shield className="w-8 h-8 text-green-600" />, title: "Mediclaim Assessment Report", description: "Through a detailed analysis of your claims MIS, we deliver a strategic assessment report designed to support more informed and advantageous negotiations with insurers." },
-    { icon: <Heart className="w-8 h-8 text-red-600" />, title: "24/7 Assistance & Support", description: "We are available 24/7 to accept service requests, with a guaranteed response time of within 30 minutes." },
-    { icon: <Building className="w-8 h-8 text-purple-600" />, title: "Elderly Care Program ", description: "Your parents are now under MGood’s care. Enroll them in our elderly care program and provide them with a dedicated personal health buddy." },
-    { icon: <CheckCircle className="w-8 h-8 text-teal-600" />, title: "Serving Over 10,000 Pincodes", description: "With our extensive pan-India network of service providers, we enable users to access our services nationwide." },
-    { icon: <Star className="w-8 h-8 text-yellow-600" />, title: "Expert Care, Exceptional Medicines", description: "Upon specific request, we facilitate access to super specialist doctors and procure rare medicines essential for specialized treatments." }
+    { icon: <Users className="w-8 h-8 text-blue-600" />, title: "Employee Wellness Programs", description: "Comprehensive health screenings, preventive care, and wellness initiatives." },
+    { icon: <Shield className="w-8 h-8 text-green-600" />, title: "Mediclaim Assessment Report", description: "A detailed analysis of your claims MIS to support advantageous negotiations with insurers." },
+    { icon: <Heart className="w-8 h-8 text-red-600" />, title: "24/7 Assistance & Support", description: "We are available 24/7 with a guaranteed response time of within 30 minutes." },
+    { icon: <Building className="w-8 h-8 text-purple-600" />, title: "Elderly Care Program", description: "Enroll parents in our program for a dedicated personal health buddy." },
+    { icon: <CheckCircle className="w-8 h-8 text-teal-600" />, title: "Serving 10,000+ Pincodes", description: "Our extensive pan-India network enables users to access our services nationwide." },
+    { icon: <Star className="w-8 h-8 text-yellow-600" />, title: "Expert Care", description: "We facilitate access to super specialist doctors and procure rare medicines." }
   ];
 
   const plansData = [
     { name: "PLAN A", price: "1699", description: "Advanced Plan (92 Tests)", features: ["Hemogram", "Urine Analysis", "Diabetes Screening", "Electrolytes Panel"], ctaLink: "/customPlan#register", highlight: false },
     { name: "PLAN B", price: "2499", description: "Comprehensive care for growing businesses.", features: ["Everything in PLAN A", "Dedicated Health Buddy", "Annual Health Check-up", "Family Support Assistance"], ctaLink: "/customPlan#register", highlight: true },
     { name: "PLAN C", price: "3299", description: "For organizations prioritizing holistic well-being.", features: ["Everything in PLAN B", "Mediclaim Assessment Report", "On-site Wellness Camps", "Elderly Care Program for Parents"], ctaLink: "/customPlan#register", highlight: false },
-    { name: "Enterprise", price: "Custom", description: "A fully tailored solution for large-scale organizations.", features: ["Everything in PLAN C", "Customized Health Portal", "Dedicated Account Manager", "Advanced Data Analytics & Reporting"], ctaLink: "#register", highlight: false }
+    { name: "Enterprise", price: "Custom", description: "A fully tailored solution for large-scale organizations.", features: ["Everything in PLAN C", "Customized Health Portal", "Dedicated Account Manager", "Advanced Data Analytics"], ctaLink: "#register", highlight: false }
   ];
 
   const ReviewCard = ({ img, name, username, body }) => (
     <figure className={cn("relative h-full w-64 cursor-pointer overflow-hidden rounded-xl border p-4", "border-gray-200 bg-white hover:shadow-lg transition-shadow")}>
-      <div className="flex flex-row items-center gap-4">
-        <img className="rounded-full" style={{ width: '64px', height: '64px', objectFit: 'cover' }} alt={name} src={img} />
-        <div className="flex flex-col">
-          <figcaption className="text-sm font-semibold text-gray-800">{name}</figcaption>
-          {username && <p className="text-xs font-medium text-gray-500">{username}</p>}
-        </div>
-      </div>
-      <blockquote className="mt-4 text-sm text-gray-600">{body}</blockquote>
+      <div className="flex flex-row items-center gap-4"><img className="rounded-full" style={{ width: '64px', height: '64px', objectFit: 'cover' }} alt={name} src={img} /><div className="flex flex-col"><figcaption className="text-sm font-semibold text-gray-800">{name}</figcaption>{username && <p className="text-xs font-medium text-gray-500">{username}</p>}</div></div><blockquote className="mt-4 text-sm text-gray-600">{body}</blockquote>
     </figure>
   );
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Section 1 - Hero with Split Layout */}
+      {/* Hero Section */}
       <section className="min-h-screen flex items-center overflow-hidden">
         <div className="container mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Text Content */}
             <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, ease: "easeOut" }} className="space-y-8">
               <div className="space-y-4 pt-12 lg:pt-0">
-                <div className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-3xl font-medium"><Building className="w-5 h-10 mr-2" />Pyramid BuildTech</div>
+                <div className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-3xl font-medium"><Building className="w-8 h-8 mr-2" />{company}</div>
                 <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">Transform Your <span className="text-blue-600 block">Employee Wellness</span></h1>
                 <p className="text-xl text-gray-600 leading-relaxed">MGood revolutionizes corporate healthcare with comprehensive wellness programs, preventive care, and seamless health management solutions.</p>
               </div>
-              <div className="flex flex-col sm:flex-row gap-4"><a href="#register" className="inline-flex items-center justify-center px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl group">Submit your request<ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" /></a></div>
+              <div className="flex flex-col sm:flex-row gap-4"><a href="#register" className="inline-flex items-center justify-center px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl group">Submit Your Request<ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" /></a></div>
               <div className="grid grid-cols-3 gap-8 pt-8 border-t border-gray-200">
                 <div className="text-center"><div className="text-3xl font-bold text-blue-600">20+</div><div className="text-sm text-gray-600">Companies Trust Us</div></div>
                 <div className="text-center"><div className="text-3xl font-bold text-green-600">1200+</div><div className="text-sm text-gray-600">Employees Covered</div></div>
                 <div className="text-center"><div className="text-3xl font-bold text-purple-600">97%</div><div className="text-sm text-gray-600">Satisfaction Rate</div></div>
               </div>
             </motion.div>
-            {/* Image/Visual Content */}
             <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }} className="relative">
               <div className="bg-gradient-to-br from-blue-500 via-purple-600 to-teal-500 rounded-3xl p-8 shadow-2xl">
                 <div className="bg-white rounded-2xl p-8 space-y-6">
@@ -580,8 +611,9 @@ const handleSubmit = async (e) => {
           </div>
         </div>
       </section>
-          {/* Pricing Section */}
-          <section className="py-20 bg-white">
+
+      {/* Pricing Section */}
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Select Your Plan</h2>
@@ -595,28 +627,13 @@ const handleSubmit = async (e) => {
 
       {/* Marquee Section */}
       <section className="py-20 bg-white">
-      <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-4xl lg:text-5xl font-bold text-blue-600 mb-12 text-center"
-        >
-          Our Onboarded Corporate
-        </motion.h2>
-
-        <Marquee>
-              {reviews.map((review) => (
-           <ReviewCard key={review.id} {...review} />
-               ))}
-         </Marquee>
-
-        {/* Gradient Overlays */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-white" />
-      </div>
-    </section>
+        <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className='text-4xl lg:text-5xl font-bold text-blue-600 mb-12 text-center'>Our Onboarded Corporates</motion.h2>
+          <Marquee pauseOnHover>{reviews.map((review) => <ReviewCard key={review.id} {...review} />)}</Marquee>
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-white" />
+        </div>
+      </section>
 
       {/* Features Section */}
       <section className="py-20 bg-gray-50">
@@ -628,8 +645,6 @@ const handleSubmit = async (e) => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">{features.map((feature, index) => (<motion.div key={index} className="group p-8 rounded-2xl border border-gray-200 hover:border-blue-300 hover:shadow-xl transition-all duration-300 bg-white hover:bg-gradient-to-br hover:from-blue-50 hover:to-purple-50" initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}><div className="mb-6 group-hover:scale-110 transition-transform duration-300">{feature.icon}</div><h3 className="text-xl font-semibold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors">{feature.title}</h3><p className="text-gray-600 leading-relaxed">{feature.description}</p></motion.div>))}</div>
         </div>
       </section>
-
-  
 
       {/* Registration Form Section */}
       <section id="register" className="py-20 bg-gray-50">
@@ -647,24 +662,21 @@ const handleSubmit = async (e) => {
                     <div className="space-y-6">
                       {error && (<div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">{error}</div>)}
                       <div className="grid md:grid-cols-2 gap-6">
-                        <div><label htmlFor="companyName" className="block text-sm font-medium text-gray-700 mb-2">Company Name *</label><input type="text" id="companyName" name="companyName" value={formData.companyName} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition-colors" placeholder="Your company name"/></div>
+                        <div>
+                          <label htmlFor="companyName" className="block text-sm font-medium text-gray-700 mb-2">Company Name *</label>
+                          <input type="text" id="companyName" name="companyName" value={formData.companyName} onChange={handleChange} readOnly className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition-colors bg-gray-100 cursor-not-allowed" placeholder="Your company name"/>
+                        </div>
                         <div><label htmlFor="contactPerson" className="block text-sm font-medium text-gray-700 mb-2">Contact Person *</label><input type="text" id="contactPerson" name="contactPerson" value={formData.contactPerson} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition-colors" placeholder="Your full name"/></div>
                       </div>
                       <div className="grid md:grid-cols-2 gap-6">
                         <div><label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">Business Email *</label><input type="email" id="email" name="email" value={formData.email} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition-colors" placeholder="company@domain.com"/></div>
                         <div><label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label><input type="text" id="phoneNumber" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition-colors" placeholder="10-digit mobile number" maxLength="10"/></div>
                       </div>
-                      
-                      {/* --- MODIFIED FORM FIELDS --- */}
                       <div>
                         <label htmlFor="plan" className="block text-sm font-medium text-gray-700 mb-2">Select Plan *</label>
                         <select id="plan" name="plan" value={formData.plan} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition-colors">
                           <option value="">Choose a plan</option>
-                          {plansData.map(p => (
-                            <option key={p.name} value={p.name}>
-                              {p.name} - {p.price === 'Custom' ? 'Custom Price' : `₹${p.price}`}
-                            </option>
-                          ))}
+                          {plansData.map(p => (<option key={p.name} value={p.name}>{p.name} - {p.price === 'Custom' ? 'Custom Price' : `₹${p.price}`}</option>))}
                         </select>
                       </div>
                       <div>
@@ -675,7 +687,6 @@ const handleSubmit = async (e) => {
                         <label htmlFor="pincode" className="block text-sm font-medium text-gray-700 mb-2">Pincode *</label>
                         <input type="text" id="pincode" name="pincode" value={formData.pincode} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition-colors" placeholder="6-digit pincode" maxLength="6" />
                       </div>
-
                       <button type="submit" disabled={isSubmitting} className={`w-full flex items-center justify-center px-8 py-4 ${isSubmitting ? 'bg-blue-300 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'} text-white font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl`}>
                         {isSubmitting ? (<><div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>Processing...</>) : (<>Book My Plan <ArrowRight className="w-5 h-5 ml-2" /></>)}
                       </button>
