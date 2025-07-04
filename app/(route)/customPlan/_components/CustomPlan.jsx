@@ -207,6 +207,7 @@ const CustomPlan = () => {
     { name: "NMV India Private Limited", body: "MGood has provided good health checkups...", img: "https://avatar.vercel.sh/jill", id: 2 },
     { name: "Pyramid Engineering", body: "MGood is offering our employees a unique plan...", img: "https://avatar.vercel.sh/john", id: 3 },
     { name: "Pyramid Buildtech", body: "We have been offered full access of the MGood platform...", img: "https://avatar.vercel.sh/jane", id: 4 },
+    { name: "Observe Now", body: "Very convenient and user-friendly. Saves time and connects you with real doctors fast!", img: "https://avatar.vercel.sh/jane", id: 5 }
   ];
 
   const features = [
@@ -407,6 +408,7 @@ const CustomPlan = () => {
                       <div className="flex items-center"><Phone className="w-6 h-6 mr-4 flex-shrink-0" /><div><p className="font-semibold">Call Us</p><p className="text-blue-100">+91-8923894358</p></div></div>
                       <div className="flex items-center"><Mail className="w-6 h-6 mr-4 flex-shrink-0" /><div><p className="font-semibold">Email Us</p><p className="text-blue-100">info@mgood.org</p></div></div>
                       <div className="flex items-center"><MapPin className="w-6 h-6 mr-4 flex-shrink-0" /><div><p className="font-semibold">Visit Us</p><p className="text-blue-100">73/71 Chagan Pura, Mathura</p></div></div>
+                      <div className="flex items-center"><MapPin className="w-6 h-6 mr-4 flex-shrink-0" /><div><p className="font-semibold">Visit Us</p><p className="text-blue-100">2074 Mahagun Mywoods Sector 16 C , Greater Noida 201309</p></div></div>
                     </div>
                     <div className="pt-8 border-t border-blue-400">
                       <h4 className="font-semibold mb-4">Our Trusted Partners</h4>
