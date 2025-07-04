@@ -70,7 +70,7 @@ function Header() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ phone: '1234567890' }),
+      body: JSON.stringify({ phone: user }),
     })
     .then(response => response.json())
     .then(data => {
