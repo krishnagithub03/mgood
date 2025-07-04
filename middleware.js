@@ -282,6 +282,7 @@ export const config = {
     "/MHL", 
     "/blood", 
     "/camp",
-    "/healthPackage"
+    "/healthPackage",
+    "/customPlan"
   ],
 };
