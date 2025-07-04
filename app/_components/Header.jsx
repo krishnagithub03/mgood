@@ -17,6 +17,7 @@ function Header() {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [mgoodId, setMgoodId] = useState("");
   const [user, setUser] = useState(null); // Store user from cookies
+  const [rewardPoints,setRewardPoints] = useState(0);
 
   const navLinks = [
     {
@@ -62,6 +63,24 @@ function Header() {
       setUser(JSON.parse(storedUser));
     }
   }, []);
+
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/rewards/get-reward-points`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ phone: '1234567890' }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+      setRewardPoints(data.points);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  }, [rewardPoints]); 
 
   const handleLogout = () => {
     try{
@@ -136,6 +155,9 @@ function Header() {
                 </li>
                 <li className="cursor-pointer hover:bg-slate-300 p-2 rounded-md">
                   MgoodId : {mgoodId}
+                </li>
+                <li className="cursor-pointer hover:bg-slate-300 p-2 rounded-md">
+                  Reward Points : {rewardPoints}
                 </li>
                 <li className="cursor-pointer hover:bg-slate-300 p-2 rounded-md">
                   <Button onClick={handleLogout}>Log Out</Button>

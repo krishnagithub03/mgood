@@ -145,6 +145,14 @@ const PatientDetails = (phoneNumber) => {
     }
   }, []);
 
+   useEffect(() => {
+     // Retrieve user details from cookies
+     const storedUser = Cookies.get("user"); // Assuming you stored the user as a JSON string
+     if (storedUser) {
+       setUser(JSON.parse(storedUser));
+     }
+   }, []);
+
   // Socket event listeners
   useEffect(() => {
     socket.on("update", (data) => {
@@ -241,6 +249,31 @@ const PatientDetails = (phoneNumber) => {
     setPaymentOptions(true); // Show payment options after form submission
   };
 
+  const addRewardPoints = async () => {
+    try {
+      await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/rewards/add-reward-points`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ phone: user, points: amount*0.1 }),
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    } catch (error) {
+      console.error("Reward error:", error);
+      toast.error("Reward initialization failed");
+    }
+  };
+
   const handlePayment = async () => {
     try {
       const response = await fetch(
@@ -261,7 +294,7 @@ const PatientDetails = (phoneNumber) => {
 
   const handlePaymentVerify = (data) => {
     const options = {
-      key: process.env.RAZORPAY_KEY_ID,
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
       amount: data.amount,
       currency: data.currency,
       name: "MGood",
@@ -285,6 +318,7 @@ const PatientDetails = (phoneNumber) => {
           if (verifyResponse.ok) {
             const verifyData = await verifyResponse.json();
             toast.success(verifyData.message);
+            addRewardPoints(); // Add reward points after successful payment
             socket.emit("appointment-booked", { data: formData });
             setShowDialog(true);
             setMeetingUrl(`https://mgood.org/Room/${roomId}`);
