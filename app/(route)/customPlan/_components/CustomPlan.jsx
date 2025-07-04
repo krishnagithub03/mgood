@@ -6,13 +6,14 @@ import { motion } from 'framer-motion';
 import { Building, Users, Shield, Heart, CheckCircle, Phone, Mail, MapPin, ArrowRight, Star, Check } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
-// --- Sample Company Data ---
-// In a real app, you might fetch this or import it from a shared file.
+
 const companyData = [
   { id: '0709', name: 'Pyramid Buildtech' },
   { id: '2611', name: 'Balaji Publication' },
   { id: '1303', name: 'NMV India Private Limited' },
   { id: '0507', name: 'Pyramid Engineering' },
+  {id:'0809',name:'ObserveNow Media'}
+
 ];
 
 // --- Reusable Pricing Card Component ---
