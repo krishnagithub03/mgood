@@ -342,6 +342,8 @@
 //   );
 // }
 
+'use client';
+
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, Shield, ArrowRight, Loader2 } from "lucide-react";
@@ -361,7 +363,7 @@ export default function OTPVerification() {
   const [retryCount, setRetryCount] = useState(0);
   const timerRef = useRef(null);
 
-  // ADD THESE LINES - Get router and search params
+  // Get router and search params
   const router = useRouter();
   const searchParams = useSearchParams();
   const returnUrl = searchParams.get('returnUrl');
@@ -472,7 +474,7 @@ export default function OTPVerification() {
         description: "Redirecting you...",
       });
 
-      // FIXED: Use returnUrl from middleware or default to home
+      // Use returnUrl from middleware or default to home
       const redirectTo = returnUrl || "/";
       console.log("Login successful, redirecting to:", redirectTo);
       
@@ -576,7 +578,7 @@ export default function OTPVerification() {
                   ? "Enter your phone number to receive an OTP"
                   : `Enter the 6-digit code sent to ${phoneNumber}`}
               </p>
-              {/* ADD DEBUG INFO - Remove this after testing */}
+              {/* Debug info - Remove this after testing */}
               {returnUrl && (
                 <p className="text-xs text-blue-600 mt-1">
                   You'll be redirected to: {returnUrl}
