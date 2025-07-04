@@ -407,8 +407,8 @@ const CustomPlan = () => {
                     <div className="space-y-6">
                       <div className="flex items-center"><Phone className="w-6 h-6 mr-4 flex-shrink-0" /><div><p className="font-semibold">Call Us</p><p className="text-blue-100">+91-8923894358</p></div></div>
                       <div className="flex items-center"><Mail className="w-6 h-6 mr-4 flex-shrink-0" /><div><p className="font-semibold">Email Us</p><p className="text-blue-100">info@mgood.org</p></div></div>
-                      <div className="flex items-center"><MapPin className="w-6 h-6 mr-4 flex-shrink-0" /><div><p className="font-semibold">Visit Us</p><p className="text-blue-100">73/71 Chagan Pura, Mathura</p></div></div>
-                      <div className="flex items-center"><MapPin className="w-6 h-6 mr-4 flex-shrink-0" /><div><p className="font-semibold">Visit Us</p><p className="text-blue-100">2074 Mahagun Mywoods Sector 16 C , Greater Noida 201309</p></div></div>
+                      <div className="flex items-center"><MapPin className="w-6 h-6 mr-4 flex-shrink-0" /><div><p className="font-semibold">Visit Us</p><span className='font-bold'>Mathura:</span><p className="text-blue-100">73/71 Chagan Pura, Mathura</p><span className='font-bold'>Greater Noida:</span><p className="text-blue-100">2074 Mahagun Mywoods Sector 16 C , Greater Noida 201309</p></div></div>
+                  
                     </div>
                     <div className="pt-8 border-t border-blue-400">
                       <h4 className="font-semibold mb-4">Our Trusted Partners</h4>
