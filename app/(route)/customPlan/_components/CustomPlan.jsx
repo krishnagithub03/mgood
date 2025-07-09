@@ -6,14 +6,14 @@ import { motion } from 'framer-motion';
 import { Building, Users, Shield, Heart, CheckCircle, Phone, Mail, MapPin, ArrowRight, Star, Check } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
-
+// --- Updated Company Data with Logo Paths ---
+// NOTE: Ensure your logo images are placed in the `public/logos/` directory.
 const companyData = [
-  { id: '0709', name: 'Pyramid Buildtech' },
-  { id: '2611', name: 'Balaji Publication' },
-  { id: '1303', name: 'NMV India Private Limited' },
-  { id: '0507', name: 'Pyramid Engineering' },
-  {id:'0809',name:'ObserveNow Media'}
-
+  { id: '0709', name: 'Pyramid Buildtech', logo: null },
+  { id: '2611', name: 'Balaji Publication', logo: null },
+  { id: '1303', name: 'NMV India Private Limited', logo: null },
+  { id: '0507', name: 'Pyramid Engineering', logo: null },
+  { id: '0809', name: 'ObserveNow Media', logo: './observenow.png' },
 ];
 
 // --- Reusable Pricing Card Component ---
@@ -137,23 +137,24 @@ const CustomPlan = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [company,setcompany]=useState('');
   const [companyId,setcompanyId]=useState(null);
+  const [companyLogo, setCompanyLogo] = useState(null); // State for company logo URL
 
   // --- Read URL Search Parameters ---
   const searchParams = useSearchParams();
 
   // --- useEffect to pre-fill the form based on URL parameter ---
   useEffect(() => {
-    const companyId = searchParams.get('companyId');
-    if (companyId) {
-      const company = companyData.find(c => c.id === companyId);
-      if (company) {
+    const currentCompanyId = searchParams.get('companyId');
+    if (currentCompanyId) {
+      const companyDetails = companyData.find(c => c.id === currentCompanyId);
+      if (companyDetails) {
         setFormData(prev => ({
           ...prev,
-          companyName: company.name
-        })
-      );
-      setcompany(company.name)
-      setcompanyId(company.id)
+          companyName: companyDetails.name
+        }));
+        setcompany(companyDetails.name);
+        setcompanyId(companyDetails.id);
+        setCompanyLogo(companyDetails.logo); // Set the company logo
       }
     }
   }, [searchParams]);
@@ -359,6 +360,13 @@ const CustomPlan = () => {
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="text-center mb-12">
+              {companyLogo && (
+                <img
+                  src={companyLogo}
+                  alt={`${company} Logo`}
+                  className="mx-auto h-16 md:h-20 mb-8 object-contain"
+                />
+              )}
               <h2 className="text-4xl font-bold text-gray-900 mb-4">Book Your Health Plan</h2>
               <p className="text-xl text-gray-600">Take the first step. Our team will contact you within 24 hours to confirm your booking.</p>
             </motion.div>
