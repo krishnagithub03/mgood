@@ -8,29 +8,13 @@ import { Marquee } from "@/components/magicui/marquee";
 
 
 const Corporate = () => {
-    const reviews = [
-        {
-          name: "Balaji Publication",
-          body: "Our employees are happy using MGood services , Because they are very proactive in providing solutions",
-          img: "https://avatar.vercel.sh/jill", 
-        },
-        {
-          name: "NMV India Private Limited",
-          body: "We are into oil and chemical industry and MGood has provided good healthcheckups for our contractual employees",
-          img: "https://avatar.vercel.sh/jill",
-        },
-        {
-          name: "Pyramid Engineering",
-          body: "MGood is offering our employees an unique plan which is so customized that we feel health empowered",
-          img: "https://avatar.vercel.sh/john",
-        },
-        {
-          name: "Pyramid Buildtech",
-          body: "We have been offered full access of MGood platform , Looking forward for a long term association",
-          img: "https://avatar.vercel.sh/jane",
-        },
-    
-      ];
+  const reviews = [
+    { name: "Balaji Publication", body: "Our employees are happy using MGood services...", img: "https://avatar.vercel.sh/jill", id: 1 },
+    { name: "NMV India Private Limited", body: "MGood has provided good health checkups...", img: "https://avatar.vercel.sh/jill", id: 2 },
+    { name: "Pyramid Engineering", body: "MGood is offering our employees a unique plan...", img: "https://avatar.vercel.sh/john", id: 3 },
+    { name: "Pyramid Buildtech", body: "We have been offered full access of the MGood platform...", img: "https://avatar.vercel.sh/jane", id: 4 },
+    { name: "Observe Now", body: "Very convenient and user-friendly. Saves time and connects you with real doctors fast!", img: "https://avatar.vercel.sh/jane", id: 5 }
+  ];
 
   const features = [
     {
