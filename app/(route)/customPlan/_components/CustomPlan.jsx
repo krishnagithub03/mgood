@@ -295,6 +295,13 @@ const CustomPlan = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, ease: "easeOut" }} className="space-y-8">
               <div className="space-y-4 pt-12 lg:pt-0">
+              {companyLogo && (
+                <img
+                  src={companyLogo}
+                  alt={`${company} Logo`}
+                  className=" h-16 md:h-20 mb-8 object-contain"
+                />
+              )}
                 <div className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-3xl font-medium"><Building className="w-8 h-8 mr-2" />{company}</div>
                 <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">Transform Your <span className="text-blue-600 block">Employee Wellness</span></h1>
                 <p className="text-xl text-gray-600 leading-relaxed">MGood revolutionizes corporate healthcare with comprehensive wellness programs, preventive care, and seamless health management solutions.</p>
