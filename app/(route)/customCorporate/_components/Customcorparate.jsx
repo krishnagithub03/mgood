@@ -82,26 +82,11 @@ const handleSubmit = async (e) => {
 
 
   const reviews = [
-    {
-      name: "Balaji Publication",
-      body: "Our employees are happy using MGood services, because they are very proactive in providing solutions.",
-      img: "https://avatar.vercel.sh/jill", // Corrected Path for Public Directory
-    },
-    {
-      name: "NMV India Private Limited",
-      body: "We are in the oil and chemical industry, and MGood has provided good health checkups for our contractual employees.",
-      img: "https://avatar.vercel.sh/jill",
-    },
-    {
-      name: "Pyramid Engineering",
-      body: "MGood is offering our employees a unique plan which is so customized that we feel health empowered.",
-      img: "https://avatar.vercel.sh/john",
-    },
-    {
-      name: "Pyramid Buildtech",
-      body: "We have been offered full access of the MGood platform. Looking forward to a long term association.",
-      img: "https://avatar.vercel.sh/jane",
-    },
+    { name: "Balaji Publication", body: "Our employees are happy using MGood services...", img: "https://avatar.vercel.sh/jill", id: 1 },
+    { name: "NMV India Private Limited", body: "MGood has provided good health checkups...", img: "https://avatar.vercel.sh/jill", id: 2 },
+    { name: "Pyramid Engineering", body: "MGood is offering our employees a unique plan...", img: "https://avatar.vercel.sh/john", id: 3 },
+    { name: "Pyramid Buildtech", body: "We have been offered full access of the MGood platform...", img: "https://avatar.vercel.sh/jane", id: 4 },
+    { name: "Observe Now", body: "Very convenient and user-friendly. Saves time and connects you with real doctors fast!", img: "https://avatar.vercel.sh/jane", id: 5 }
   ];
 
   const features = [
