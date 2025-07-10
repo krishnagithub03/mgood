@@ -283,6 +283,6 @@ export const config = {
     "/blood", 
     "/camp",
     "/healthPackage",
-    // "/customPlan"
+    "/customPlan"
   ],
 };
