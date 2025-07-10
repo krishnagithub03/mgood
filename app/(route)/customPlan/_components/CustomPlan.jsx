@@ -583,7 +583,7 @@ const CustomPlan = () => {
     address: '',
     pincode: ''
   });
-  const [submitted, setSubmitted] = auseState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [company,setcompany]=useState('');

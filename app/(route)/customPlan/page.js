@@ -1,12 +1,25 @@
-import { Suspense } from "react";
+// import { Suspense } from "react";
+// import CustomPlan from "./_components/CustomPlan";
+
+// export default function PlanUsersPage() {
+//   return (
+//     <div>
+//       <Suspense fallback={<div>Loading plan...</div>}>
+//         <CustomPlan />
+//       </Suspense>
+//     </div>
+//   );
+// }
+
+
 import CustomPlan from "./_components/CustomPlan";
+
+export const dynamic = "force-dynamic"; // Add this to fix the error
 
 export default function PlanUsersPage() {
   return (
     <div>
-      <Suspense fallback={<div>Loading plan...</div>}>
-        <CustomPlan />
-      </Suspense>
+      <CustomPlan />
     </div>
   );
 }
