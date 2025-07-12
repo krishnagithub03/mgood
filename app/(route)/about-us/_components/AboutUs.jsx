@@ -130,7 +130,7 @@ const AboutUs = () => {
         transition={{ duration: 0.8, ease: "easeOut", delay: 2.8 }}
       >
         <h2 className="md:text-3xl text-2xl font-display font-bold p-2 text-center md:text-left">
-          MD's <span className="text-primary">Desk</span>
+          Chairman's <span className="text-primary">Desk</span>
         </h2>
         <p className="font-body p-2 text-base md:text-lg leading-relaxed text-gray-700 text-center md:text-left">
           I am thrilled to introduce MGood, a revolutionary platform poised to
