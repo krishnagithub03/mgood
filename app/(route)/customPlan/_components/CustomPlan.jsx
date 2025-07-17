@@ -445,7 +445,7 @@ const CustomPlan = () => {
               <div className="grid lg:grid-cols-2">
                 <div className="p-8 lg:p-12">
                   <form onSubmit={handleSubmit}>
-                    {submitted && (<div className="mb-6 p-6 bg-green-50 border border-green-200 rounded-xl flex items-center"><CheckCircle className="w-6 h-6 text-green-600 mr-3" /><div><h3 className="font-semibold text-green-800">Booking Confirmed!</h3><p className="text-green-600 text-sm mt-1">Our team will be in touch shortly.</p></div></div>)}
+                    {submitted && (<div className="mb-6 p-6 bg-green-50 border border-green-200 rounded-xl flex items-center"><CheckCircle className="w-6 h-6 text-green-600 mr-3" /><div><h3 className="font-semibold text-green-800">Request Received !</h3><p className="text-green-600 text-sm mt-1">Our team will be in touch shortly.</p></div></div>)}
                     <div className="space-y-6">
                       {error && (<div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">{error}</div>)}
                       <div className="grid md:grid-cols-2 gap-6">
