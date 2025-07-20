@@ -11,20 +11,25 @@ import RuralGallery from "./_components/RuralGallery";
 import Trusted from "./_components/Trusted";
 import Numbers from "./_components/Numbers";
 import Services from "./_components/Services";
+import Logo from "./_components/logo"
 
 
 export default function Home() {
   return (
     <div>
-       <Event />
+       {/* <Event /> */}
        <Slider/>
+       <Numbers/>
+       <Trusted/>
       <Plans />
-      <Numbers/>
+      <Services />
+      <Logo/>
+      
       <Hero />
 
-      <Services />
+      
       <Gallery/>
-      <Trusted/>
+     
       <Testimonials />
       <Faqs />
       <RuralGallery/>

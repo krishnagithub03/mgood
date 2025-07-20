@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 const Trusted=()=>{
     return (
     <div>
-     <section className="min-h-screen flex items-center overflow-hidden">
+     <section className="h-[80vh] flex items-center overflow-hidden">
         <div className="container mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Text Content */}

@@ -9,8 +9,9 @@ export function Slider() {
     "./slider1.jpg",
     "./slider2.jpg",
     "./slider3.jpg",
-    "./slider4.jpg",
+    "./slider4.png",
     "./slider5.jpg",
+    "./slider6.png"
     
   ];
   
