@@ -18,6 +18,7 @@ export default function Home() {
   return (
     <div>
        {/* <Event /> */}
+       {/* hii */}
        <Slider/>
        <Numbers/>
        <Trusted/>
