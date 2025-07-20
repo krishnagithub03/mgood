@@ -11,7 +11,7 @@ import RuralGallery from "./_components/RuralGallery";
 import Trusted from "./_components/Trusted";
 import Numbers from "./_components/Numbers";
 import Services from "./_components/Services";
-import Logo from "./_components/logo"
+import Logo from "./_components/Tieup"
 
 
 export default function Home() {
