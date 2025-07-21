@@ -127,10 +127,7 @@ export default function PhoneAuth() {
       toast.success("Authentication successful", {
         description: "Redirecting you...",
       });
-
-      const redirectTo = returnUrl || "/";
-      await mutateUser(); // re-fetch user info
-      router.push(redirectTo);
+      window.location.reload();
       
     } catch (error) {
       toast.error("Invalid OTP", { description: "Please check the code and try again." });
