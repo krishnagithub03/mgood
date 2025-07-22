@@ -30,6 +30,18 @@ const Logo = () => {
             width: 250,
             height: 180,
         },
+        {
+            src: "/image5.jpeg",
+            alt: "Ocean waves",
+            width: 250,
+            height: 180,
+        },
+        {
+            src: "/image6.jpeg",
+            alt: "Ocean waves",
+            width: 250,
+            height: 200,
+        },
     ];
 
     return (
