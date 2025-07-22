@@ -78,7 +78,7 @@ const Footer = () => {
 
               <a
                 className="text-gray-700 transition hover:text-gray-700/75"
-                href="https://www.instagram.com/mgoodhealthcare2024"
+                href="https://www.instagram.com/mgoodindia/"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -117,7 +117,7 @@ const Footer = () => {
               </a>
               <a
                 className="text-gray-700 transition hover:text-gray-700/75"
-                href="https://www.linkedin.com/in/mgood-india-32856b341/"
+                href="https://www.linkedin.com/company/m-good/"
                 target="_blank"
                 rel="noreferrer"
               >
