@@ -19,10 +19,7 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export const metadata = {
-  title: "MGood",
-  description: "Elevating Healthcare",
-};
+
 
 export default function RootLayout({ children }) {
   return (
