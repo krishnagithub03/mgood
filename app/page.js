@@ -13,12 +13,17 @@ import Numbers from "./_components/Numbers";
 import Services from "./_components/Services";
 import Logo from "./_components/Tieup"
 
+export const metadata = {
+  title: "MGood | Medical Tourism Near Me • Premium Healthcare Services • Best Digital Health Platform",
+  description:
+    "Explore premium healthcare services, treatment in foreign countries, annual health checkups, full body health checkup packages, and online doctor consultation near me on the leading healthtech startup platform.",
+};
+
 
 export default function Home() {
   return (
     <div>
        {/* <Event /> */}
-       {/* hii */}
        <Slider/>
        <Numbers/>
        <Trusted/>
