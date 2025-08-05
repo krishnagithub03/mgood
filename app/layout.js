@@ -31,6 +31,7 @@ export default function RootLayout({ children }) {
         />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="google-site-verification" content="30HWOZPbfWYGEC9NZRHqPIi5hPMyqxWGl27VWAubaXw" />
 <Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=G-DG2GY331WV`}></Script>
 <Script id="google-analytics" strategy="afterInteractive">
   {
