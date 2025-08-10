@@ -45,7 +45,7 @@ const Logo = () => {
     ];
 
     return (
-        <div className=' mt-10 '>
+        <div className=' mt-10 overflow-x-hidden'>
       <InfiniteMovingImages
             images={images}
             direction="left"

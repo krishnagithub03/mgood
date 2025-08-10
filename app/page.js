@@ -31,7 +31,7 @@ export default function Home() {
        <Trusted/>
       <Plans />
       <Services />
-      <Logo/>
+     <Logo/> 
       
       <Hero />
 
