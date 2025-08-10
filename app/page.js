@@ -12,6 +12,7 @@ import Trusted from "./_components/Trusted";
 import Numbers from "./_components/Numbers";
 import Services from "./_components/Services";
 import Logo from "./_components/Tieup"
+import Country from "./_components/Country";
 
 export const metadata = {
   title: "MGood | Medical Tourism Near Me • Premium Healthcare Services • Best Digital Health Platform",
@@ -26,6 +27,7 @@ export default function Home() {
        {/* <Event /> */}
        <Slider/>
        <Numbers/>
+       <Country/>
        <Trusted/>
       <Plans />
       <Services />
