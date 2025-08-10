@@ -11,7 +11,8 @@ export function Slider() {
     "./slider3.jpg",
     "./slider4.png",
     "./slider5.jpg",
-    "./slider6.png"
+    "./slider6.png",
+    "./slider7.jpg",
     
   ];
   
