@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Building, Users, Shield, Heart, CheckCircle, Phone, Mail, MapPin, ArrowRight, Star, Check } from 'lucide-react';
 import { cn } from "@/lib/utils";
+import Country from '@/app/_components/Country';
 
 // --- Updated Company Data with Logo Paths ---
 // NOTE: Ensure your logo images are placed in the `public/logos/` directory.
@@ -391,6 +392,7 @@ const CustomPlan = () => {
           </div>
         </div>
       </section>
+      <Country/>
 
       {/* Pricing Section */}
       <section className="py-20 bg-white">
