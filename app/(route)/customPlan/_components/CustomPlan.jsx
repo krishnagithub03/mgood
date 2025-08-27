@@ -16,7 +16,7 @@ const companyData = [
   { id: '0507', name: 'Pyramid Engineering', logo: null },
   { id: '0809', name: 'ObserveNow Media', logo: './observenow.png' },
   {id: '0308', name: 'Aramco Papers Private Limited', logo: null},
-  {id: '0406', name: 'Shri Balaji publications', logo: null},
+  {id: '0406', name: 'Shri Balaji Publications', logo: null},
 ];
 
 // --- Reusable Pricing Card Component ---
