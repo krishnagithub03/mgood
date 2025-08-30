@@ -468,6 +468,7 @@ const CustomPlan = () => {
                         <select id="plan" name="plan" value={formData.plan} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition-colors">
                           <option value="">Choose a plan</option>
                           {plansData.map(p => (<option key={p.name} value={p.name}>{p.name} - {p.price === 'Custom' ? 'Custom Price' : `₹${p.price}`}</option>))}
+                          <option value="Any Other Requests">Any Other Requests</option>
                         </select>
                       </div>
                       <div>
