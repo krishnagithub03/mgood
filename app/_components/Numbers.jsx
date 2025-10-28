@@ -14,7 +14,7 @@ const Numbers=()=>{
 return(
 <div className="grid grid-cols-3 gap-8 pt-8 border-t border-b border-gray-200 pb-3">
 <div className="text-center">
-  <div className="text-3xl font-bold text-blue-600">1006+</div>
+  <div className="text-3xl font-bold text-blue-600">1410+</div>
   <div className="text-sm text-gray-600">Health Service Request</div>
 </div>
 <div className="text-center">
