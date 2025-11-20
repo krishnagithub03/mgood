@@ -30,25 +30,30 @@ function Header() {
       name: "About Us",
       path: "/about-us",
     },
+    // {
+    //   id: 3,
+    //   name: "Teleconsultation",
+    //   path: "/book-tc",
+    // },
+    // {
+    //   id: 4,
+    //   name: "Prescriptions",
+    //   path : "/prescriptions"
+    // },
+    // {
+    //   id: 5,
+    //   name: "Blood Donation",
+    //   path : "/blood"
+    // },
     {
       id: 3,
-      name: "Teleconsultation",
-      path: "/book-tc",
+      name: "Corporate",
+      path:" /Corporate",
     },
     {
       id: 4,
-      name: "Prescriptions",
-      path : "/prescriptions"
-    },
-    {
-      id: 5,
-      name: "Blood Donation",
-      path : "/blood"
-    },
-    {
-      id: 6,
-      name: "Corporate",
-      path:" /Corporate",
+      name: "Events",
+      path:" /events",
     }
    
   ];
