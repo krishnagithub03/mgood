@@ -3,10 +3,9 @@ import { Calendar, MapPin } from "lucide-react";
 import Logo from "./../../../_components/Tieup";
 import { FadingLine } from "./FadingLine";
 
-const Events = () => {
+const Events = (props) => {
   return (
     <div className="w-full flex flex-col">
-
       <section
         id="banner"
         className="
@@ -18,33 +17,41 @@ const Events = () => {
 
         <div className="relative z-10 px-6 flex flex-col items-center gap-5 max-w-2xl">
           <h1 className="text-white text-5xl font-bold tracking-wide drop-shadow-lg">
-            Mgood Wellness Day 2025
+            {props.title || "An Exclusive Session with Our Distinguished Speaker"}
           </h1>
+          <h3 className="text-white text-2xl font-bold tracking-wide drop-shadow-lg">
+            {props.speaker} ({props.designation})
+          </h3>
 
           <p className="text-white text-lg opacity-90 leading-relaxed max-w-xl">
-            Join us for a day of wellness, learning, and meaningful conversations
-            with industry leaders and health experts.
+            Join us for an insightful session with {props.speaker}, where we explore wellness, learning, and meaningful conversations.
           </p>
 
           <div className="flex items-center gap-8 text-white mt-4">
             <div className="flex items-center gap-2">
               <Calendar className="w-5 h-5 text-[#1A73E8]" />
-              <h3 className="text-lg font-semibold">Nov 21, 2025</h3>
+              <h3 className="text-lg font-semibold">
+                {props.date}, 2025 at {props.time}
+              </h3>
             </div>
 
             <div className="flex items-center gap-2">
               <MapPin className="w-5 h-5 text-[#1A73E8]" />
-              <h3 className="text-lg font-semibold">Hyatt Regency Delhi</h3>
+              <h3 className="text-lg font-semibold">
+                {props.place}
+              </h3>
             </div>
           </div>
 
           {/* THEME BUTTON */}
-          <button className="
-            mt-4 bg-[#1A73E8] text-white px-10 py-3 rounded-xl font-semibold shadow-lg 
-            hover:bg-[#1667d1] transition-all
-          ">
-            Register Now
-          </button>
+          <a href="https://wa.me/+918923894358?text=Hi%2C%20I'm%20interested%20in%20Wellness%20Day%20Programs?">
+            <button className="
+              mt-4 bg-[#1A73E8] text-white px-10 py-3 rounded-xl font-semibold shadow-lg 
+              hover:bg-[#1667d1] transition-all
+            ">
+              Register Now
+            </button>
+          </a>
         </div>
       </section>
 
@@ -57,33 +64,32 @@ const Events = () => {
 
       <section className="py-20 flex flex-col items-center px-6 bg-[#F9FAFB]">
         <h2 className="text-4xl font-bold mb-14 text-center text-[#1A73E8]">
-          What Awaits You at Mgood Wellness Day 2025?
+          What Awaits You at This Exclusive Session?
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-
           <div className="flex flex-col items-center bg-white shadow-md p-10 rounded-2xl border border-gray-100">
             <h3 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              30+
+              1
             </h3>
-            <p className="text-gray-600 mt-2 text-lg">Eminent Speakers</p>
+            <p className="text-gray-600 mt-2 text-lg">Distinguished Speaker</p>
           </div>
 
           <div className="flex flex-col items-center bg-white shadow-md p-10 rounded-2xl border border-gray-100">
-            <h3 className="text-4xl font-bold text-[#0BB15E]">9+</h3>
-            <p className="text-gray-600 mt-2 text-lg">Hours of Networking</p>
+            <h3 className="text-4xl font-bold text-[#0BB15E]">2+</h3>
+            <p className="text-gray-600 mt-2 text-lg">Hours of Insights</p>
           </div>
 
           <div className="flex flex-col items-center bg-white shadow-md p-10 rounded-2xl border border-gray-100">
             <h3 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-              6+
+              100+
             </h3>
-            <p className="text-gray-600 mt-2 text-lg">Power-packed Sessions</p>
+            <p className="text-gray-600 mt-2 text-lg">Attendees</p>
           </div>
 
           <div className="flex flex-col items-center bg-white shadow-md p-10 rounded-2xl border border-gray-100">
-            <h3 className="text-4xl font-bold text-[#0BB15E]">200+</h3>
-            <p className="text-gray-600 mt-2 text-lg">Industry Experts</p>
+            <h3 className="text-4xl font-bold text-[#0BB15E]">1</h3>
+            <p className="text-gray-600 mt-2 text-lg">Unforgettable Experience</p>
           </div>
         </div>
       </section>
@@ -96,14 +102,11 @@ const Events = () => {
         </h1>
 
         <p className="text-gray-700 text-lg lg:w-2/3 leading-relaxed">
-          Mgood Wellness Day brings together world-class speakers,
-          health professionals, wellness coaches, and industry experts under one
-          roof. Expect knowledge-packed sessions, hands-on experiences,
-          and opportunities to network with leaders from across industries.
+          This exclusive session brings together {props.speaker}, a distinguished expert in their field, to share invaluable insights and experiences. Don't miss this opportunity to learn and grow.
         </p>
       </section>
-      <FadingLine className="my-6" />
 
+      <FadingLine className="my-6" />
 
       <section className="px-6 lg:px-24 py-16 bg-gradient-to-br from-white to-teal-50">
         <h2 className="text-4xl font-bold lg:w-1/3 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Key Discussion Points</h2>
@@ -126,34 +129,20 @@ const Events = () => {
           </ul>
         </div>
       </section>
+
       <FadingLine className="my-6" />
 
       <section className="px-6 lg:px-24 py-20 bg-white">
-        <h2 className="text-4xl font-bold lg:w-1/3 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Esteemed Speakers</h2>
+        <h2 className="text-4xl font-bold lg:w-1/3 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Esteemed Speaker</h2>
         <div className="w-10 h-1 bg-teal-600 mx-auto mt-2 mb-10"></div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {[
             {
-              name: "Takayuki Hagiwara",
-              role: "FAO Representative in India, UN",
+              name: `${props.speaker}`,
+              role: `${props.designation}`,
               img: "/profile.jpg"
-            },
-            {
-              name: "Dr. Kavitha Ramasamy",
-              role: "Joint Director, Food Standards & Regulations, FSSAI",
-              img: "/profile.jpg"
-            },
-            {
-              name: "Prof Rupal Dalal",
-              role: "Assoc. Professor, IIT Bombay | Head - Nutrition, WGF",
-              img: "/profile.jpg"
-            },
-            {
-              name: "Dr. Rajesh Rajput",
-              role: "Director – Endocrinology, Medanta Hospital",
-              img: "/profile.jpg"
-            },
+            }
           ].map((spk, i) => (
             <div key={i} className="flex flex-col items-center text-center">
               <img
@@ -166,6 +155,7 @@ const Events = () => {
           ))}
         </div>
       </section>
+
       <FadingLine className="my-6" />
 
       <section className="px-6 lg:px-24 py-16 bg-gradient-to-br from-white to-teal-50">
@@ -193,7 +183,6 @@ const Events = () => {
           </ul>
         </div>
       </section>
-
     </div>
   );
 };
