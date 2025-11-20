@@ -20,6 +20,7 @@ export function Slider() {
 
     <div className="flex justify-center ">
   
+        <a href="https://wa.me/+918923894358?text=Hi%2C%20I'm%20interested%20in%20healthcare%20services%20.">
   <ImagesSlider className="h-[20rem] md:h-[30rem] md:w-[70rem]" images={images}>
       <motion.div
         initial={{
@@ -40,6 +41,7 @@ export function Slider() {
         </motion.p> */}
       </motion.div>
     </ImagesSlider>
+          </a>
     </div>
   );
 }
