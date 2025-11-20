@@ -46,6 +46,7 @@ const Services =()=>{
 return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-4 w-[90%] m-auto" id="services" >
     {features.map((feature, index) => (
+      <a href="https://wa.me/+918923894358?text=Hi%2C%20I'm%20interested%20in%20healthcare%20services%20.">
         <motion.div
           key={index}
           className="group p-8 rounded-2xl border border-gray-200 hover:border-blue-300 hover:shadow-xl transition-all duration-300 bg-white hover:bg-gradient-to-br hover:from-blue-50 hover:to-purple-50"
@@ -64,6 +65,7 @@ return (
             {feature.description}
           </p>
         </motion.div>
+          </a>
     ))}
   </div>
 )
