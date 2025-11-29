@@ -584,6 +584,21 @@ export async function POST(request) {
       ]];
       range = "CorporateInquiries!A:H"; // New sheet for this form
 
+    // --- Cybersecurity Form (from Cybersecurity.js) ---
+    // Identified by `location` field (unique to this form)
+    } else if (body.location !== undefined && body.name !== undefined && body.number !== undefined && body.email !== undefined) {
+      if (!body.name || !body.location || !validateEmail(body.email) || !validateServerMobileNumber(body.number)) {
+        return NextResponse.json({ message: "All fields are required and must be valid." }, { status: 400 });
+      }
+      values = [[
+          submissionDate,
+          body.name,
+          body.number,
+          body.email,
+          body.location
+      ]];
+      range = "Cybersecurity!A:E"; // New sheet for cybersecurity form
+
     // --- Health Package Form ---
     } else if (body.employeeId !== undefined && body.healthPackage !== undefined) {
       if (!body.employeeId || !body.name || !body.email || !body.mobileNo || !body.gender || !body.age || !body.healthPackage || !body.address || !body.pincode) {
